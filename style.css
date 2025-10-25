@@ -1,0 +1,77 @@
+/* Fullscreen staging area */
+.sacred-hero{
+  position: relative;
+  height: 100dvh; /* good for mobile address bar */
+  background: radial-gradient(120vmax 100vmax at 50% 60%, rgba(0,0,0,.65), #000 70%);
+  overflow: hidden;
+}
+
+/* Kaleidoscope layer (behind) */
+.kaleido,
+.kaleido::before,
+.kaleido::after{
+  content:"";
+  position:absolute;
+  inset:-30vmax;               /* overscan so edges never show */
+  pointer-events:none;
+  z-index: 0;
+}
+
+/* Base spinning pattern (grayscale + diffused) */
+.kaleido{
+  background:
+    /* wedge-like spokes */
+    repeating-conic-gradient(from 0deg,
+      rgba(255,255,255,.08) 0 6deg,
+      transparent 6deg 12deg),
+    /* soft rings */
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.06) 0 12px,
+      transparent 12px 24px);
+  filter: grayscale(1) blur(18px) contrast(125%) brightness(90%);
+  opacity:.55;
+  animation: spin 80s linear infinite;
+  /* feather the edges so it feels “mystic” not mechanical */
+  -webkit-mask: radial-gradient(120vmax 120vmax at 50% 60%, #000 35%, transparent 80%);
+          mask: radial-gradient(120vmax 120vmax at 50% 60%, #000 35%, transparent 80%);
+}
+
+/* Additional layers rotating at different speeds to feel “mandala/kaleidoscope” */
+.kaleido::before{
+  background:
+    repeating-conic-gradient(from 45deg,
+      rgba(255,255,255,.06) 0 8deg,
+      transparent 8deg 16deg),
+    radial-gradient(ellipse at 50% 50%,
+      rgba(255,255,255,.04), transparent 60%);
+  mix-blend-mode: screen;
+  opacity:.45;
+  animation: spin 120s linear infinite reverse;
+}
+
+.kaleido::after{
+  background:
+    repeating-conic-gradient(from 22.5deg,
+      rgba(255,255,255,.05) 0 4deg,
+      transparent 4deg 8deg);
+  mix-blend-mode: screen;
+  opacity:.35;
+  animation: spin 200s linear infinite;
+}
+
+/* Your transparent outline + chakra orbs image (on top) */
+.meditator{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  max-width:min(80vmin, 90%);
+  z-index: 3;
+  filter: drop-shadow(0 0 .9rem rgba(255,255,255,.35)); /* gentle glow */
+}
+
+/* Motion-respectful fallback */
+@media (prefers-reduced-motion: reduce){
+  .kaleido, .kaleido::before, .kaleido::after{ animation:none; }
+}
+
+@keyframes spin{ to { transform: rotate(360deg); } }
