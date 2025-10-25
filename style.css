@@ -7,6 +7,12 @@
   text-rendering: optimizeLegibility;
 }
 
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
 .sacred-body {
   background: #000;
   min-height: 100vh;
@@ -33,30 +39,58 @@
 }
 
 /* faint cosmic haze in the background */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 30%, rgba(80,60,120,.35) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(circle at 50% 70%, rgba(30,10,50,.4) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(circle at 20% 50%, rgba(120,30,40,.22) 0%, rgba(0,0,0,0) 60%);
-  filter: blur(40px);
-  opacity: .4;
-  z-index: 0;
-  pointer-events: none;
-}
-
 /* ----------------------------- */
 /* KALEIDOSCOPE / MANTRA HALO    */
 /* ----------------------------- */
 /* This sits BEHIND the girl, small and centered, and spins slowly */
 
+.kaleido-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.field-layer {
+  position: absolute;
+  inset: -25vmax;
+  margin: auto;
+  width: 160vmax;
+  height: 160vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(120, 120, 120, 0.08) 0%, rgba(0, 0, 0, 0) 60%);
+  opacity: 0;
+  filter: blur(24px);
+  animation: fieldPulse 14s ease-in-out infinite;
+}
+
+.field-layer--outer {
+  animation-delay: 0s;
+  mix-blend-mode: lighten;
+}
+
+.field-layer--middle {
+  animation-delay: 4.5s;
+  background: radial-gradient(circle at 20% 35%, rgba(120, 120, 120, 0.1) 0%, rgba(0, 0, 0, 0) 55%),
+    radial-gradient(circle at 78% 68%, rgba(160, 160, 160, 0.12) 0%, rgba(0, 0, 0, 0) 50%);
+  filter: blur(30px);
+}
+
+.field-layer--inner {
+  animation-delay: 8s;
+  background: radial-gradient(circle at 35% 70%, rgba(180, 180, 180, 0.1) 0%, rgba(0, 0, 0, 0) 45%),
+    radial-gradient(circle at 65% 30%, rgba(140, 140, 140, 0.08) 0%, rgba(0, 0, 0, 0) 40%);
+  filter: blur(18px);
+}
+
 .kaleido-shell {
   position: absolute;
   z-index: 1;          /* under the girl (girl is z-index:2) */
-  width: min(40vmin, 260px);
-  max-width: 260px;
+  inset: 0;
+  margin: auto;
+  width: min(34vmin, 220px);
+  max-width: 220px;
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -64,7 +98,7 @@
   pointer-events: none;
   /* gentle breathing so the halo "lives" */
   animation: haloBreath 6s ease-in-out infinite;
-  filter: blur(18px);
+  filter: blur(6px);
 }
 
 .kaleido {
@@ -73,47 +107,199 @@
   height: 100%;
   border-radius: 50%;
 
-  /* layered gradients to fake a sacred mandala */
   background:
-    /* faint spokes */
+    /* crisp radial rings */
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(200, 200, 200, 0.22) 0% 3%,
+      rgba(0, 0, 0, 0) 3% 7%
+    ),
+    /* starburst petals */
     repeating-conic-gradient(
       from 0deg,
-      rgba(255,255,255,.15) 0deg 6deg,
-      rgba(0,0,0,0)       6deg 12deg
+      rgba(210, 210, 210, 0.18) 0deg 4deg,
+      rgba(0, 0, 0, 0) 4deg 8deg
     ),
     /* inner glow core */
     radial-gradient(
       circle at 50% 50%,
-      rgba(255,255,255,.4) 0%,
-      rgba(255,255,255,0) 60%
+      rgba(220, 220, 220, 0.36) 0%,
+      rgba(255, 255, 255, 0) 65%
     );
 
   mix-blend-mode: screen;
-  opacity: .28;
+  opacity: .32;
 
   /* slow spin for mantra feel */
-  animation: spin 60s linear infinite;
+  animation: spin 50s linear infinite;
+}
+
+.kaleido::before,
+.kaleido::after {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.kaleido::before {
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(190, 190, 190, 0.25) 0deg 2deg,
+      rgba(0, 0, 0, 0) 2deg 4deg
+    ),
+    radial-gradient(circle at 50% 50%, rgba(220, 220, 220, 0.24) 0%, rgba(0, 0, 0, 0) 70%);
+  opacity: .35;
+  filter: blur(2px);
+  animation: spinReverse 40s linear infinite;
+}
+
+.kaleido::after {
+  inset: 16%;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(200, 200, 200, 0.22) 0deg 6deg,
+      rgba(0, 0, 0, 0) 6deg 12deg
+    ),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%);
+  opacity: .4;
+  animation: spin 70s linear infinite;
 }
 
 /* breathing aura for halo */
 @keyframes haloBreath {
   0% {
-    filter: blur(18px) brightness(0.9);
-    opacity: .28;
+    filter: blur(10px) brightness(0.95);
+    opacity: .24;
   }
   50% {
-    filter: blur(22px) brightness(1.1);
-    opacity: .38;
+    filter: blur(14px) brightness(1.08);
+    opacity: .35;
   }
   100% {
-    filter: blur(18px) brightness(0.9);
-    opacity: .28;
+    filter: blur(10px) brightness(0.95);
+    opacity: .24;
   }
 }
 
 /* slow, constant rotation */
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes fieldPulse {
+  0%,
+  22% {
+    opacity: 0;
+    transform: scale(0.6) rotate(0deg);
+  }
+  38% {
+    opacity: 0.22;
+    transform: scale(0.85) rotate(45deg);
+  }
+  55% {
+    opacity: 0.32;
+    transform: scale(1.05) rotate(90deg);
+  }
+  72% {
+    opacity: 0.16;
+    transform: scale(0.9) rotate(135deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6) rotate(180deg);
+  }
+}
+
+/* ----------------------------- */
+/* WIND SWIRL OUTLINE            */
+/* ----------------------------- */
+
+.wind-swirl {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(26vmin, 170px);
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  z-index: 1;
+  filter:
+    drop-shadow(0 0 0.65rem rgba(220, 240, 255, 0.18))
+    drop-shadow(0 0 1.5rem rgba(150, 210, 255, 0.16));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swirl-layer {
+  position: absolute;
+  inset: 10%;
+  display: block;
+  border-radius: 50%;
+  border: 1.9px solid rgba(215, 235, 255, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(120, 170, 255, 0.18);
+  border-left-color: rgba(255, 255, 255, 0.12);
+  border-right-color: rgba(255, 255, 255, 0.22);
+  mix-blend-mode: screen;
+  opacity: .85;
+  transform-origin: 50% 50%;
+  animation: swirlOrbit 12s linear infinite;
+  mask: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0 32%, rgba(255, 255, 255, 0.9) 44% 100%);
+  -webkit-mask: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0 32%, rgba(255, 255, 255, 0.9) 44% 100%);
+}
+
+.swirl-layer::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  border: inherit;
+  border-width: 1.3px;
+  border-top-color: rgba(255, 255, 255, 0.28);
+  border-bottom-color: rgba(140, 190, 255, 0.14);
+  border-left-color: rgba(255, 255, 255, 0.08);
+  border-right-color: rgba(255, 255, 255, 0.18);
+  opacity: .42;
+}
+
+.swirl-layer--outer {
+  animation-duration: 14s;
+  box-shadow:
+    0 0 0.65rem rgba(200, 240, 255, 0.18),
+    0 0 1.6rem rgba(120, 200, 255, 0.12);
+}
+
+.swirl-layer--inner {
+  inset: 22%;
+  border-width: 1.4px;
+  opacity: .68;
+  animation-duration: 9s;
+  animation-direction: reverse;
+  filter: blur(0.5px);
+}
+
+@keyframes swirlOrbit {
+  0% {
+    transform: rotate(0deg) scale(0.96);
+    opacity: .82;
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+    opacity: .98;
+  }
+  100% {
+    transform: rotate(360deg) scale(0.96);
+    opacity: .82;
+  }
 }
 
 /* ----------------------------- */
@@ -135,9 +321,29 @@
   /* slow aura glow "breathing" around her */
   animation: auraBreath 6s ease-in-out infinite;
   filter:
-    drop-shadow(0 0 1rem rgba(255,255,255,.4))
-    drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
-    drop-shadow(0 0 4rem rgba(255,255,255,.08));
+    drop-shadow(0 0 0.85rem rgba(255,255,255,.45))
+    drop-shadow(0 0 2.25rem rgba(205,180,255,.24))
+    drop-shadow(0 0 3.5rem rgba(255,255,255,.12));
+}
+
+.chakragirl-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 120%;
+  height: 35%;
+  background: radial-gradient(
+    50% 60% at 50% 100%,
+    rgba(255, 180, 255, 0.5) 0%,
+    rgba(70, 0, 110, 0.08) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  filter: blur(16px);
+  opacity: .75;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .chakragirl-img {
@@ -147,28 +353,81 @@
   image-rendering: auto;
 }
 
+.third-eye-orb {
+  position: absolute;
+  top: 18.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16.5%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 120, 120, 0.95) 0%, rgba(255, 0, 0, 0.55) 38%, rgba(120, 0, 0, 0) 72%),
+    radial-gradient(circle at 50% 60%, rgba(255, 120, 120, 0.55) 0%, rgba(90, 0, 0, 0) 70%);
+  box-shadow:
+    0 0 18px 8px rgba(255, 60, 60, 0.22),
+    0 0 32px 14px rgba(255, 30, 30, 0.18);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: thirdEyePulse 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* breathing glow for the girl */
 @keyframes auraBreath {
   0% {
     filter:
       drop-shadow(0 0 1rem rgba(255,255,255,.4))
-      drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
+      drop-shadow(0 0 2.5rem rgba(205,180,255,.2))
       drop-shadow(0 0 4rem rgba(255,255,255,.08));
     opacity: .9;
   }
   50% {
     filter:
-      drop-shadow(0 0 1.5rem rgba(255,255,255,.6))
-      drop-shadow(0 0 3.5rem rgba(200,160,255,.28))
-      drop-shadow(0 0 5rem rgba(255,255,255,.12));
+      drop-shadow(0 0 1.5rem rgba(255,255,255,.62))
+      drop-shadow(0 0 3.5rem rgba(200,160,255,.3))
+      drop-shadow(0 0 5rem rgba(255,255,255,.14));
     opacity: 1;
   }
   100% {
     filter:
       drop-shadow(0 0 1rem rgba(255,255,255,.4))
-      drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
+      drop-shadow(0 0 2.5rem rgba(205,180,255,.2))
       drop-shadow(0 0 4rem rgba(255,255,255,.08));
     opacity: .9;
+  }
+}
+
+@keyframes thirdEyePulse {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+    box-shadow:
+      0 0 12px 4px rgba(255, 60, 60, 0.18),
+      0 0 24px 10px rgba(255, 30, 30, 0.12);
+  }
+  40% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.95);
+    box-shadow:
+      0 0 22px 8px rgba(255, 60, 60, 0.28),
+      0 0 40px 16px rgba(255, 30, 30, 0.22);
+  }
+  60% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.82);
+    box-shadow:
+      0 0 16px 6px rgba(255, 60, 60, 0.22),
+      0 0 30px 14px rgba(255, 30, 30, 0.18);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.64);
+    box-shadow:
+      0 0 10px 4px rgba(255, 60, 60, 0.14),
+      0 0 18px 10px rgba(255, 30, 30, 0.08);
   }
 }
 
@@ -176,10 +435,18 @@
 @media (prefers-reduced-motion: reduce) {
   .kaleido-shell,
   .kaleido,
-  .chakragirl-wrap {
+  .kaleido-field,
+  .field-layer,
+  .chakragirl-wrap,
+  .third-eye-orb,
+  .wind-swirl,
+  .swirl-layer {
     animation: none !important;
   }
   .kaleido {
     transform: none !important;
+  }
+  .third-eye-orb {
+    opacity: .6 !important;
   }
 }
