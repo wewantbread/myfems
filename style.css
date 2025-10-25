@@ -17,7 +17,7 @@
   color: #fff;
 }
 
-/* fullscreen hero */
+/* fullscreen hero container */
 .hero {
   position: relative;
   width: 100%;
@@ -30,7 +30,7 @@
   isolation: isolate;
 }
 
-/* faint cosmic haze behind her */
+/* faint cosmic / nebula haze behind her */
 .hero::before {
   content: "";
   position: absolute;
@@ -45,8 +45,8 @@
   pointer-events: none;
 }
 
-/* wrapper around the girl */
-.chakragirl-wrap {
+/* wrapper for the image */
+.sacredgirl-wrap {
   position: relative;
   width: min(88vmin, 90%);
   max-width: 600px;
@@ -58,7 +58,7 @@
   pointer-events: none;
   z-index: 2;
 
-  /* slow inhale/exhale glow */
+  /* slow “breathing” aura glow */
   animation: auraBreath 6s ease-in-out infinite;
   filter:
     drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
@@ -66,15 +66,16 @@
     drop-shadow(0 0 5rem rgba(255,255,255,.08));
 }
 
-/* the image itself */
-.chakragirl-img {
+/* the sacred girl image */
+.sacredgirl-img {
   max-width: 100%;
   height: auto;
   object-fit: contain;
   image-rendering: auto;
+  border-radius: 0; /* keep it raw */
 }
 
-/* gentle breathing halo for entire figure */
+/* overall aura pulsing in/out */
 @keyframes auraBreath {
   0% {
     filter:
