@@ -1,3 +1,4 @@
+/* base reset / smoothing */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,7 +18,7 @@
   color: #fff;
 }
 
-/* fullscreen hero container */
+/* full-screen stage */
 .hero {
   position: relative;
   width: 100%;
@@ -28,9 +29,10 @@
   justify-content: center;
   overflow: hidden;
   isolation: isolate;
+  z-index: 0;
 }
 
-/* faint cosmic haze behind her */
+/* faint cosmic haze in the background */
 .hero::before {
   content: "";
   position: absolute;
@@ -45,25 +47,97 @@
   pointer-events: none;
 }
 
-/* wrapper for chakragirl.png */
-.chakragirl-wrap {
-  position: relative;
-  /* smaller center floating size */
-  width: min(35vmin, 220px);
-  max-width: 220px;
-  aspect-ratio: 3/4; /* keeps a nice vertical feel */
+/* ----------------------------- */
+/* KALEIDOSCOPE / MANTRA HALO    */
+/* ----------------------------- */
+/* This sits BEHIND the girl, small and centered, and spins slowly */
+
+.kaleido-shell {
+  position: absolute;
+  z-index: 1;          /* under the girl (girl is z-index:2) */
+  width: min(40vmin, 260px);
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 2;
+  /* gentle breathing so the halo "lives" */
+  animation: haloBreath 6s ease-in-out infinite;
+  filter: blur(18px);
+}
 
-  /* slow breathing aura glow */
+.kaleido {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+
+  /* layered gradients to fake a sacred mandala */
+  background:
+    /* faint spokes */
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255,255,255,.15) 0deg 6deg,
+      rgba(0,0,0,0)       6deg 12deg
+    ),
+    /* inner glow core */
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255,255,255,.4) 0%,
+      rgba(255,255,255,0) 60%
+    );
+
+  mix-blend-mode: screen;
+  opacity: .28;
+
+  /* slow spin for mantra feel */
+  animation: spin 60s linear infinite;
+}
+
+/* breathing aura for halo */
+@keyframes haloBreath {
+  0% {
+    filter: blur(18px) brightness(0.9);
+    opacity: .28;
+  }
+  50% {
+    filter: blur(22px) brightness(1.1);
+    opacity: .38;
+  }
+  100% {
+    filter: blur(18px) brightness(0.9);
+    opacity: .28;
+  }
+}
+
+/* slow, constant rotation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------------------------- */
+/* CENTER GIRL IMAGE             */
+/* ----------------------------- */
+
+.chakragirl-wrap {
+  position: relative;
+  z-index: 2; /* above halo */
+  /* MAKE HER SMALLER HERE */
+  width: min(22vmin, 140px);    /* this is the main knob for size */
+  max-width: 140px;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  /* slow aura glow "breathing" around her */
   animation: auraBreath 6s ease-in-out infinite;
   filter:
-    drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
-    drop-shadow(0 0 3rem rgba(255,255,255,.18))
-    drop-shadow(0 0 5rem rgba(255,255,255,.08));
+    drop-shadow(0 0 1rem rgba(255,255,255,.4))
+    drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
+    drop-shadow(0 0 4rem rgba(255,255,255,.08));
 }
 
 .chakragirl-img {
@@ -73,27 +147,39 @@
   image-rendering: auto;
 }
 
-/* inhale/exhale overall glow */
+/* breathing glow for the girl */
 @keyframes auraBreath {
   0% {
     filter:
-      drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
-      drop-shadow(0 0 3rem rgba(255,255,255,.18))
-      drop-shadow(0 0 5rem rgba(255,255,255,.08));
+      drop-shadow(0 0 1rem rgba(255,255,255,.4))
+      drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
+      drop-shadow(0 0 4rem rgba(255,255,255,.08));
     opacity: .9;
   }
   50% {
     filter:
-      drop-shadow(0 0 1.8rem rgba(255,255,255,.6))
-      drop-shadow(0 0 4rem rgba(200,160,255,.28))
-      drop-shadow(0 0 6rem rgba(255,255,255,.12));
+      drop-shadow(0 0 1.5rem rgba(255,255,255,.6))
+      drop-shadow(0 0 3.5rem rgba(200,160,255,.28))
+      drop-shadow(0 0 5rem rgba(255,255,255,.12));
     opacity: 1;
   }
   100% {
     filter:
-      drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
-      drop-shadow(0 0 3rem rgba(255,255,255,.18))
-      drop-shadow(0 0 5rem rgba(255,255,255,.08));
+      drop-shadow(0 0 1rem rgba(255,255,255,.4))
+      drop-shadow(0 0 2.5rem rgba(255,255,255,.18))
+      drop-shadow(0 0 4rem rgba(255,255,255,.08));
     opacity: .9;
+  }
+}
+
+/* accessibility: if someone has reduce motion on, stop spinning/breathing */
+@media (prefers-reduced-motion: reduce) {
+  .kaleido-shell,
+  .kaleido,
+  .chakragirl-wrap {
+    animation: none !important;
+  }
+  .kaleido {
+    transform: none !important;
   }
 }
