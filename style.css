@@ -89,7 +89,7 @@ body {
     );
 
   mix-blend-mode: screen;
-  opacity: .28;
+  opacity: .24;
 
   /* slow spin for mantra feel */
   animation: spin 60s linear infinite;
