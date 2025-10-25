@@ -9,79 +9,151 @@
 <body class="sacred-body">
 
 <section class="sacred-hero">
-
-  <!-- spinning mantra bg stays behind; keep your kaleido divs from last version if you want -->
-  <div class="bg-fade" aria-hidden="true"></div>
-  <div class="kaleido" aria-hidden="true"></div>
-
-  <!-- center figure -->
   <div class="figure-wrapper">
 
-    <!-- MAIN FIGURE AS SVG -->
-    <!-- viewBox is square so it will scale nicely and stay centered on iPhone -->
-    <svg class="meditator-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- High fidelity meditating figure -->
+    <!-- viewBox is taller/wider so proportions feel right -->
+    <svg class="meditator-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-      <!-- BODY OUTLINE
-           This is a stylized seated/lotus outline:
-           - head
-           - shoulders/torso
+      <!-- MAIN BODY OUTLINE
+           I shaped this to match your reference:
+           - bun
+           - long neck
+           - shoulders wide then taper to waist
+           - arms out + forearms resting on knees
            - crossed legs
            - hands in mudra
-           You can tweak stroke if you want even thinner. -->
-      <path class="body-outline" d="
-        M250 95
-        C235 95 225 108 225 122
-        C225 138 236 150 250 150
-        C264 150 275 138 275 122
-        C275 108 265 95 250 95
+      -->
+      <path class="body-outline main-outline" d="
+        M300 80
+        C285 80 270 93 270 110
+        C270 128 285 140 300 140
+        C315 140 330 128 330 110
+        C330 93 315 80 300 80
+        C310 70 315 62 315 55
+        C315 45 307 35 300 35
+        C293 35 285 45 285 55
+        C285 63 290 70 300 80
 
-        M210 165
-        C185 185 170 215 170 245
-        C170 280 195 300 195 325
-        C170 345 150 365 140 385
-        C130 405 140 420 155 420
-        C170 420 185 405 215 405
-        C230 405 240 410 250 410
-        C260 410 270 405 285 405
-        C315 405 330 420 345 420
-        C360 420 370 405 360 385
-        C350 365 330 345 305 325
-        C305 300 330 280 330 245
-        C330 215 315 185 290 165
+        M265 150
+        C250 158 235 170 225 190
+        C215 210 210 230 210 250
+        C210 280 225 300 230 320
+        C210 335 195 355 180 375
+        C170 390 165 405 170 415
+        C175 425 190 425 200 420
+        C210 415 225 405 250 400
+        C260 398 270 398 280 400
+        C285 401 290 402 300 402
+        C310 402 315 401 320 400
+        C330 398 340 398 350 400
+        C375 405 390 415 400 420
+        C410 425 425 425 430 415
+        C435 405 430 390 420 375
+        C405 355 390 335 370 320
+        C375 300 390 280 390 250
+        C390 230 385 210 375 190
+        C365 170 350 158 335 150
 
-        M195 325
-        C215 315 235 312 250 312
-        C265 312 285 315 305 325
+        M230 320
+        C260 305 285 300 300 300
+        C315 300 340 305 370 320
 
-        M155 420
-        C150 440 165 450 180 445
-        C195 440 205 430 215 425
-        M345 420
-        C350 440 335 450 320 445
-        C305 440 295 430 285 425
+        M200 420
+        C190 435 195 445 205 450
+        C215 455 225 455 235 450
+        C245 445 255 435 265 430
+        M400 420
+        C410 435 405 445 395 450
+        C385 455 375 455 365 450
+        C355 445 345 435 335 430
 
         M205 260
-        C215 255 220 260 220 268
-        C220 276 215 280 205 280
-        M295 260
-        C285 255 280 260 280 268
-        C280 276 285 280 295 280
-      " />
+        C215 255 225 260 225 270
+        C225 280 215 285 205 283
+        M395 260
+        C385 255 375 260 375 270
+        C375 280 385 285 395 283
 
-      <!-- CHAKRAS (7 circles stacked vertically along centerline) -->
-      <!-- We'll animate each with CSS: glow, pulse, float -->
-      <circle class="chakra chakra-root"    cx="250" cy="360" r="10"/>
-      <circle class="chakra chakra-sacral"  cx="250" cy="330" r="9"/>
-      <circle class="chakra chakra-solar"   cx="250" cy="300" r="9"/>
-      <circle class="chakra chakra-heart"   cx="250" cy="265" r="10"/>
-      <circle class="chakra chakra-throat"  cx="250" cy="230" r="8"/>
-      <circle class="chakra chakra-brow"    cx="250" cy="195" r="8"/>
-      <circle class="chakra chakra-crown"   cx="250" cy="160" r="9"/>
+        M180 375
+        C165 370 155 370 150 380
+        C145 390 150 400 160 405
+        C170 410 180 410 190 410
+        M420 375
+        C435 370 445 370 450 380
+        C455 390 450 400 440 405
+        C430 410 420 410 410 410
 
+        M250 400
+        C230 405 215 420 205 440
+        C195 460 200 480 220 485
+        C240 490 260 480 280 470
+        C290 465 295 465 300 465
+        C305 465 310 465 320 470
+        C340 480 360 490 380 485
+        C400 480 405 460 395 440
+        C385 420 370 405 350 400
+        C335 397 325 398 300 398
+        C275 398 265 397 250 400
+      "/>
+
+      <!-- SCRATCH / GRUNGE STROKES
+           These are extra light strokes slightly offset,
+           to fake that hazy hand-drawn vibe / aura wobble.
+           They hug the torso/arms/legs but aren't perfectly clean.
+      -->
+      <path class="body-outline sketch-stroke" d="
+        M300 82
+        C285 82 272 96 272 110
+        C272 130 288 142 300 142
+        C315 142 328 128 328 110
+        C328 95 315 82 300 82
+        M265 152
+        C250 160 238 172 228 192
+        C218 212 213 232 213 252
+        C213 282 228 304 233 322
+        C215 338 198 360 185 378
+        C176 392 172 404 176 412
+        C179 420 190 420 198 417
+        C208 412 224 402 250 397
+        C275 392 290 395 300 395
+        C310 395 325 392 350 397
+        C376 402 392 412 402 417
+        C410 420 421 420 424 412
+        C428 404 424 392 415 378
+        C402 360 385 338 367 322
+        C372 304 387 282 387 252
+        C387 232 382 212 372 192
+        C362 172 350 160 335 152
+      "/>
+
+      <path class="body-outline sketch-stroke" d="
+        M250 401
+        C230 406 215 420 207 438
+        C200 455 205 470 220 474
+        C240 478 260 468 278 460
+        C288 456 297 456 304 458
+        C312 460 320 464 330 468
+        C350 476 366 480 380 476
+        C392 472 398 460 392 445
+        C386 430 372 412 350 404
+        C325 395 275 395 250 401
+      "/>
+
+      <!-- CHAKRAS (7 orbs down center spine)
+           We'll glow/pulse in CSS.
+           y positions chosen to line up with head / neck / chest / stomach / pelvis in this anatomy.
+      -->
+      <circle class="chakra chakra-crown"   cx="300" cy="120" r="10"/>
+      <circle class="chakra chakra-brow"    cx="300" cy="155" r="9"/>
+      <circle class="chakra chakra-throat"  cx="300" cy="190" r="9"/>
+      <circle class="chakra chakra-heart"   cx="300" cy="230" r="11"/>
+      <circle class="chakra chakra-solar"   cx="300" cy="270" r="10"/>
+      <circle class="chakra chakra-sacral"  cx="300" cy="310" r="10"/>
+      <circle class="chakra chakra-root"    cx="300" cy="355" r="12"/>
     </svg>
 
   </div>
-
 </section>
 
 </body>
