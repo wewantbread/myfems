@@ -1,15 +1,29 @@
-/* ================ */
-/* LAYOUT CONTAINER */
-/* ================ */
+/* Reset-ish */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+}
 
+.sacred-body {
+  background:#000;
+  color:#fff;
+  min-height:100vh;
+  overflow:hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, Inter, Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* MAIN SECTION WRAPPER */
 .sacred-hero {
   position: relative;
   height: 100dvh;
   width: 100%;
-  background: #000;            /* start pure black */
+  background: #000;
   overflow: hidden;
+  isolation: isolate; /* lets blend modes behave right */
   color: #fff;
-  isolation: isolate;          /* helps blending behave */
 }
 
 /* center stack */
@@ -27,20 +41,20 @@
   pointer-events: none;
 }
 
-/* ============================= */
-/* 1. OUTLINE "WIRE LIGHTING UP" */
-/* ============================= */
+/* ============ */
+/* OUTLINE DRAW */
+/* ============ */
 
-/* this svg sits on top initially, draws the outline stroke */
 .outline-draw {
   position: absolute;
   inset: 0;
   margin: auto;
   height: 100%;
   width: 100%;
-  /* subtle glow */
-  filter: drop-shadow(0 0 1.2rem rgba(255,255,255,.6))
-          drop-shadow(0 0 2.5rem rgba(255,255,255,.35));
+  /* glow while it draws */
+  filter:
+    drop-shadow(0 0 1.2rem rgba(255,255,255,.6))
+    drop-shadow(0 0 2.5rem rgba(255,255,255,.35));
   opacity: 1;
   z-index: 2;
 }
@@ -51,7 +65,7 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 
-  /* the "fuse lighting up" trick */
+  /* "fuse lighting up" by animating dashoffset */
   stroke-dasharray: 2600;
   stroke-dashoffset: 2600;
 
@@ -60,54 +74,54 @@
     outlineGlow 2s ease-in-out forwards;
 }
 
-/* draws stroke head-to-tail */
+/* draws head-to-tail */
 @keyframes drawOutline {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-/* glow tapers slightly so it doesn't stay too harsh */
+/* make glow calm down a bit after draw */
 @keyframes outlineGlow {
   0% {
-    filter: drop-shadow(0 0 1.5rem rgba(255,255,255,1))
-            drop-shadow(0 0 3rem rgba(255,255,255,.8));
+    filter:
+      drop-shadow(0 0 1.5rem rgba(255,255,255,1))
+      drop-shadow(0 0 3rem rgba(255,255,255,.8));
   }
   100% {
-    filter: drop-shadow(0 0 1rem rgba(255,255,255,.45))
-            drop-shadow(0 0 2rem rgba(255,255,255,.25));
+    filter:
+      drop-shadow(0 0 1rem rgba(255,255,255,.45))
+      drop-shadow(0 0 2rem rgba(255,255,255,.25));
   }
 }
 
-/* ============================= */
-/* 2. CHAKRA IMAGE FADE-IN       */
-/* ============================= */
+/* ===================== */
+/* CHAKRA IMAGE FADE-IN */
+/* ===================== */
 
-/* chakra.png (the final glowing lady w/ chakra orbs) */
 .chakra-img {
   position: relative;
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 .9rem rgba(255,255,255,.4))
-          drop-shadow(0 0 2rem rgba(255,255,255,.2));
+  filter:
+    drop-shadow(0 0 .9rem rgba(255,255,255,.4))
+    drop-shadow(0 0 2rem rgba(255,255,255,.2));
   opacity: 0;
   animation: chakraFade 1s ease forwards;
-  animation-delay: 2s; /* wait until outline finishes drawing */
+  animation-delay: 2s; /* after outline draw finishes */
   z-index: 3;
 }
 
 @keyframes chakraFade {
-  to {
-    opacity: 1;
-  }
+  to { opacity: 1; }
 }
 
-/* =================================================== */
-/* 3. SOFT RADIAL BG GLOW (FADES IN AFTER OUTLINE)     */
-/* =================================================== */
+/* ======================================= */
+/* RADIAL BACKGROUND GLOW (fades in later) */
+/* ======================================= */
 
-.bg-fade{
+.bg-fade {
   position:absolute;
   inset:0;
   background: radial-gradient(
@@ -117,31 +131,31 @@
   );
   opacity:0;
   animation: bgIn 2s ease forwards;
-  animation-delay: 2s; /* start after outline finishes */
+  animation-delay: 2s; /* sync with chakra image */
   z-index:0;
 }
 
-@keyframes bgIn{
+@keyframes bgIn {
   to { opacity:1; }
 }
 
-/* =================================================== */
-/* 4. SPINNING KALEIDOSCOPE / MANTRA BEHIND FIGURE     */
-/* =================================================== */
+/* ======================================= */
+/* SPINNING MANTRA / KALEIDOSCOPE LAYERS   */
+/* ======================================= */
 
 .kaleido,
 .kaleido::before,
-.kaleido::after{
+.kaleido::after {
   content:"";
   position:absolute;
-  inset:-30vmax; /* overscan so no hard edges show */
+  inset:-30vmax; /* overscan so edges are offscreen */
   pointer-events:none;
   z-index:1;
-  opacity:0; /* will fade in via animation below */
+  opacity:0; /* start hidden, fade in w/ kaleidoAppear */
 }
 
-/* base spinning mandala texture */
-.kaleido{
+/* base spinning texture */
+.kaleido {
   background:
     /* subtle spokes */
     repeating-conic-gradient(from 0deg,
@@ -156,19 +170,20 @@
   animation:
     kaleidoAppear 2s ease forwards 2s,
     spin 80s linear infinite;
-  /* soften edges into the void */
+  /* feather edges into darkness */
   -webkit-mask: radial-gradient(120vmax 120vmax at 50% 60%, #000 35%, transparent 80%);
           mask: radial-gradient(120vmax 120vmax at 50% 60%, #000 35%, transparent 80%);
 }
 
-/* extra layered spokes, slower reverse spin */
-.kaleido::before{
+/* extra spokes, slow reverse spin */
+.kaleido::before {
   background:
     repeating-conic-gradient(from 45deg,
       rgba(255,255,255,.06) 0 8deg,
       transparent 8deg 16deg),
     radial-gradient(ellipse at 50% 50%,
-      rgba(255,255,255,.04), transparent 60%);
+      rgba(255,255,255,.04),
+      transparent 60%);
   mix-blend-mode: screen;
   animation:
     kaleidoAppear 2s ease forwards 2s,
@@ -176,7 +191,7 @@
 }
 
 /* fine filament layer, ultra slow */
-.kaleido::after{
+.kaleido::after {
   background:
     repeating-conic-gradient(from 22.5deg,
       rgba(255,255,255,.05) 0 4deg,
@@ -187,19 +202,19 @@
     spin 200s linear infinite;
 }
 
-/* fade in the mantra spinner AFTER outline draw (2s delay above) */
-@keyframes kaleidoAppear{
+/* fade in after outline finishes */
+@keyframes kaleidoAppear {
   to { opacity:.55; }
 }
 
-/* global spin */
+/* slow rotation */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* ==================================== */
-/* ACCESSIBILITY: REDUCE MOTION RESPECT */
-/* ==================================== */
+/* =============================== */
+/* ACCESSIBILITY (reduced motion)  */
+/* =============================== */
 @media (prefers-reduced-motion: reduce){
   .outline-draw path{
     animation: none;
