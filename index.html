@@ -1,71 +1,79 @@
-<!-- sacred64 splash / hero -->
-<section class="sacred-hero">
-  <!-- soft radial aura bg that fades in after outline -->
-  <div class="bg-fade" aria-hidden="true"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sacred64</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="sacred-body">
+  <section class="sacred-hero">
+    <!-- soft radial aura bg that fades in -->
+    <div class="bg-fade" aria-hidden="true"></div>
 
-  <!-- kaleidoscope / mantra spinner (hidden at first, then fades in) -->
-  <div class="kaleido" aria-hidden="true"></div>
+    <!-- spinning grayscale kaleidoscope -->
+    <div class="kaleido" aria-hidden="true"></div>
 
-  <!-- meditator wrapper -->
-  <div class="meditator-wrapper">
-    <!-- 1. animated stroke outline "wire lighting up" -->
-    <!-- NOTE: this SVG path is a placeholder silhouette. 
-         You'll want to replace the <path d="..."> with a path
-         you trace from your real figure so it lines up perfectly
-         with chakra.png. Everything else can stay the same. -->
-    <svg class="outline-draw" viewBox="0 0 800 800" fill="none">
-      <path
-        d="M400 120
-           C380 160 360 210 360 250
-           C360 290 400 300 400 340
-           C400 300 440 290 440 250
-           C440 210 420 160 400 120
-           M360 250
-           C300 260 260 320 260 380
-           C260 450 320 480 320 520
-           C260 560 220 600 210 640
-           C200 680 230 700 260 700
-           C300 700 340 660 400 660
-           C460 660 500 700 540 700
-           C570 700 600 680 590 640
-           C580 600 540 560 480 520
-           C480 480 540 450 540 380
-           C540 320 500 260 440 250
-           M320 520
-           C360 500 440 500 480 520
-           M260 700
-           C260 740 300 750 320 740
-           C340 730 360 700 400 700
-           C440 700 460 730 480 740
-           C500 750 540 740 540 700
-           M300 360
-           C320 360 330 370 330 390
-           C330 410 320 420 300 420
-           M500 360
-           C480 360 470 370 470 390
-           C470 410 480 420 500 420
-           M330 390
-           L330 370
-           M470 390
-           L470 370
-           "
-        vector-effect="non-scaling-stroke"
+    <!-- center stack -->
+    <div class="meditator-wrapper">
+      <!-- animated outline that "draws" in -->
+      <!-- NOTE: replace this <path d="..."> with a path of your actual figure if you want perfect match -->
+      <svg class="outline-draw" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M400 120
+             C380 160 360 210 360 250
+             C360 290 400 300 400 340
+             C400 300 440 290 440 250
+             C440 210 420 160 400 120
+             M360 250
+             C300 260 260 320 260 380
+             C260 450 320 480 320 520
+             C260 560 220 600 210 640
+             C200 680 230 700 260 700
+             C300 700 340 660 400 660
+             C460 660 500 700 540 700
+             C570 700 600 680 590 640
+             C580 600 540 560 480 520
+             C480 480 540 450 540 380
+             C540 320 500 260 440 250
+             M320 520
+             C360 500 440 500 480 520
+             M260 700
+             C260 740 300 750 320 740
+             C340 730 360 700 400 700
+             C440 700 460 730 480 740
+             C500 750 540 740 540 700
+             M300 360
+             C320 360 330 370 330 390
+             C330 410 320 420 300 420
+             M500 360
+             C480 360 470 370 470 390
+             C470 410 480 420 500 420
+             M330 390
+             L330 370
+             M470 390
+             L470 370
+          "
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+
+      <!-- your final glowing girl with chakra orbs -->
+      <img
+        class="chakra-img"
+        src="img/chakra.png"
+        alt="Meditating figure with chakra orbs"
       />
-    </svg>
+    </div>
+  </section>
 
-    <!-- 2. full glowing girl w/ chakra orbs -->
-    <img
-      class="chakra-img"
-      src="/img/chakra.png"
-      alt="Meditating figure with chakra orbs"
-    />
-  </div>
-</section>
-
-<script>
-  // Optional auto-redirect to products after intro.
-  // Adjust or remove.
-  setTimeout(() => {
-    window.location.replace('/products');
-  }, 4000); // ~2s draw + 2s reveal
-</script>
+  <!-- OPTIONAL REDIRECT -->
+  <!--
+  <script>
+    setTimeout(() => {
+      window.location.replace('/products');
+    }, 4000);
+  </script>
+  -->
+</body>
+</html>
