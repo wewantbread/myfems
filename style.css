@@ -1,4 +1,4 @@
-/* BASIC RESET */
+/* base reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,149 +15,159 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, Inter, Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* MAIN WRAPPER */
+/* center section */
 .sacred-hero {
   position: relative;
   height: 100dvh;
   width: 100%;
   background: #000;
   overflow: hidden;
-  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
+  isolation: isolate;
 }
 
-/* center figure container */
+/* wrapper sized like the art */
 .figure-wrapper {
   position: relative;
-  z-index: 3;
-  width: min(80vmin, 90%);
-  max-width: 500px;
-  max-height: 500px;
+  width: min(85vmin, 90%);
+  max-width: 600px;
+  max-height: 600px;
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  z-index: 2;
 }
 
-/* THE SVG */
+/* the svg */
 .meditator-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 0 1rem rgba(255,255,255,.4))
-          drop-shadow(0 0 3rem rgba(255,255,255,.15));
+  /* halo around entire figure */
+  filter:
+    drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
+    drop-shadow(0 0 3rem rgba(255,255,255,.18))
+    drop-shadow(0 0 4.5rem rgba(255,255,255,.08));
 }
 
-/* BODY OUTLINE STYLE */
-.body-outline {
+/* main clean outline */
+.body-outline.main-outline {
   fill: none;
-  stroke: rgba(255,255,255,0.5);
+  stroke: rgba(255,255,255,0.55);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+  opacity: 0.9;
   filter:
-    drop-shadow(0 0 0.75rem rgba(255,255,255,.6))
+    drop-shadow(0 0 .7rem rgba(255,255,255,.6))
     drop-shadow(0 0 2rem rgba(255,255,255,.2));
-  /* Optional: slightly diffused look */
-  opacity: 0.8;
 }
 
-/* CHAKRA BASE STYLE */
+/* sketch / grunge strokes:
+   - thinner
+   - lower opacity
+   - slight blur via drop-shadow
+   - these give that imperfect pencil pass
+*/
+.body-outline.sketch-stroke {
+  fill: none;
+  stroke: rgba(255,255,255,0.18);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+  filter:
+    drop-shadow(0 0 .4rem rgba(255,255,255,.4))
+    drop-shadow(0 0 1.2rem rgba(255,255,255,.15));
+}
+
+/* CHAKRA ORBS */
 .chakra {
   stroke: none;
+  /* glow stack */
   filter:
     drop-shadow(0 0 .6rem rgba(255,255,255,.9))
-    drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
-    drop-shadow(0 0 2.5rem rgba(255,255,255,.2));
+    drop-shadow(0 0 1.5rem rgba(255,255,255,.5))
+    drop-shadow(0 0 3rem rgba(255,255,255,.25));
+
   animation:
     chakraPulse 3s ease-in-out infinite,
     chakraFloat 4s ease-in-out infinite;
 }
 
-/* each chakra color */
-/* root (base) */
-.chakra-root {
-  fill: #ff2b2b; /* red */
-  animation-delay: 0s, 0s;
-}
-/* sacral */
-.chakra-sacral {
-  fill: #ff7b1a; /* orange */
-  animation-delay: .1s, .1s;
-}
-/* solar plexus */
-.chakra-solar {
-  fill: #ffd400; /* yellow */
-  animation-delay: .2s, .2s;
-}
-/* heart */
-.chakra-heart {
-  fill: #00c94f; /* green */
-  animation-delay: .3s, .3s;
-}
-/* throat */
-.chakra-throat {
-  fill: #00b7ff; /* sky blue */
-  animation-delay: .4s, .4s;
-}
-/* brow / third eye */
-.chakra-brow {
-  fill: #6440ff; /* indigo/violet */
-  animation-delay: .5s, .5s;
-}
-/* crown */
-.chakra-crown {
-  fill: #e89bff; /* lilac / violet-white */
-  animation-delay: .6s, .6s;
-}
+/* individual chakra colors (top → bottom)
+   choose tones close to your ref:
+   - crown: violet/white
+   - brow: indigo
+   - throat: aqua/blue
+   - heart: green
+   - solar: yellow/gold
+   - sacral: orange
+   - root: red
+*/
+.chakra-crown  { fill: #d9b0ff; animation-delay: 0s,   0s; }
+.chakra-brow   { fill: #5c4dff; animation-delay: .1s, .1s; }
+.chakra-throat { fill: #4ac5ff; animation-delay: .2s, .2s; }
+.chakra-heart  { fill: #3df56d; animation-delay: .3s, .3s; }
+.chakra-solar  { fill: #ffd84a; animation-delay: .4s, .4s; }
+.chakra-sacral { fill: #ff8a2a; animation-delay: .5s, .5s; }
+.chakra-root   { fill: #ff3a2a; animation-delay: .6s, .6s; }
 
-/* subtle breathing glow */
+/* chakra breathing glow */
 @keyframes chakraPulse {
-  0%   { filter:
-          drop-shadow(0 0 .4rem rgba(255,255,255,.6))
-          drop-shadow(0 0 1rem rgba(255,255,255,.3))
-          drop-shadow(0 0 2rem rgba(255,255,255,.15));
-        opacity: 0.9;
-      }
-  50%  { filter:
-          drop-shadow(0 0 1rem rgba(255,255,255,1))
-          drop-shadow(0 0 2rem rgba(255,255,255,.6))
-          drop-shadow(0 0 3.5rem rgba(255,255,255,.3));
-        opacity: 1;
-      }
-  100% { filter:
-          drop-shadow(0 0 .4rem rgba(255,255,255,.6))
-          drop-shadow(0 0 1rem rgba(255,255,255,.3))
-          drop-shadow(0 0 2rem rgba(255,255,255,.15));
-        opacity: 0.9;
-      }
+  0% {
+    filter:
+      drop-shadow(0 0 .5rem rgba(255,255,255,.7))
+      drop-shadow(0 0 1rem rgba(255,255,255,.35))
+      drop-shadow(0 0 2rem rgba(255,255,255,.15));
+    opacity: .9;
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 1rem rgba(255,255,255,1))
+      drop-shadow(0 0 2rem rgba(255,255,255,.6))
+      drop-shadow(0 0 3.5rem rgba(255,255,255,.3));
+    opacity: 1;
+  }
+  100% {
+    filter:
+      drop-shadow(0 0 .5rem rgba(255,255,255,.7))
+      drop-shadow(0 0 1rem rgba(255,255,255,.35))
+      drop-shadow(0 0 2rem rgba(255,255,255,.15));
+    opacity: .9;
+  }
 }
 
-/* gentle float up/down */
+/* subtle float / lift of energy */
 @keyframes chakraFloat {
   0%   { transform: translateY(0px) scale(1); }
   50%  { transform: translateY(-2px) scale(1.05); }
   100% { transform: translateY(0px) scale(1); }
 }
 
-/* BACKGROUND LAYERS (reuse from before if you want, left minimal here) */
-.bg-fade {
+/* optional: darker spacey backdrop gradient to hint nebula */
+.sacred-hero::before {
+  content:"";
   position:absolute;
   inset:0;
-  background: radial-gradient(
-    120vmax 100vmax at 50% 60%,
-    rgba(0,0,0,.65) 0%,
-    #000 70%
-  );
-  opacity:1;
-  z-index:0;
+  background:
+    radial-gradient(circle at 50% 30%,
+      rgba(60,40,90,.35) 0%,
+      rgba(0,0,0,0) 60%)
+    ,
+    radial-gradient(circle at 50% 70%,
+      rgba(20,10,40,.4) 0%,
+      rgba(0,0,0,0) 60%)
+    ,
+    radial-gradient(circle at 20% 50%,
+      rgba(80,20,40,.25) 0%,
+      rgba(0,0,0,0) 60%);
+  filter: blur(30px);
+  opacity: .4;
+  z-index: 1;
+  pointer-events:none;
 }
-
-/* if you still want the mantra spin:
-   keep your .kaleido, .kaleido::before, .kaleido::after,
-   spin, kaleidoAppear keyframes from last version.
-   We'll add the chest mini-mandala later as its own absolutely
-   positioned div centered on the heart chakra. */
