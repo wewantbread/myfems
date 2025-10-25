@@ -1,4 +1,4 @@
-/* base reset */
+/* basic reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,165 +9,121 @@
 
 .sacred-body {
   background: #000;
-  color: #fff;
   min-height: 100vh;
   overflow: hidden;
+  color: #fff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, Inter, Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* center section */
-.sacred-hero {
+/* fullscreen hero container */
+.hero {
   position: relative;
-  height: 100dvh;
   width: 100%;
+  height: 100dvh;
   background: #000;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   isolation: isolate;
+  overflow: hidden;
 }
 
-/* wrapper sized like the art */
-.figure-wrapper {
+/* wrapper so it scales well on iPhone */
+.figure-shell {
   position: relative;
-  width: min(85vmin, 90%);
+  width: min(88vmin, 90%);
   max-width: 600px;
   max-height: 600px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1/1;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   z-index: 2;
+  animation: auraBreath 6s ease-in-out infinite;
+  /* auraBreath is super subtle, whole figure glows in/out */
 }
 
-/* the svg */
-.meditator-svg {
+/* the svg itself */
+.aura-figure {
   width: 100%;
   height: 100%;
   overflow: visible;
-  /* halo around entire figure */
   filter:
     drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
     drop-shadow(0 0 3rem rgba(255,255,255,.18))
-    drop-shadow(0 0 4.5rem rgba(255,255,255,.08));
+    drop-shadow(0 0 5rem rgba(255,255,255,.08));
 }
 
-/* main clean outline */
-.body-outline.main-outline {
-  fill: none;
-  stroke: rgba(255,255,255,0.55);
-  stroke-width: 1.5;
+/* outline of the body */
+.body-line {
+  stroke: rgba(255,255,255,0.5);
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
+  fill: none;
+
+  /* hazy pencil vibe with glow */
+  filter:
+    drop-shadow(0 0 .8rem rgba(255,255,255,.55))
+    drop-shadow(0 0 2rem rgba(255,255,255,.22))
+    drop-shadow(0 0 4rem rgba(150,100,255,.15));
   opacity: 0.9;
-  filter:
-    drop-shadow(0 0 .7rem rgba(255,255,255,.6))
-    drop-shadow(0 0 2rem rgba(255,255,255,.2));
 }
 
-/* sketch / grunge strokes:
-   - thinner
-   - lower opacity
-   - slight blur via drop-shadow
-   - these give that imperfect pencil pass
-*/
-.body-outline.sketch-stroke {
-  fill: none;
-  stroke: rgba(255,255,255,0.18);
-  stroke-width: 0.9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.6;
-  filter:
-    drop-shadow(0 0 .4rem rgba(255,255,255,.4))
-    drop-shadow(0 0 1.2rem rgba(255,255,255,.15));
-}
-
-/* CHAKRA ORBS */
+/* chakra blobs are already diffused with radialGradient,
+   we just add a teeny extra soft halo */
 .chakra {
-  stroke: none;
-  /* glow stack */
   filter:
-    drop-shadow(0 0 .6rem rgba(255,255,255,.9))
-    drop-shadow(0 0 1.5rem rgba(255,255,255,.5))
-    drop-shadow(0 0 3rem rgba(255,255,255,.25));
-
-  animation:
-    chakraPulse 3s ease-in-out infinite,
-    chakraFloat 4s ease-in-out infinite;
+    drop-shadow(0 0 0.5rem rgba(255,255,255,.9))
+    drop-shadow(0 0 2rem rgba(255,255,255,.4))
+    drop-shadow(0 0 4rem rgba(255,255,255,.15));
 }
 
-/* individual chakra colors (top → bottom)
-   choose tones close to your ref:
-   - crown: violet/white
-   - brow: indigo
-   - throat: aqua/blue
-   - heart: green
-   - solar: yellow/gold
-   - sacral: orange
-   - root: red
-*/
-.chakra-crown  { fill: #d9b0ff; animation-delay: 0s,   0s; }
-.chakra-brow   { fill: #5c4dff; animation-delay: .1s, .1s; }
-.chakra-throat { fill: #4ac5ff; animation-delay: .2s, .2s; }
-.chakra-heart  { fill: #3df56d; animation-delay: .3s, .3s; }
-.chakra-solar  { fill: #ffd84a; animation-delay: .4s, .4s; }
-.chakra-sacral { fill: #ff8a2a; animation-delay: .5s, .5s; }
-.chakra-root   { fill: #ff3a2a; animation-delay: .6s, .6s; }
-
-/* chakra breathing glow */
-@keyframes chakraPulse {
+/* very gentle breathing animation for whole figure */
+@keyframes auraBreath {
   0% {
     filter:
-      drop-shadow(0 0 .5rem rgba(255,255,255,.7))
-      drop-shadow(0 0 1rem rgba(255,255,255,.35))
-      drop-shadow(0 0 2rem rgba(255,255,255,.15));
-    opacity: .9;
+      drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
+      drop-shadow(0 0 3rem rgba(255,255,255,.18))
+      drop-shadow(0 0 5rem rgba(255,255,255,.08));
+    opacity: 0.9;
   }
   50% {
     filter:
-      drop-shadow(0 0 1rem rgba(255,255,255,1))
-      drop-shadow(0 0 2rem rgba(255,255,255,.6))
-      drop-shadow(0 0 3.5rem rgba(255,255,255,.3));
+      drop-shadow(0 0 1.8rem rgba(255,255,255,.6))
+      drop-shadow(0 0 4rem rgba(200,160,255,.28))
+      drop-shadow(0 0 6rem rgba(255,255,255,.12));
     opacity: 1;
   }
   100% {
     filter:
-      drop-shadow(0 0 .5rem rgba(255,255,255,.7))
-      drop-shadow(0 0 1rem rgba(255,255,255,.35))
-      drop-shadow(0 0 2rem rgba(255,255,255,.15));
-    opacity: .9;
+      drop-shadow(0 0 1.2rem rgba(255,255,255,.4))
+      drop-shadow(0 0 3rem rgba(255,255,255,.18))
+      drop-shadow(0 0 5rem rgba(255,255,255,.08));
+    opacity: 0.9;
   }
 }
 
-/* subtle float / lift of energy */
-@keyframes chakraFloat {
-  0%   { transform: translateY(0px) scale(1); }
-  50%  { transform: translateY(-2px) scale(1.05); }
-  100% { transform: translateY(0px) scale(1); }
-}
-
-/* optional: darker spacey backdrop gradient to hint nebula */
-.sacred-hero::before {
-  content:"";
-  position:absolute;
-  inset:0;
+/* faint background haze like the nebula from your reference */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
     radial-gradient(circle at 50% 30%,
-      rgba(60,40,90,.35) 0%,
+      rgba(80,60,120,.35) 0%,
       rgba(0,0,0,0) 60%)
     ,
     radial-gradient(circle at 50% 70%,
-      rgba(20,10,40,.4) 0%,
+      rgba(30,10,50,.4) 0%,
       rgba(0,0,0,0) 60%)
     ,
     radial-gradient(circle at 20% 50%,
-      rgba(80,20,40,.25) 0%,
+      rgba(120,30,40,.22) 0%,
       rgba(0,0,0,0) 60%);
-  filter: blur(30px);
+  filter: blur(40px);
   opacity: .4;
   z-index: 1;
-  pointer-events:none;
+  pointer-events: none;
 }
