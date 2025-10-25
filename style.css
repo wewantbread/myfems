@@ -303,6 +303,89 @@ body {
 }
 
 /* ----------------------------- */
+/* WIND SWIRL OUTLINE            */
+/* ----------------------------- */
+
+.wind-swirl {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(24vmin, 165px);
+  height: min(36vmin, 230px);
+  pointer-events: none;
+  z-index: 1;
+  filter:
+    drop-shadow(0 0 0.65rem rgba(220, 240, 255, 0.18))
+    drop-shadow(0 0 1.5rem rgba(150, 210, 255, 0.16));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swirl-layer {
+  position: absolute;
+  inset: 4% 8%;
+  display: block;
+  border-radius: 46% 46% 52% 52% / 70% 70% 36% 36%;
+  border: 1.8px solid rgba(215, 235, 255, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  border-bottom-color: rgba(120, 170, 255, 0.15);
+  border-left-color: rgba(255, 255, 255, 0.08);
+  border-right-color: rgba(255, 255, 255, 0.18);
+  mix-blend-mode: screen;
+  opacity: .85;
+  transform-origin: 50% 50%;
+  animation: swirlOrbit 12s linear infinite;
+  mask: radial-gradient(ellipse at 50% 52%, rgba(0, 0, 0, 0) 0 34%, rgba(255, 255, 255, 0.9) 44% 100%);
+  -webkit-mask: radial-gradient(ellipse at 50% 52%, rgba(0, 0, 0, 0) 0 34%, rgba(255, 255, 255, 0.9) 44% 100%);
+}
+
+.swirl-layer::after {
+  content: "";
+  position: absolute;
+  inset: -10% -12% -18% -12%;
+  border-radius: 50% 50% 58% 58% / 72% 72% 38% 38%;
+  border: inherit;
+  border-width: 1.2px;
+  border-top-color: rgba(255, 255, 255, 0.26);
+  border-bottom-color: rgba(140, 190, 255, 0.12);
+  border-left-color: rgba(255, 255, 255, 0.04);
+  border-right-color: rgba(255, 255, 255, 0.12);
+  opacity: .45;
+}
+
+.swirl-layer--outer {
+  animation-duration: 14s;
+  box-shadow:
+    0 0 0.65rem rgba(200, 240, 255, 0.18),
+    0 0 1.6rem rgba(120, 200, 255, 0.12);
+}
+
+.swirl-layer--inner {
+  inset: 18% 12% 22% 12%;
+  border-width: 1.3px;
+  opacity: .7;
+  animation-duration: 9s;
+  animation-direction: reverse;
+  filter: blur(0.6px);
+}
+
+@keyframes swirlOrbit {
+  0% {
+    transform: rotate(0deg) scale(0.96);
+    opacity: .82;
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+    opacity: .98;
+  }
+  100% {
+    transform: rotate(360deg) scale(0.96);
+    opacity: .82;
+  }
+}
+
+/* ----------------------------- */
 /* CENTER GIRL IMAGE             */
 /* ----------------------------- */
 
