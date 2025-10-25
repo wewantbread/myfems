@@ -7,71 +7,82 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="sacred-body">
-  <section class="sacred-hero">
-    <!-- soft radial aura bg that fades in -->
-    <div class="bg-fade" aria-hidden="true"></div>
 
-    <!-- spinning grayscale kaleidoscope -->
-    <div class="kaleido" aria-hidden="true"></div>
+<section class="sacred-hero">
 
-    <!-- center stack -->
-    <div class="meditator-wrapper">
-      <!-- animated outline that "draws" in -->
-      <!-- NOTE: replace this <path d="..."> with a path of your actual figure if you want perfect match -->
-      <svg class="outline-draw" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M400 120
-             C380 160 360 210 360 250
-             C360 290 400 300 400 340
-             C400 300 440 290 440 250
-             C440 210 420 160 400 120
-             M360 250
-             C300 260 260 320 260 380
-             C260 450 320 480 320 520
-             C260 560 220 600 210 640
-             C200 680 230 700 260 700
-             C300 700 340 660 400 660
-             C460 660 500 700 540 700
-             C570 700 600 680 590 640
-             C580 600 540 560 480 520
-             C480 480 540 450 540 380
-             C540 320 500 260 440 250
-             M320 520
-             C360 500 440 500 480 520
-             M260 700
-             C260 740 300 750 320 740
-             C340 730 360 700 400 700
-             C440 700 460 730 480 740
-             C500 750 540 740 540 700
-             M300 360
-             C320 360 330 370 330 390
-             C330 410 320 420 300 420
-             M500 360
-             C480 360 470 370 470 390
-             C470 410 480 420 500 420
-             M330 390
-             L330 370
-             M470 390
-             L470 370
-          "
-          vector-effect="non-scaling-stroke"
-        />
-      </svg>
+  <!-- spinning mantra bg stays behind; keep your kaleido divs from last version if you want -->
+  <div class="bg-fade" aria-hidden="true"></div>
+  <div class="kaleido" aria-hidden="true"></div>
 
-      <!-- your final glowing girl with chakra orbs -->
-      <img
-    <img class="chakra-img" src="chakra.png" alt="Meditating figure with chakra orbs" />
-      />
-    </div>
-  </section>
+  <!-- center figure -->
+  <div class="figure-wrapper">
 
-  <!-- OPTIONAL REDIRECT -->
-  <!--
-  <script>
-    setTimeout(() => {
-      window.location.replace('/products');
-    }, 4000);
-  </script>
-  -->
+    <!-- MAIN FIGURE AS SVG -->
+    <!-- viewBox is square so it will scale nicely and stay centered on iPhone -->
+    <svg class="meditator-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- BODY OUTLINE
+           This is a stylized seated/lotus outline:
+           - head
+           - shoulders/torso
+           - crossed legs
+           - hands in mudra
+           You can tweak stroke if you want even thinner. -->
+      <path class="body-outline" d="
+        M250 95
+        C235 95 225 108 225 122
+        C225 138 236 150 250 150
+        C264 150 275 138 275 122
+        C275 108 265 95 250 95
+
+        M210 165
+        C185 185 170 215 170 245
+        C170 280 195 300 195 325
+        C170 345 150 365 140 385
+        C130 405 140 420 155 420
+        C170 420 185 405 215 405
+        C230 405 240 410 250 410
+        C260 410 270 405 285 405
+        C315 405 330 420 345 420
+        C360 420 370 405 360 385
+        C350 365 330 345 305 325
+        C305 300 330 280 330 245
+        C330 215 315 185 290 165
+
+        M195 325
+        C215 315 235 312 250 312
+        C265 312 285 315 305 325
+
+        M155 420
+        C150 440 165 450 180 445
+        C195 440 205 430 215 425
+        M345 420
+        C350 440 335 450 320 445
+        C305 440 295 430 285 425
+
+        M205 260
+        C215 255 220 260 220 268
+        C220 276 215 280 205 280
+        M295 260
+        C285 255 280 260 280 268
+        C280 276 285 280 295 280
+      " />
+
+      <!-- CHAKRAS (7 circles stacked vertically along centerline) -->
+      <!-- We'll animate each with CSS: glow, pulse, float -->
+      <circle class="chakra chakra-root"    cx="250" cy="360" r="10"/>
+      <circle class="chakra chakra-sacral"  cx="250" cy="330" r="9"/>
+      <circle class="chakra chakra-solar"   cx="250" cy="300" r="9"/>
+      <circle class="chakra chakra-heart"   cx="250" cy="265" r="10"/>
+      <circle class="chakra chakra-throat"  cx="250" cy="230" r="8"/>
+      <circle class="chakra chakra-brow"    cx="250" cy="195" r="8"/>
+      <circle class="chakra chakra-crown"   cx="250" cy="160" r="9"/>
+
+    </svg>
+
+  </div>
+
+</section>
+
 </body>
 </html>
