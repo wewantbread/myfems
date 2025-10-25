@@ -2,157 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Sacred64</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="sacred-body">
 
-<section class="sacred-hero">
-  <div class="figure-wrapper">
+<section class="hero">
+  <div class="figure-shell">
 
-    <!-- High fidelity meditating figure -->
-    <!-- viewBox is taller/wider so proportions feel right -->
-    <svg class="meditator-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Meditating figure as scalable vector -->
+    <!-- This is a single SVG: outline body + soft chakra glows -->
+    <svg
+      class="aura-figure"
+      viewBox="0 0 600 600"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+    >
 
-      <!-- MAIN BODY OUTLINE
-           I shaped this to match your reference:
+      <!-- gradients for chakra glow (radial, diffused) -->
+      <defs>
+        <radialGradient id="crownGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#cfaaff" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#cfaaff" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="browGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#6a4dff" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#6a4dff" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="throatGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#5fcfff" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#5fcfff" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="heartGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#3df56d" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#3df56d" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="solarGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#ffe363" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#ffe363" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="sacralGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#ff9a3a" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#ff9a3a" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+
+        <radialGradient id="rootGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"  stop-color="#ff4b3a" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#ff4b3a" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- BODY OUTLINE
+           More human / less duck:
            - bun
-           - long neck
-           - shoulders wide then taper to waist
-           - arms out + forearms resting on knees
-           - crossed legs
-           - hands in mudra
+           - head + neck
+           - shoulders rolling out wide
+           - waist in
+           - thighs crossed
+           - forearms resting on knees
+           - mudra hands
+           It’s one path with breaks for clarity, but visually it’s the classic sit pose in your ref.
       -->
-      <path class="body-outline main-outline" d="
-        M300 80
-        C285 80 270 93 270 110
-        C270 128 285 140 300 140
-        C315 140 330 128 330 110
-        C330 93 315 80 300 80
-        C310 70 315 62 315 55
-        C315 45 307 35 300 35
-        C293 35 285 45 285 55
-        C285 63 290 70 300 80
+      <path
+        class="body-line"
+        d="
+          M300 70
+          C290 70 282 78 282 88
+          C282 98 290 105 300 105
+          C310 105 318 98 318 88
+          C318 78 310 70 300 70
+          C307 62 309 57 309 52
+          C309 43 301 35 300 35
+          C299 35 291 43 291 52
+          C291 57 293 62 300 70
 
-        M265 150
-        C250 158 235 170 225 190
-        C215 210 210 230 210 250
-        C210 280 225 300 230 320
-        C210 335 195 355 180 375
-        C170 390 165 405 170 415
-        C175 425 190 425 200 420
-        C210 415 225 405 250 400
-        C260 398 270 398 280 400
-        C285 401 290 402 300 402
-        C310 402 315 401 320 400
-        C330 398 340 398 350 400
-        C375 405 390 415 400 420
-        C410 425 425 425 430 415
-        C435 405 430 390 420 375
-        C405 355 390 335 370 320
-        C375 300 390 280 390 250
-        C390 230 385 210 375 190
-        C365 170 350 158 335 150
+          M270 120
+          C255 130 245 138 235 150
+          C220 170 212 195 212 220
+          C212 250 225 270 232 290
+          C210 305 192 328 180 350
+          C170 368 166 382 169 392
+          C172 402 182 405 190 402
+          C200 398 210 392 225 386
+          C238 381 250 380 260 382
+          C270 384 280 386 300 386
+          C320 386 330 384 340 382
+          C350 380 362 381 375 386
+          C390 392 400 398 410 402
+          C418 405 428 402 431 392
+          C434 382 430 368 420 350
+          C408 328 390 305 368 290
+          C375 270 388 250 388 220
+          C388 195 380 170 365 150
+          C355 138 345 130 330 120
 
-        M230 320
-        C260 305 285 300 300 300
-        C315 300 340 305 370 320
+          M232 290
+          C260 275 285 270 300 270
+          C315 270 340 275 368 290
 
-        M200 420
-        C190 435 195 445 205 450
-        C215 455 225 455 235 450
-        C245 445 255 435 265 430
-        M400 420
-        C410 435 405 445 395 450
-        C385 455 375 455 365 450
-        C355 445 345 435 335 430
+          M190 402
+          C178 415 178 425 185 432
+          C192 438 202 438 212 434
+          C222 430 230 422 240 416
+          M410 402
+          C422 415 422 425 415 432
+          C408 438 398 438 388 434
+          C378 430 370 422 360 416
 
-        M205 260
-        C215 255 225 260 225 270
-        C225 280 215 285 205 283
-        M395 260
-        C385 255 375 260 375 270
-        C375 280 385 285 395 283
+          M180 350
+          C165 345 155 345 150 353
+          C145 360 146 370 153 375
+          C160 380 167 382 175 382
+          C183 382 190 381 195 380
+          M420 350
+          C435 345 445 345 450 353
+          C455 360 454 370 447 375
+          C440 380 433 382 425 382
+          C417 382 410 381 405 380
 
-        M180 375
-        C165 370 155 370 150 380
-        C145 390 150 400 160 405
-        C170 410 180 410 190 410
-        M420 375
-        C435 370 445 370 450 380
-        C455 390 450 400 440 405
-        C430 410 420 410 410 410
+          M225 386
+          C210 395 198 410 192 424
+          C186 438 190 452 205 456
+          C220 460 235 455 250 447
+          C260 442 270 438 280 438
+          C290 438 300 442 310 447
+          C325 455 340 460 355 456
+          C370 452 374 438 368 424
+          C362 410 350 395 335 386
+          C325 380 315 380 300 380
+          C285 380 275 380 265 386
+          C255 390 245 394 240 396
 
-        M250 400
-        C230 405 215 420 205 440
-        C195 460 200 480 220 485
-        C240 490 260 480 280 470
-        C290 465 295 465 300 465
-        C305 465 310 465 320 470
-        C340 480 360 490 380 485
-        C400 480 405 460 395 440
-        C385 420 370 405 350 400
-        C335 397 325 398 300 398
-        C275 398 265 397 250 400
-      "/>
+          M205 456
+          C195 470 198 480 207 485
+          C215 489 223 489 232 485
+          C240 481 247 474 255 470
+          M355 456
+          C365 470 362 480 353 485
+          C345 489 337 489 328 485
+          C320 481 313 474 305 470
+        "
+      />
 
-      <!-- SCRATCH / GRUNGE STROKES
-           These are extra light strokes slightly offset,
-           to fake that hazy hand-drawn vibe / aura wobble.
-           They hug the torso/arms/legs but aren't perfectly clean.
+      <!-- CHAKRA GLOWS (static, no bouncing)
+           These are just blurred glow blobs, positioned down the spine.
+           cx/cy tuned for this body.
       -->
-      <path class="body-outline sketch-stroke" d="
-        M300 82
-        C285 82 272 96 272 110
-        C272 130 288 142 300 142
-        C315 142 328 128 328 110
-        C328 95 315 82 300 82
-        M265 152
-        C250 160 238 172 228 192
-        C218 212 213 232 213 252
-        C213 282 228 304 233 322
-        C215 338 198 360 185 378
-        C176 392 172 404 176 412
-        C179 420 190 420 198 417
-        C208 412 224 402 250 397
-        C275 392 290 395 300 395
-        C310 395 325 392 350 397
-        C376 402 392 412 402 417
-        C410 420 421 420 424 412
-        C428 404 424 392 415 378
-        C402 360 385 338 367 322
-        C372 304 387 282 387 252
-        C387 232 382 212 372 192
-        C362 172 350 160 335 152
-      "/>
+      <circle class="chakra chakra-crown"   cx="300" cy="100" r="22" fill="url(#crownGlow)" />
+      <circle class="chakra chakra-brow"    cx="300" cy="135" r="20" fill="url(#browGlow)" />
+      <circle class="chakra chakra-throat"  cx="300" cy="175" r="20" fill="url(#throatGlow)" />
+      <circle class="chakra chakra-heart"   cx="300" cy="220" r="24" fill="url(#heartGlow)" />
+      <circle class="chakra chakra-solar"   cx="300" cy="260" r="22" fill="url(#solarGlow)" />
+      <circle class="chakra chakra-sacral"  cx="300" cy="300" r="22" fill="url(#sacralGlow)" />
+      <circle class="chakra chakra-root"    cx="300" cy="345" r="26" fill="url(#rootGlow)" />
 
-      <path class="body-outline sketch-stroke" d="
-        M250 401
-        C230 406 215 420 207 438
-        C200 455 205 470 220 474
-        C240 478 260 468 278 460
-        C288 456 297 456 304 458
-        C312 460 320 464 330 468
-        C350 476 366 480 380 476
-        C392 472 398 460 392 445
-        C386 430 372 412 350 404
-        C325 395 275 395 250 401
-      "/>
-
-      <!-- CHAKRAS (7 orbs down center spine)
-           We'll glow/pulse in CSS.
-           y positions chosen to line up with head / neck / chest / stomach / pelvis in this anatomy.
-      -->
-      <circle class="chakra chakra-crown"   cx="300" cy="120" r="10"/>
-      <circle class="chakra chakra-brow"    cx="300" cy="155" r="9"/>
-      <circle class="chakra chakra-throat"  cx="300" cy="190" r="9"/>
-      <circle class="chakra chakra-heart"   cx="300" cy="230" r="11"/>
-      <circle class="chakra chakra-solar"   cx="300" cy="270" r="10"/>
-      <circle class="chakra chakra-sacral"  cx="300" cy="310" r="10"/>
-      <circle class="chakra chakra-root"    cx="300" cy="355" r="12"/>
     </svg>
-
   </div>
 </section>
 
