@@ -13,16 +13,16 @@
     aria-label="Toggle day or night background"
     aria-pressed="false"
   >
+    <span class="sr-only">Toggle day or night background</span>
     <span class="mode-toggle__track" aria-hidden="true"></span>
     <span class="mode-toggle__thumb" aria-hidden="true"></span>
-    <span class="mode-toggle__label mode-toggle__label--day">Day</span>
-    <span class="mode-toggle__label mode-toggle__label--night">Night</span>
+    <span class="mode-toggle__icon mode-toggle__icon--day" aria-hidden="true">☀️</span>
+    <span class="mode-toggle__icon mode-toggle__icon--night" aria-hidden="true">🌙</span>
   </button>
-
-<body>
- main
-  <main class="stage" aria-label="Meditative elemental aura animation">
+  <div class="stage" role="main" aria-label="Meditative elemental aura animation">
     <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
+      <span class="figure__breath" aria-hidden="true"></span>
+      <span class="figure__third-eye" aria-hidden="true"></span>
       <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
 
       <div class="aura aura--air" aria-hidden="true">
@@ -66,7 +66,8 @@
         <span class="ember" style="--ember: 5"></span>
       </div>
     </div>
-  </main>
+  </div>
+
   <script>
     const toggle = document.querySelector('.mode-toggle');
     const body = document.body;
@@ -85,6 +86,5 @@
       });
     }
   </script>
-  main
 </body>
 </html>
