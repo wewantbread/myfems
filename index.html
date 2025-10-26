@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <button class="theme-toggle" type="button" aria-label="Toggle between night and day">
+    <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
+    <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
+  </button>
   <main class="stage" aria-label="Meditative elemental aura animation">
     <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
       <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
@@ -53,5 +57,23 @@
       </div>
     </div>
   </main>
+  <script>
+    const body = document.body;
+    const storedTheme = window.localStorage.getItem("chakra-theme");
+    if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      body.dataset.theme = "night";
+    }
+
+    document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+      const isNight = body.dataset.theme === "night";
+      const nextTheme = isNight ? "day" : "night";
+      if (nextTheme === "night") {
+        body.dataset.theme = "night";
+      } else {
+        delete body.dataset.theme;
+      }
+      window.localStorage.setItem("chakra-theme", nextTheme);
+    });
+  </script>
 </body>
 </html>
