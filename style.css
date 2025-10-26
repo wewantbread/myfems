@@ -1,4 +1,7 @@
 :root {
+codex/create-elemental-aura-animation-for-silhouette-vj0oi1
+  color-scheme: light;
+  main
   --cycle-duration: 20s;
   --air-color: 198 72% 72%;
   --leaf-color: 118 54% 44%;
@@ -205,7 +208,17 @@ body.theme--night .mode-toggle__label--night {
   background-repeat: no-repeat;
   background-position: center;
   mix-blend-mode: screen;
-  pointer-events: none;
+  background:
+    conic-gradient(
+      from 45deg,
+      hsla(var(--air-color) / 0) 0deg,
+      hsla(var(--air-color) / 0.22) 60deg,
+      hsla(var(--air-color) / 0.48) 120deg,
+      hsla(var(--air-color) / 0) 210deg
+    );
+  filter: blur(20px);
+  opacity: 0.55;
+  animation: air-trace-flow 5s ease-in-out infinite;
 }
 
 .aura--air::before {
@@ -293,6 +306,7 @@ body.theme--night .mode-toggle__label--night {
     opacity: 0.6;
     transform: translate(-50%, -50%) rotate(210deg) translateX(2%) scale(0.98);
   }
+  54%,
   100% {
     opacity: 0.4;
     transform: translate(-50%, -50%) rotate(300deg) translateX(8%) scale(0.94);
