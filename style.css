@@ -13,6 +13,24 @@ body {
   overflow: hidden;
 }
 
+@property --element-hue {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 190;
+}
+
+@property --element-spark {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --element-shift {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .sacred-body {
   background: #000;
   min-height: 100vh;
@@ -303,6 +321,128 @@ body {
   }
 }
 
+@keyframes elementStage {
+  0% {
+    --element-hue: 190;
+    --element-spark: 0.04;
+    --element-shift: 0deg;
+  }
+  10%,
+  20% {
+    --element-hue: 190;
+    --element-spark: 0.55;
+    --element-shift: 60deg;
+  }
+  24% {
+    --element-hue: 190;
+    --element-spark: 0.08;
+    --element-shift: 90deg;
+  }
+  25% {
+    --element-hue: 110;
+    --element-spark: 0.48;
+    --element-shift: 140deg;
+  }
+  35%,
+  45% {
+    --element-hue: 110;
+    --element-spark: 0.64;
+    --element-shift: 200deg;
+  }
+  49% {
+    --element-hue: 110;
+    --element-spark: 0.1;
+    --element-shift: 230deg;
+  }
+  50% {
+    --element-hue: 205;
+    --element-spark: 0.52;
+    --element-shift: 260deg;
+  }
+  60%,
+  70% {
+    --element-hue: 205;
+    --element-spark: 0.68;
+    --element-shift: 300deg;
+  }
+  74% {
+    --element-hue: 205;
+    --element-spark: 0.12;
+    --element-shift: 320deg;
+  }
+  75% {
+    --element-hue: 28;
+    --element-spark: 0.56;
+    --element-shift: 330deg;
+  }
+  85%,
+  95% {
+    --element-hue: 28;
+    --element-spark: 0.78;
+    --element-shift: 345deg;
+  }
+  99% {
+    --element-hue: 28;
+    --element-spark: 0.06;
+    --element-shift: 355deg;
+  }
+  100% {
+    --element-hue: 190;
+    --element-spark: 0;
+    --element-shift: 360deg;
+  }
+}
+
+@keyframes elementVeil {
+  0% {
+    transform: rotate(0deg) scale(0.97);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.97);
+  }
+}
+
+@keyframes elementRingFlow {
+  0% {
+    transform: rotate(0deg) scale(0.98);
+    filter:
+      blur(12px) brightness(1.1)
+      drop-shadow(0 0 1.3rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.45 + 0.03)))
+      drop-shadow(0 0 2.6rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.35 + 0.02)));
+  }
+  25% {
+    transform: rotate(90deg) scale(1);
+    filter:
+      blur(11px) brightness(1.16)
+      drop-shadow(0 0 1.4rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.5 + 0.03)))
+      drop-shadow(0 0 2.8rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.38 + 0.02)));
+  }
+  50% {
+    transform: rotate(180deg) scale(1.03);
+    filter:
+      blur(10px) brightness(1.24)
+      drop-shadow(0 0 1.5rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.54 + 0.03)))
+      drop-shadow(0 0 3rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.4 + 0.02)));
+  }
+  75% {
+    transform: rotate(270deg) scale(1);
+    filter:
+      blur(11px) brightness(1.16)
+      drop-shadow(0 0 1.4rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.5 + 0.03)))
+      drop-shadow(0 0 2.8rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.38 + 0.02)));
+  }
+  100% {
+    transform: rotate(360deg) scale(0.98);
+    filter:
+      blur(12px) brightness(1.1)
+      drop-shadow(0 0 1.3rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.45 + 0.03)))
+      drop-shadow(0 0 2.6rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.35 + 0.02)));
+  }
+}
+
 /* ----------------------------- */
 /* CENTER GIRL IMAGE             */
 /* ----------------------------- */
@@ -327,6 +467,70 @@ body {
     drop-shadow(0 0 3.5rem rgba(255,255,255,.12));
 }
 
+.element-flow {
+  position: absolute;
+  inset: -6% -10% -4% -10%;
+  pointer-events: none;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  mix-blend-mode: screen;
+  --element-hue: 190;
+  --element-spark: 0;
+  --element-shift: 0deg;
+  animation: elementStage 20s ease-in-out infinite;
+}
+
+.element-flow__veil,
+.element-flow__ring {
+  position: absolute;
+  inset: 0;
+  mask: url('chakragirl.png') center / contain no-repeat;
+  -webkit-mask: url('chakragirl.png') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.element-flow__veil {
+  background:
+    conic-gradient(
+      from var(--element-shift),
+      hsla(var(--element-hue), 90%, 80%, 0) 0deg,
+      hsla(var(--element-hue), 90%, 80%, 0.14) 55deg,
+      hsla(var(--element-hue), 92%, 72%, 0.4) 140deg,
+      hsla(var(--element-hue), 88%, 65%, 0.36) 220deg,
+      hsla(var(--element-hue), 90%, 78%, 0.16) 300deg,
+      hsla(var(--element-hue), 90%, 80%, 0) 360deg
+    );
+  filter: blur(6px) saturate(1.35);
+  opacity: calc(var(--element-spark) * 0.85);
+  transform-origin: 50% 50%;
+  animation:
+    elementVeil 9s linear infinite;
+}
+
+.element-flow__ring {
+  inset: -6% -8% -2% -8%;
+  background:
+    radial-gradient(60% 80% at 40% 15%, hsla(var(--element-hue), 90%, 85%, 0.1) 0%, transparent 60%),
+    radial-gradient(65% 70% at 60% 80%, hsla(var(--element-hue), 92%, 70%, 0.28) 0%, transparent 70%),
+    conic-gradient(
+      from calc(var(--element-shift) + 40deg),
+      transparent 0deg 30deg,
+      hsla(var(--element-hue), 95%, 72%, 0.55) 120deg,
+      hsla(var(--element-hue), 98%, 65%, 0.85) 190deg,
+      hsla(var(--element-hue), 98%, 75%, 0.55) 260deg,
+      transparent 310deg 360deg
+    );
+  filter:
+    blur(12px) brightness(1.1)
+    drop-shadow(0 0 1.3rem hsla(var(--element-hue), 95%, 70%, calc(var(--element-spark) * 0.45 + 0.03)))
+    drop-shadow(0 0 2.6rem hsla(var(--element-hue), 95%, 60%, calc(var(--element-spark) * 0.35 + 0.02)));
+  opacity: calc(var(--element-spark) * 0.65);
+  transform-origin: 50% 50%;
+  animation:
+    elementRingFlow 12s linear infinite;
+}
+
 .chakragirl-wrap::after {
   content: "";
   position: absolute;
@@ -348,6 +552,8 @@ body {
 }
 
 .chakragirl-img {
+  position: relative;
+  z-index: 2;
   max-width: 100%;
   height: auto;
   object-fit: contain;
@@ -441,8 +647,16 @@ body {
   .chakragirl-wrap,
   .third-eye-orb,
   .wind-swirl,
-  .swirl-layer {
+  .swirl-layer,
+  .element-flow,
+  .element-flow__veil,
+  .element-flow__ring {
     animation: none !important;
+  }
+  .element-flow {
+    --element-hue: 190;
+    --element-spark: 0.5;
+    --element-shift: 140deg;
   }
   .kaleido {
     transform: none !important;
