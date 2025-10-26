@@ -6,7 +6,21 @@
   <title>Sacred Element Cycle</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<body class="theme--day" data-theme="day">
+  <button
+    class="mode-toggle"
+    type="button"
+    aria-label="Toggle day or night background"
+    aria-pressed="false"
+  >
+    <span class="mode-toggle__track" aria-hidden="true"></span>
+    <span class="mode-toggle__thumb" aria-hidden="true"></span>
+    <span class="mode-toggle__label mode-toggle__label--day">Day</span>
+    <span class="mode-toggle__label mode-toggle__label--night">Night</span>
+  </button>
+
 <body>
+ main
   <main class="stage" aria-label="Meditative elemental aura animation">
     <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
       <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
@@ -53,5 +67,24 @@
       </div>
     </div>
   </main>
+  <script>
+    const toggle = document.querySelector('.mode-toggle');
+    const body = document.body;
+
+    if (toggle) {
+      const setTheme = (isNight) => {
+        body.classList.toggle('theme--night', isNight);
+        body.classList.toggle('theme--day', !isNight);
+        body.dataset.theme = isNight ? 'night' : 'day';
+        toggle.setAttribute('aria-pressed', String(isNight));
+      };
+
+      toggle.addEventListener('click', () => {
+        const nextIsNight = body.dataset.theme !== 'night';
+        setTheme(nextIsNight);
+      });
+    }
+  </script>
+  main
 </body>
 </html>
