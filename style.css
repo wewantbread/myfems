@@ -240,6 +240,76 @@ body {
   justify-content: center;
 }
 
+.elemental-flows {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(26vmin, 170px);
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  z-index: 1;
+  display: block;
+  mask: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0 30%, rgba(0, 0, 0, 1) 42% 100%);
+  -webkit-mask: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0 30%, rgba(0, 0, 0, 1) 42% 100%);
+}
+
+.elemental-flow {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  display: block;
+  opacity: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  filter: blur(6px);
+  animation: elementFlowOrbit 20s linear infinite, elementFlowFade 20s ease-in-out infinite;
+  animation-delay: 0s, 0s;
+  mask: radial-gradient(circle at 50% 52%, rgba(0, 0, 0, 0) 0 36%, rgba(0, 0, 0, 1) 48% 100%);
+  -webkit-mask: radial-gradient(circle at 50% 52%, rgba(0, 0, 0, 0) 0 36%, rgba(0, 0, 0, 1) 48% 100%);
+  box-shadow:
+    0 0 1.8rem rgba(255, 255, 255, 0.12),
+    0 0 3.6rem rgba(120, 120, 120, 0.08);
+}
+
+.elemental-flow::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  opacity: 0.65;
+  filter: blur(4px);
+  mix-blend-mode: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.elemental-flow--wind {
+  background:
+    radial-gradient(circle at 40% 30%, rgba(190, 235, 255, 0.45) 0%, rgba(190, 235, 255, 0.08) 45%, rgba(255, 255, 255, 0) 70%),
+    conic-gradient(from 120deg, rgba(140, 210, 255, 0.18) 0deg 120deg, rgba(70, 140, 255, 0.04) 120deg 360deg);
+  animation-delay: 0s, 0s;
+}
+
+.elemental-flow--leaf {
+  background:
+    radial-gradient(circle at 55% 60%, rgba(205, 255, 190, 0.42) 0%, rgba(140, 255, 170, 0.12) 48%, rgba(0, 0, 0, 0) 74%),
+    conic-gradient(from 60deg, rgba(120, 220, 150, 0.25) 0deg 110deg, rgba(30, 120, 60, 0.05) 110deg 360deg);
+  animation-delay: 5s, 5s;
+}
+
+.elemental-flow--water {
+  background:
+    radial-gradient(circle at 45% 40%, rgba(130, 205, 255, 0.5) 0%, rgba(70, 160, 255, 0.18) 48%, rgba(0, 0, 0, 0) 76%),
+    conic-gradient(from -30deg, rgba(60, 150, 255, 0.28) 0deg 140deg, rgba(10, 70, 150, 0.05) 140deg 360deg);
+  animation-delay: 10s, 10s;
+}
+
+.elemental-flow--fire {
+  background:
+    radial-gradient(circle at 42% 55%, rgba(255, 190, 150, 0.55) 0%, rgba(255, 120, 80, 0.2) 44%, rgba(0, 0, 0, 0) 72%),
+    conic-gradient(from 210deg, rgba(255, 150, 60, 0.28) 0deg 130deg, rgba(120, 20, 0, 0.05) 130deg 360deg);
+  animation-delay: 15s, 15s;
+}
+
 .swirl-layer {
   position: absolute;
   inset: 10%;
@@ -300,6 +370,55 @@ body {
   100% {
     transform: rotate(360deg) scale(0.96);
     opacity: .82;
+  }
+}
+
+@keyframes elementFlowOrbit {
+  0% {
+    transform: rotate(0deg) scale(0.88);
+  }
+  20% {
+    transform: rotate(72deg) scale(1.02);
+  }
+  40% {
+    transform: rotate(144deg) scale(1.08) translateX(2%);
+  }
+  60% {
+    transform: rotate(216deg) scale(1.02);
+  }
+  80% {
+    transform: rotate(288deg) scale(0.94) translateX(-2%);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.88);
+  }
+}
+
+@keyframes elementFlowFade {
+  0%,
+  15% {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  25% {
+    opacity: 0.55;
+    filter: blur(8px);
+  }
+  40% {
+    opacity: 0.9;
+    filter: blur(5px);
+  }
+  55% {
+    opacity: 0.65;
+    filter: blur(7px);
+  }
+  75% {
+    opacity: 0.2;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(12px);
   }
 }
 
@@ -441,7 +560,9 @@ body {
   .chakragirl-wrap,
   .third-eye-orb,
   .wind-swirl,
-  .swirl-layer {
+  .swirl-layer,
+  .elemental-flows,
+  .elemental-flow {
     animation: none !important;
   }
   .kaleido {
