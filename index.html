@@ -2,61 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Sacred64</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sacred Element Cycle</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="sacred-body">
+<body>
+  <main class="stage" aria-label="Meditative elemental aura animation">
+    <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
+      <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
 
-<section class="hero">
+      <div class="aura aura--air" aria-hidden="true">
+        <span class="air-trace air-trace--one"></span>
+        <span class="air-trace air-trace--two"></span>
+      </div>
 
-  <!-- soft spinning mantra halo behind her -->
-  <div class="kaleido-field" aria-hidden="true">
-    <span class="field-layer field-layer--outer"></span>
-    <span class="field-layer field-layer--middle"></span>
-    <span class="field-layer field-layer--inner"></span>
-  </div>
+      <div class="aura aura--leaves" aria-hidden="true">
+        <span class="leaf" style="--index: 0"></span>
+        <span class="leaf" style="--index: 1"></span>
+        <span class="leaf" style="--index: 2"></span>
+        <span class="leaf" style="--index: 3"></span>
+        <span class="leaf" style="--index: 4"></span>
+        <span class="leaf" style="--index: 5"></span>
+        <span class="leaf" style="--index: 6"></span>
+        <span class="leaf" style="--index: 7"></span>
+        <span class="leaf" style="--index: 8"></span>
+        <span class="leaf" style="--index: 9"></span>
+        <span class="leaf" style="--index: 10"></span>
+        <span class="leaf" style="--index: 11"></span>
+        <span class="leaf" style="--index: 12"></span>
+        <span class="leaf" style="--index: 13"></span>
+        <span class="leaf" style="--index: 14"></span>
+        <span class="leaf" style="--index: 15"></span>
+      </div>
 
-  <div class="kaleido-shell" aria-hidden="true">
-    <div class="kaleido"></div>
-  </div>
+      <div class="aura aura--water" aria-hidden="true">
+        <span class="water-ribbon water-ribbon--inner"></span>
+        <span class="water-ribbon water-ribbon--outer"></span>
+        <span class="droplet" style="--offset: 0"></span>
+        <span class="droplet" style="--offset: 1"></span>
+        <span class="droplet" style="--offset: 2"></span>
+      </div>
 
-  <!-- swirling wind outline -->
-  <div class="wind-swirl" aria-hidden="true">
-    <span class="swirl-layer swirl-layer--outer"></span>
-    <span class="swirl-layer swirl-layer--inner"></span>
-  </div>
-
-  <!-- the glowing girl -->
-  <div class="chakragirl-wrap">
-    <div class="element-flow" aria-hidden="true">
-      <span class="element-flow__veil"></span>
-      <span class="element-flow__ring"></span>
+      <div class="aura aura--fire" aria-hidden="true">
+        <span class="ember" style="--ember: 0"></span>
+        <span class="ember" style="--ember: 1"></span>
+        <span class="ember" style="--ember: 2"></span>
+        <span class="ember" style="--ember: 3"></span>
+        <span class="ember" style="--ember: 4"></span>
+        <span class="ember" style="--ember: 5"></span>
+      </div>
     </div>
-    <span class="third-eye-orb" aria-hidden="true"></span>
-    <img
-      class="chakragirl-img"
-      src="chakragirl.png"
-      alt="sacred meditating figure with aligned chakras"
-    />
-  </div>
-
-</section>
-
-<!-- optional redirect -->
-<!--
-<script>
-  setTimeout(() => {
-    window.location.replace('/products');
-  }, 3000);
-</script>
--->
-
+  </main>
 </body>
 </html>
-
-
-
-</body>
-</html>
-
