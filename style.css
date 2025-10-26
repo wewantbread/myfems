@@ -276,6 +276,11 @@ body.theme--night .mode-toggle__icon--night {
   45% {
     transform: scale3d(1.01, 1.01, 1) translateY(-1.3%);
   }
+  75% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) rotate(210deg) translateX(2%) scale(0.98);
+  }
+  54%,
   100% {
     transform: scale3d(0.984, 0.984, 1) translateY(0.5%);
   }
