@@ -276,6 +276,11 @@ body.theme--night .mode-toggle__icon--night {
   45% {
     transform: scale3d(1.015, 1.015, 1) rotate(1.4deg) translateY(-1.2%);
   }
+  75% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) rotate(210deg) translateX(2%) scale(0.98);
+  }
+  54%,
   100% {
     transform: scale3d(0.99, 0.99, 1) rotate(-0.8deg) translateY(0.6%);
   }
@@ -503,6 +508,7 @@ body.theme--night .mode-toggle__icon--night {
     transform: translate(-50%, -70%) rotate(232deg) translateX(32%) rotate(-232deg) scale(0.62);
     opacity: 0.3;
   }
+  79%,
   100% {
     opacity: 0;
     transform: translate(-50%, 52%) rotate(330deg) translateX(58%) rotate(-330deg) scale(0.6);
