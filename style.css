@@ -338,18 +338,22 @@ body[data-theme="night"] .figure__image {
   mask: url("chakragirl.png") center / contain no-repeat;
   filter: blur(28px) saturate(1.32);
   opacity: 0.5;
-  animation: air-orbit 18s linear infinite;
+  animation: air-orbit 14s ease-in-out infinite;
 }
 
 @keyframes air-orbit {
-  0% {
-    transform: rotate(0deg) scale(1.01);
-  }
-  50% {
-    transform: rotate(210deg) scale(1.04);
-  }
+  0%,
   100% {
-    transform: rotate(360deg) scale(1.01);
+    transform: scale(0.98);
+    opacity: 0.46;
+  }
+  45% {
+    transform: scale(1.05);
+    opacity: 0.58;
+  }
+  70% {
+    transform: scale(1.01);
+    opacity: 0.5;
   }
 }
 
@@ -378,25 +382,28 @@ body[data-theme="night"] .figure__image {
   filter: blur(30px) saturate(1.36);
   opacity: 0.44;
   transform-origin: center;
-  animation: air-flow-loop 16s cubic-bezier(0.62, 0.04, 0.34, 1) infinite;
+  animation: air-flow-loop 16s ease-in-out infinite;
 }
 
 .air-flow--secondary {
-  animation-duration: 22s;
-  animation-direction: reverse;
+  animation-duration: 20s;
   opacity: 0.36;
   filter: blur(32px) saturate(1.24);
 }
 
 @keyframes air-flow-loop {
-  0% {
-    transform: rotate(0deg) scale(1.03);
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.4;
   }
   40% {
-    transform: rotate(180deg) scale(1.07);
+    transform: scale(1.06);
+    opacity: 0.54;
   }
-  100% {
-    transform: rotate(360deg) scale(1.03);
+  70% {
+    transform: scale(1.01);
+    opacity: 0.48;
   }
 }
 
@@ -410,7 +417,7 @@ body[data-theme="night"] .figure__image {
   filter: blur(20px) saturate(1.24);
   opacity: 0.58;
   transform-origin: center;
-  animation: air-trace-glide 8s ease-in-out infinite;
+  animation: air-trace-glide 9s ease-in-out infinite;
 }
 
 .air-trace--two {
@@ -420,17 +427,18 @@ body[data-theme="night"] .figure__image {
 }
 
 @keyframes air-trace-glide {
-  0% {
-    transform: rotate(-22deg) scale(1.01);
+  0%,
+  100% {
+    transform: scale(0.97);
+    opacity: 0.46;
   }
-  38% {
-    transform: rotate(140deg) scale(1.05);
+  36% {
+    transform: scale(1.05);
+    opacity: 0.58;
   }
   68% {
-    transform: rotate(260deg) scale(0.99);
-  }
-  100% {
-    transform: rotate(338deg) scale(1.02);
+    transform: scale(1.01);
+    opacity: 0.5;
   }
 }
 
