@@ -16,6 +16,12 @@
     <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
       <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
       <span class="figure__outline" aria-hidden="true"></span>
+      <div class="deity-cycle" aria-hidden="true">
+        <span class="deity deity--lakshmi"></span>
+        <span class="deity deity--saraswati"></span>
+        <span class="deity deity--shiva"></span>
+        <span class="deity deity--ganesha"></span>
+      </div>
       <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
       <div class="aura aura--air" aria-hidden="true">
@@ -61,6 +67,17 @@
         <span class="ember" style="--ember: 5"></span>
       </div>
     </div>
+    <section class="integration-panel" aria-label="Integration timer and affirmation">
+      <p class="integration-panel__words" aria-hidden="true">
+        <span>rewire</span>
+        <span>heal</span>
+        <span>reset</span>
+      </p>
+      <div class="countdown" role="timer" aria-live="polite" aria-atomic="true" aria-label="Two minute integration countdown">
+        <div class="countdown__ring" aria-hidden="true"></div>
+        <span class="countdown__time">02:00</span>
+      </div>
+    </section>
   </main>
   <script>
     const body = document.body;
@@ -79,6 +96,34 @@
       }
       window.localStorage.setItem("chakra-theme", nextTheme);
     });
+
+    const countdown = document.querySelector(".countdown");
+    const countdownTime = document.querySelector(".countdown__time");
+    const COUNTDOWN_DURATION = 120000;
+
+    if (countdown && countdownTime) {
+      let startTime = performance.now();
+
+      const updateCountdown = (now) => {
+        const elapsed = now - startTime;
+        const remaining = Math.max(COUNTDOWN_DURATION - elapsed, 0);
+        const totalSeconds = Math.ceil(remaining / 1000);
+        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+        const seconds = String(totalSeconds % 60).padStart(2, "0");
+        countdownTime.textContent = `${minutes}:${seconds}`;
+
+        const progress = Math.min(1, elapsed / COUNTDOWN_DURATION);
+        countdown.style.setProperty("--countdown-angle", `${progress * 360}deg`);
+
+        if (remaining <= 0) {
+          startTime = now;
+        }
+
+        requestAnimationFrame(updateCountdown);
+      };
+
+      requestAnimationFrame(updateCountdown);
+    }
   </script>
 </body>
 </html>
