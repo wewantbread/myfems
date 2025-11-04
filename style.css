@@ -532,6 +532,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .leaf {
+  --leaf-angle: calc(var(--index) * 22.5deg);
   position: absolute;
   inset: -11%;
   pointer-events: none;
