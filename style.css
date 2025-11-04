@@ -328,7 +328,7 @@ body[data-theme="night"] .time-panel {
 }
 
 .chakra--third-eye {
-  top: 10%;
+  top: 29%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
