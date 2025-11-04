@@ -1,5 +1,4 @@
 :root {
-  --cycle-duration: 20s;
   --air-color: 198 72% 72%;
   --leaf-color: 118 54% 44%;
   --water-color: 192 64% 58%;
@@ -110,7 +109,7 @@ body[data-theme="night"] {
 }
 
 body[data-theme="night"]::before {
-  opacity: 0.5;
+  opacity: 0.35;
   mix-blend-mode: screen;
 }
 
@@ -119,7 +118,7 @@ body[data-theme="night"]::after {
     radial-gradient(circle at 18% 22%, hsla(210 64% 86% / 0.08) 0%, transparent 58%),
     radial-gradient(circle at 82% 32%, hsla(198 82% 72% / 0.06) 0%, transparent 62%),
     radial-gradient(circle at 50% 78%, hsla(220 84% 64% / 0.04) 0%, transparent 60%);
-  opacity: 0.3;
+  opacity: 0.22;
 }
 
 .theme-toggle {
@@ -200,9 +199,8 @@ body[data-theme="night"] .theme-toggle__icon--moon {
 .stage {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   padding: 6vmin;
   position: relative;
   isolation: isolate;
@@ -285,6 +283,8 @@ body[data-theme="night"] .countdown__time {
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
+  perspective: 1400px;
+  transform-style: preserve-3d;
 }
 
 .deity-cycle {
@@ -720,12 +720,125 @@ body[data-theme="night"] .figure__image {
   animation: chakra-breath 4.8s ease-in-out infinite;
 }
 
+.orbital-ring {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  width: 90%;
+  aspect-ratio: 3.1 / 1;
+  transform: translate(-50%, 6%) rotateX(68deg);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, filter;
+}
+
+.orbital-ring::before,
+.orbital-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.orbital-ring::before {
+  background: conic-gradient(
+    from 0deg,
+    hsla(198 92% 78% / 0.45) 0deg,
+    hsla(162 88% 68% / 0.65) 80deg,
+    hsla(294 76% 72% / 0.7) 160deg,
+    hsla(32 92% 68% / 0.68) 240deg,
+    hsla(198 92% 78% / 0.45) 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 52%, #000 57%, transparent 64%);
+  mask: radial-gradient(circle, transparent 52%, #000 57%, transparent 64%);
+  filter: blur(0.6px);
+  opacity: 0.85;
+  transform-origin: center;
+  animation: orbit-spin 14s linear infinite, orbit-spectrum 18s linear infinite;
+}
+
+.orbital-ring::after {
+  background:
+    radial-gradient(circle at 50% 12%, hsla(0 0% 100% / 0.9) 0%, transparent 58%),
+    radial-gradient(circle at 50% 86%, hsla(0 0% 100% / 0.38) 0%, transparent 60%);
+  -webkit-mask: radial-gradient(circle, transparent 52%, #000 57%, transparent 64%);
+  mask: radial-gradient(circle, transparent 52%, #000 57%, transparent 64%);
+  transform-origin: center;
+  animation: orbit-beacon 7.5s linear infinite, orbit-spectrum 18s linear infinite;
+  opacity: 0.9;
+}
+
+.orbital-ring--rear {
+  z-index: 1;
+  opacity: 0.75;
+  -webkit-mask: linear-gradient(180deg, transparent 0% 46%, #000 50% 100%);
+  mask: linear-gradient(180deg, transparent 0% 46%, #000 50% 100%);
+  filter: drop-shadow(0 0 1.4rem hsla(var(--outline-color) / 0.22));
+}
+
+.orbital-ring--front {
+  z-index: 2;
+  opacity: 0.92;
+  -webkit-mask: linear-gradient(180deg, #000 0% 56%, transparent 60% 100%);
+  mask: linear-gradient(180deg, #000 0% 56%, transparent 60% 100%);
+  filter:
+    drop-shadow(0 0 1.5rem hsla(var(--outline-color) / 0.35))
+    drop-shadow(0 0 2.6rem hsla(var(--outline-color) / 0.2));
+}
+
+@keyframes orbit-spectrum {
+  0% {
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  25% {
+    filter: hue-rotate(90deg) saturate(1.1);
+  }
+  50% {
+    filter: hue-rotate(180deg) saturate(1.05);
+  }
+  75% {
+    filter: hue-rotate(270deg) saturate(1.1);
+  }
+  100% {
+    filter: hue-rotate(360deg) saturate(1);
+  }
+}
+
+@keyframes orbit-spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes orbit-beacon {
+  0% {
+    transform: rotateZ(0deg);
+    opacity: 0.9;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotateZ(180deg);
+    opacity: 0.85;
+  }
+  100% {
+    transform: rotateZ(360deg);
+    opacity: 0.9;
+  }
+}
+
 .aura {
   position: absolute;
   inset: -14%;
   pointer-events: none;
   z-index: 1;
-  opacity: 0;
+  opacity: 1;
 }
 
 /* shared breathing helper */
@@ -747,23 +860,7 @@ body[data-theme="night"] .figure__image {
 
 /* AIR --------------------------------------------------- */
 .aura--air {
-  animation: air-cycle var(--cycle-duration) linear infinite;
-  z-index: 2;
-}
-
-@keyframes air-cycle {
-  0%,
-  6% {
-    opacity: 0;
-  }
-  12%,
-  34% {
-    opacity: 1;
-  }
-  40%,
-  100% {
-    opacity: 0;
-  }
+  z-index: 1;
 }
 
 .aura--air::before,
@@ -954,7 +1051,6 @@ body[data-theme="night"] .figure__image {
   z-index: 3;
   transform-origin: center;
   mix-blend-mode: screen;
-  animation: leaf-cycle var(--cycle-duration) linear infinite;
 }
 
 .aura--leaves::before {
@@ -980,27 +1076,6 @@ body[data-theme="night"] .figure__image {
   animation: leaf-halo 16s ease-in-out infinite;
 }
 
-@keyframes leaf-cycle {
-  0%,
-  24% {
-    opacity: 0;
-  }
-  26% {
-    opacity: 0.45;
-  }
-  29%,
-  49% {
-    opacity: 1;
-  }
-  51% {
-    opacity: 0.4;
-  }
-  54%,
-  100% {
-    opacity: 0;
-  }
-}
-
 .leaf {
   --leaf-angle: calc(var(--index) * 22.5deg);
   position: absolute;
@@ -1016,17 +1091,25 @@ body[data-theme="night"] .figure__image {
   filter: blur(28px) saturate(1.28);
   opacity: 0.75;
   transform-origin: center;
+  transform-style: preserve-3d;
   will-change: transform, opacity;
-  transform: rotate(var(--leaf-angle)) translateY(-1.2vmin) scale(0.96);
-  animation: leaf-breathe 11s ease-in-out infinite;
-  animation-delay: calc(var(--index) * -0.45s);
+  animation: leaf-orbit 18s ease-in-out infinite;
+  animation-delay: calc(var(--index) * -0.5s);
 }
 
-@keyframes leaf-breathe {
+@keyframes leaf-orbit {
   0%,
   100% {
-    transform: rotate(var(--leaf-angle)) translateY(-1.1vmin) scale(0.94);
-    opacity: 0.68;
+    transform: rotate(var(--leaf-angle)) translateY(0) translateZ(-8px) scale(0.96);
+    opacity: 0.7;
+  }
+  42% {
+    transform: rotate(var(--leaf-angle)) translateY(-1.6vmin) translateZ(14px) scale(1.05);
+    opacity: 0.88;
+  }
+  72% {
+    transform: rotate(var(--leaf-angle)) translateY(1.2vmin) translateZ(-4px) scale(0.98);
+    opacity: 0.78;
   }
   46% {
     transform: rotate(var(--leaf-angle)) translateY(-1.6vmin) scale(1.04);
@@ -1052,28 +1135,6 @@ body[data-theme="night"] .figure__image {
 
 /* WATER ------------------------------------------------ */
 .aura--water {
-  animation: water-cycle var(--cycle-duration) linear infinite;
-}
-
-@keyframes water-cycle {
-  0%,
-  49% {
-    opacity: 0;
-  }
-  51% {
-    opacity: 0.45;
-  }
-  54%,
-  74% {
-    opacity: 1;
-  }
-  76% {
-    opacity: 0.42;
-  }
-  79%,
-  100% {
-    opacity: 0;
-  }
 }
 
 .water-ribbon {
@@ -1086,6 +1147,7 @@ body[data-theme="night"] .figure__image {
   mix-blend-mode: screen;
   opacity: 0.85;
   animation: water-ribbon-drift 6s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 
 .water-ribbon--outer {
@@ -1097,13 +1159,13 @@ body[data-theme="night"] .figure__image {
 
 @keyframes water-ribbon-drift {
   0% {
-    transform: rotate(-12deg) scale(0.94);
+    transform: rotate(-12deg) scale(0.94) translateZ(-14px);
   }
   50% {
-    transform: rotate(32deg) scale(1.08);
+    transform: rotate(32deg) scale(1.08) translateZ(12px);
   }
   100% {
-    transform: rotate(68deg) scale(0.94);
+    transform: rotate(68deg) scale(0.94) translateZ(-10px);
   }
 }
 
@@ -1145,24 +1207,7 @@ body[data-theme="night"] .figure__image {
 
 /* FIRE ------------------------------------------------- */
 .aura--fire {
-  animation: fire-cycle var(--cycle-duration) linear infinite;
-}
-
-@keyframes fire-cycle {
-  0%,
-  74% {
-    opacity: 0;
-  }
-  76% {
-    opacity: 0.45;
-  }
-  79%,
-  99% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  z-index: 4;
 }
 
 .aura--fire::before {
@@ -1233,6 +1278,7 @@ body[data-theme="night"] .figure__image {
 @media (prefers-reduced-motion: reduce) {
   .aura,
   .figure__outline,
+  .orbital-ring,
   .air-flow,
   .air-trace,
   .leaf,
