@@ -934,5 +934,5 @@ body[data-theme="night"] .time-panel {
   /* gray most of the time */
   0%, 9%, 21%, 100% { background-color: #8a8a8a; }
   /* purple flash ~0.5s in a 5s cycle (10% of 5s) */
-  10%, 20% { background-color: #7c3aed; } /* purple */
+  100%, 80%, 60%, 40%, 20% { background-color: #82aba1; } /* purple */
 }
