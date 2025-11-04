@@ -38,7 +38,7 @@ body {
   justify-content: center;
   font-family: "Inter", "Helvetica Neue", system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  transition: background 0.6s ease, color 0.6s ease;
+  transition: background 0.6s ease, color 90s ease;
 }
 
 body::before {
@@ -217,7 +217,7 @@ body[data-theme="night"] .stage::before {
 }
 
 body[data-theme="night"] .figure__image {
-  filter: drop-shadow(0 0 1.4rem hsla(210 90% 10% / 0.6)) drop-shadow(0 0 4.2rem hsla(210 100% 78% / 0.38));
+  filter: drop-shadow(0 0 1.4rem hsla(210 90% 10% / 0.6)) drop-shadow(0 0 4.2rem hsla(210 100% 78% / 0.33));
 }
 
 .shop-tag {
