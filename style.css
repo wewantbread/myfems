@@ -177,6 +177,13 @@ body[data-theme="night"] .stage::before {
   mix-blend-mode: screen;
 }
 
+.figure-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.2rem, 2vmin, 1.8rem);
+}
+
 .figure {
   position: relative;
   width: min(36vmin, 280px);
@@ -184,19 +191,96 @@ body[data-theme="night"] .stage::before {
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
+  --figure-mask: url("chakragirl.png");
+  transition: transform 0.9s ease;
+}
+
+.figure.is-transitioning {
+  transform: scale(0.98);
 }
 
 .figure__image {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   display: block;
-  filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.18)) drop-shadow(0 0 3.5rem hsla(210 58% 65% / 0.28));
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.18))
+    drop-shadow(0 0 3.5rem hsla(210 58% 65% / 0.28));
+}
+
+.figure.is-transitioning .figure__image {
+  opacity: 0;
+  transform: scale(0.94);
 }
 
 body[data-theme="night"] .figure__image {
   filter: drop-shadow(0 0 1.4rem hsla(210 90% 10% / 0.6)) drop-shadow(0 0 4.2rem hsla(210 100% 78% / 0.38));
+}
+
+.shop-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.9rem 0.85rem;
+  border-radius: 999px;
+  background: hsla(210 60% 95% / 0.55);
+  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: clamp(0.72rem, 1.2vmin, 0.82rem);
+  color: hsla(210 32% 32% / 0.9);
+  isolation: isolate;
+}
+
+body[data-theme="night"] .shop-tag {
+  background: hsla(210 60% 20% / 0.55);
+  color: hsla(210 16% 88% / 0.92);
+}
+
+.shop-tag__label {
+  position: relative;
+  z-index: 1;
+}
+
+.shop-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.35rem;
+  width: 120%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, hsla(198 82% 70% / 0.3), hsla(198 82% 70% / 0.9), hsla(198 82% 70% / 0.3));
+  border-radius: 999px;
+  box-shadow: 0 0 0.6rem hsla(198 82% 70% / 0.45);
+}
+
+.time-panel {
+  position: fixed;
+  right: clamp(1.4rem, 4vw, 2.4rem);
+  bottom: clamp(1.2rem, 4vw, 2.2rem);
+  padding: 0.65rem 1rem;
+  min-width: 16ch;
+  border-radius: 0.85rem;
+  font-size: clamp(0.72rem, 1.4vmin, 0.88rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsla(210 28% 26% / 0.88);
+  background: hsla(210 60% 96% / 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1.8rem 4rem hsla(210 38% 40% / 0.25);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+body[data-theme="night"] .time-panel {
+  background: hsla(210 62% 12% / 0.66);
+  color: hsla(210 22% 88% / 0.94);
+  box-shadow: 0 1.8rem 4rem hsla(210 80% 60% / 0.2);
 }
 
 .figure__outline {
@@ -210,8 +294,8 @@ body[data-theme="night"] .figure__image {
       hsla(var(--outline-color) / 0.86) 74%,
       hsla(var(--outline-color) / 0) 96%
     );
-  -webkit-mask: url("chakragirl.png") center / contain no-repeat;
-  mask: url("chakragirl.png") center / contain no-repeat;
+  -webkit-mask: var(--figure-mask) center / contain no-repeat;
+  mask: var(--figure-mask) center / contain no-repeat;
   filter:
     blur(12px)
     drop-shadow(0 0 1.8rem hsla(var(--outline-color) / 0.42))
@@ -772,5 +856,10 @@ body[data-theme="night"] .figure__image {
   .chakra {
     animation: none !important;
     opacity: 0 !important;
+  }
+
+  .figure,
+  .figure__image {
+    transition: none !important;
   }
 }
