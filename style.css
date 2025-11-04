@@ -21,6 +21,7 @@
   --toggle-icon: hsl(40 90% 55%);
   --toggle-icon-night: hsl(210 90% 82%);
   --text-color: hsl(220 32% 22%);
+  --mantra-color: hsla(220 20% 32% / 0.22);
 }
 
 * {
@@ -89,6 +90,7 @@ body[data-theme="night"] {
   --toggle-icon: hsl(46 96% 62%);
   --toggle-icon-night: hsl(210 90% 86%);
   --text-color: hsl(220 18% 92%);
+  --mantra-color: hsla(210 18% 82% / 0.18);
 }
 
 body[data-theme="night"]::before {
@@ -188,6 +190,22 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   padding: 6vmin;
   position: relative;
   isolation: isolate;
+}
+
+.element-mantra {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(2.8rem, 16vw, 9rem);
+  letter-spacing: clamp(0.2rem, 1.2vw, 1rem);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mantra-color);
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 0;
 }
 
 .stage::before {
@@ -579,22 +597,23 @@ body[data-theme="night"] .figure__image {
   opacity: 0.75;
   transform-origin: center;
   will-change: transform, opacity;
-  animation: leaf-orbit 18s ease-in-out infinite;
-  animation-delay: calc(var(--index) * -0.5s);
+  transform: rotate(var(--leaf-angle)) translateY(-1.2vmin) scale(0.96);
+  animation: leaf-breathe 11s ease-in-out infinite;
+  animation-delay: calc(var(--index) * -0.45s);
 }
 
-@keyframes leaf-orbit {
+@keyframes leaf-breathe {
   0%,
   100% {
-    transform: rotate(var(--leaf-angle)) translateY(0) scale(0.96);
-    opacity: 0.7;
+    transform: rotate(var(--leaf-angle)) translateY(-1.1vmin) scale(0.94);
+    opacity: 0.68;
   }
-  42% {
-    transform: rotate(var(--leaf-angle)) translateY(-1.6vmin) scale(1.05);
+  46% {
+    transform: rotate(var(--leaf-angle)) translateY(-1.6vmin) scale(1.04);
     opacity: 0.88;
   }
   72% {
-    transform: rotate(var(--leaf-angle)) translateY(1.2vmin) scale(0.98);
+    transform: rotate(var(--leaf-angle)) translateY(-0.8vmin) scale(0.98);
     opacity: 0.78;
   }
 }
