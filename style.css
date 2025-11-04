@@ -630,3 +630,13 @@ body[data-theme="night"] .time-panel {
   /* purple flash ~0.5s in a 5s cycle (10% of 5s) */
   100%, 80%, 60%, 40%, 20% { background-color: #82aba1; } /* purple */
 }
+/* Center the wrapper fullscreen */
+.logo-center{
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left: 0 */
+  display: grid;
+  place-items: center;      /* perfect center */
+  pointer-events: none;     /* so it won't block clicks below */
+  z-index: 50;              /* bring it above background */
+}
+/* your existing .genetic-logo CSS stays the same */
