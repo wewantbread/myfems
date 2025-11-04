@@ -892,3 +892,47 @@ body[data-theme="night"] .time-panel {
     transition: none !important;
   }
 }
+/* === Genetic Logo (PNG) — Spin + Gray→Purple pulse === */
+/* 1) Set your PNG path here */
+:root {
+  --genetic-logo-url: url("genetic_molecule_ring_v2.png"); /* update path if needed */
+}
+
+/* 2) Apply this class to any empty element (e.g., <div class="genetic-logo"></div>) */
+.genetic-logo {
+  /* size — tweak as you like */
+  width: clamp(120px, 24vmin, 320px);
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+
+  /* use PNG as an alpha mask so we can tint cleanly */
+  background-color: #8a8a8a; /* base gray */
+  -webkit-mask-image: var(--genetic-logo-url);
+  mask-image: var(--genetic-logo-url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  /* motion + color pulse */
+  animation:
+    genetic-spin 60s linear infinite,
+    genetic-purple-pulse 5s linear infinite;
+  transform-origin: center center;
+  will-change: transform, background-color;
+}
+
+/* Slow continuous spin */
+@keyframes genetic-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mostly gray; turns purple briefly every 5s */
+@keyframes genetic-purple-pulse {
+  /* gray most of the time */
+  0%, 9%, 21%, 100% { background-color: #8a8a8a; }
+  /* purple flash ~0.5s in a 5s cycle (10% of 5s) */
+  10%, 20% { background-color: #7c3aed; } /* purple */
+}
