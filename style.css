@@ -589,7 +589,7 @@ body[data-theme="night"] .time-panel {
 /* Genetic molecule logo — center + spin + gray→purple pulse */
 :root{
   --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← change this */
-  --genetic-logo-size: clamp(160px, 26vmin, 420px);                  /* size control */
+  --genetic-logo-size: clamp(700px, 26vmin, 700px);                  /* size control */
   --genetic-gray:   #8a8a8a;
   --genetic-purple: #82aba1;
 }
