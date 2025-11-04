@@ -12,8 +12,17 @@
     <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
   </button>
   <main class="stage" aria-label="Meditative elemental aura animation">
-    <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
-      <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
+    <div class="figure-wrapper">
+      <div
+        class="figure is-chakra-active"
+        role="img"
+        aria-label="Chakra aligned silhouette surrounded by elemental energy"
+      >
+        <img
+          src="chakragirl.png"
+          alt="Meditative silhouette with illuminated chakras"
+          class="figure__image"
+        />
       <span class="figure__outline" aria-hidden="true"></span>
       <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
@@ -59,8 +68,13 @@
         <span class="ember" style="--ember: 4"></span>
         <span class="ember" style="--ember: 5"></span>
       </div>
+      </div>
+      <div class="shop-tag" aria-hidden="true">
+        <span class="shop-tag__label">Shop</span>
+      </div>
     </div>
   </main>
+  <div class="time-panel" aria-live="polite" role="status"></div>
   <script>
     const body = document.body;
     const storedTheme = window.localStorage.getItem("chakra-theme");
@@ -78,6 +92,173 @@
       }
       window.localStorage.setItem("chakra-theme", nextTheme);
     });
+
+    const figure = document.querySelector(".figure");
+    const figureImage = document.querySelector(".figure__image");
+    const timePanel = document.querySelector(".time-panel");
+
+    const chakraSource = "chakragirl.png";
+
+    const imageManifest = [
+      {
+        src: chakraSource,
+        alt: "Meditative silhouette with illuminated chakras",
+        label: "Chakra aligned silhouette surrounded by elemental energy",
+      },
+      { src: "soul1.png", alt: "Radiant soul figure one" },
+      { src: "soul2.png", alt: "Radiant soul figure two" },
+      { src: "soul3.png", alt: "Radiant soul figure three" },
+      { src: "soul4.png", alt: "Radiant soul figure four" },
+      { src: "soul5.png", alt: "Radiant soul figure five" },
+      { src: "soul6.png", alt: "Radiant soul figure six" },
+      { src: "goddess.png", alt: "Divine goddess figure" },
+      { src: "deitys.png", alt: "Celestial deity figure" },
+      { src: "gods.png", alt: "Pantheon of gods illustration" },
+    ];
+
+    const preloadImage = (entry) =>
+      new Promise((resolve) => {
+        const loader = new Image();
+        loader.src = entry.src;
+        loader.onload = () => resolve({ ...entry, available: true });
+        loader.onerror = () => resolve({ ...entry, available: false });
+      });
+
+    const TRANSITION_DURATION = 900;
+    let activeIndex = 0;
+    let cycleTimer;
+
+    const setChakraState = (isActive) => {
+      if (!figure) return;
+      figure.classList.toggle("is-chakra-active", Boolean(isActive));
+    };
+
+    const updateFigureMeta = (entry) => {
+      if (!figure || !figureImage) return;
+      figureImage.alt = entry.alt;
+      figure.setAttribute("aria-label", entry.label || entry.alt);
+      figure.style.setProperty("--figure-mask", `url("${entry.src}")`);
+      setChakraState(entry.src === chakraSource);
+    };
+
+    const swapImage = (entry) => {
+      if (!figure || !figureImage) return;
+      figure.classList.add("is-transitioning");
+      const loader = new Image();
+      loader.src = entry.src;
+      loader.onload = () => {
+        window.setTimeout(() => {
+          figureImage.src = entry.src;
+          updateFigureMeta(entry);
+        }, TRANSITION_DURATION / 2);
+        window.setTimeout(() => {
+          figure.classList.remove("is-transitioning");
+        }, TRANSITION_DURATION + 60);
+      };
+      loader.onerror = () => {
+        window.setTimeout(() => {
+          figure.classList.remove("is-transitioning");
+        }, 200);
+      };
+    };
+
+    const cycleImages = (manifest) => {
+      if (cycleTimer) {
+        window.clearInterval(cycleTimer);
+      }
+
+      if (!manifest.length) return;
+
+      updateFigureMeta(manifest[0]);
+
+      if (manifest.length < 2) {
+        return;
+      }
+
+      cycleTimer = window.setInterval(() => {
+        activeIndex = (activeIndex + 1) % manifest.length;
+        swapImage(manifest[activeIndex]);
+      }, 15000);
+    };
+
+    Promise.all(imageManifest.map(preloadImage)).then((results) => {
+      const available = results.filter((item) => item.available);
+      if (!available.length) return;
+      activeIndex = 0;
+      figureImage.src = available[0].src;
+      updateFigureMeta(available[0]);
+      cycleImages(available);
+    });
+
+    const scrambleCharacters = "#@&%$*?/<>-_+=0123456789";
+
+    const formatDateTime = () => {
+      const now = new Date();
+      return now.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZoneName: "short",
+      });
+    };
+
+    const scrambleText = (element, finalText, duration = 1500) => {
+      if (!element) return;
+      const start = performance.now();
+
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const revealCount = Math.floor(finalText.length * progress);
+        let display = "";
+
+        for (let i = 0; i < finalText.length; i += 1) {
+          const char = finalText[i];
+          if (char === " ") {
+            display += " ";
+            continue;
+          }
+
+          if (i < revealCount) {
+            display += char;
+          } else {
+            const randomIndex = Math.floor(Math.random() * scrambleCharacters.length);
+            display += scrambleCharacters[randomIndex];
+          }
+        }
+
+        element.textContent = display;
+
+        if (progress < 1) {
+          window.requestAnimationFrame(update);
+        } else {
+          element.textContent = finalText;
+        }
+      };
+
+      window.requestAnimationFrame(update);
+    };
+
+    const updateClock = () => {
+      if (!timePanel) return;
+      timePanel.textContent = formatDateTime();
+    };
+
+    const initializeClock = () => {
+      if (!timePanel) return;
+      const initial = formatDateTime();
+      scrambleText(timePanel, initial);
+      window.setTimeout(() => {
+        updateClock();
+        window.setInterval(updateClock, 1000);
+      }, 1600);
+    };
+
+    initializeClock();
   </script>
 </body>
 </html>
