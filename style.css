@@ -324,20 +324,22 @@ body[data-theme="night"] .figure__image {
 .aura--air::after {
   inset: -16%;
   background: conic-gradient(
-    from 0deg,
-    hsla(var(--air-color) / 0.02) 0deg 20deg,
-    hsla(var(--air-color) / 0.5) 60deg,
-    hsla(var(--air-color) / 0.18) 110deg,
-    hsla(var(--air-color) / 0.04) 160deg,
-    hsla(var(--air-color) / 0.38) 220deg,
-    hsla(var(--air-color) / 0.08) 280deg,
-    hsla(var(--air-color) / 0.45) 340deg,
+    from -10deg,
+    hsla(var(--air-color) / 0.02) 0deg 14deg,
+    hsla(var(--air-color) / 0.12) 32deg,
+    hsla(var(--air-color) / 0.5) 74deg,
+    hsla(var(--air-color) / 0.26) 118deg,
+    hsla(var(--air-color) / 0.08) 156deg,
+    hsla(var(--air-color) / 0.42) 206deg,
+    hsla(var(--air-color) / 0.18) 248deg,
+    hsla(var(--air-color) / 0.48) 302deg,
+    hsla(var(--air-color) / 0.12) 336deg,
     hsla(var(--air-color) / 0.02) 360deg
   );
   -webkit-mask: url("chakragirl.png") center / contain no-repeat;
   mask: url("chakragirl.png") center / contain no-repeat;
-  filter: blur(28px) saturate(1.32);
-  opacity: 0.5;
+  filter: blur(34px) saturate(1.32);
+  opacity: 0.52;
   animation: air-orbit 14s ease-in-out infinite;
 }
 
@@ -369,18 +371,20 @@ body[data-theme="night"] .figure__image {
 
 .air-flow {
   background: conic-gradient(
-    from 40deg,
-    hsla(var(--air-color) / 0) 0deg 30deg,
-    hsla(var(--air-color) / 0.58) 70deg,
-    hsla(var(--air-color) / 0.26) 110deg,
-    hsla(var(--air-color) / 0.04) 150deg,
-    hsla(var(--air-color) / 0.42) 210deg,
-    hsla(var(--air-color) / 0.16) 260deg,
-    hsla(var(--air-color) / 0.52) 320deg,
+    from 28deg,
+    hsla(var(--air-color) / 0) 0deg 22deg,
+    hsla(var(--air-color) / 0.16) 46deg,
+    hsla(var(--air-color) / 0.58) 86deg,
+    hsla(var(--air-color) / 0.32) 126deg,
+    hsla(var(--air-color) / 0.08) 168deg,
+    hsla(var(--air-color) / 0.48) 220deg,
+    hsla(var(--air-color) / 0.18) 262deg,
+    hsla(var(--air-color) / 0.54) 316deg,
+    hsla(var(--air-color) / 0.12) 340deg,
     hsla(var(--air-color) / 0) 360deg
   );
-  filter: blur(30px) saturate(1.36);
-  opacity: 0.44;
+  filter: blur(36px) saturate(1.38);
+  opacity: 0.46;
   transform-origin: center;
   animation: air-flow-loop 16s ease-in-out infinite;
 }
@@ -476,7 +480,9 @@ body[data-theme="night"] .figure__image {
 
 /* LEAVES ------------------------------------------------ */
 .aura--leaves {
-  animation: leaf-cycle var(--cycle-duration) linear infinite;
+  transform-origin: center;
+  animation: leaf-cycle var(--cycle-duration) linear infinite,
+    leaf-wheel 18s ease-in-out infinite;
 }
 
 .aura--leaves::after {
@@ -515,6 +521,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .leaf {
+  --leaf-angle: calc(var(--index) * 22.5deg);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -522,11 +529,12 @@ body[data-theme="night"] .figure__image {
   height: clamp(16px, 3.4vmin, 26px);
   background: radial-gradient(circle at 30% 30%, hsl(var(--leaf-color) / 0.92) 0%, hsl(var(--leaf-color) / 0.6) 55%, hsl(var(--leaf-color) / 0.08) 100%);
   border-radius: 48% 52% 46% 54%;
-  transform-origin: center calc(120% + var(--index) * 0.4px);
   opacity: 0;
   filter: blur(0.2px) saturate(1.2);
-  animation: leaf-spiral 5s ease-in-out infinite;
-  animation-delay: calc(var(--index) * 0.12s);
+  transform: translate(-50%, -50%) rotate(var(--leaf-angle)) translateY(-5vmin) scale(0.82);
+  transform-origin: center;
+  animation: leaf-bloom 6.4s ease-in-out infinite;
+  animation-delay: calc(var(--index) * 0.18s);
 }
 
 .leaf::after {
@@ -537,25 +545,35 @@ body[data-theme="night"] .figure__image {
   background: hsl(var(--leaf-color) / 0.32);
 }
 
-@keyframes leaf-spiral {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(0deg) translateX(3.4vmin) rotate(0deg) scale(0.7);
-  }
-  18% {
-    opacity: 1;
-  }
-  52% {
-    transform: translate(-50%, -50%) rotate(300deg) translateX(2.2vmin) rotate(-300deg) scale(0.92);
-    opacity: 0.88;
-  }
-  70% {
-    transform: translate(-50%, -50%) rotate(420deg) translateX(1.2vmin) rotate(-420deg) scale(0.7);
-    opacity: 0.35;
-  }
+@keyframes leaf-bloom {
+  0%,
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(540deg) translateX(3.4vmin) rotate(-540deg) scale(0.7);
+    transform: translate(-50%, -50%) rotate(var(--leaf-angle)) translateY(-5.2vmin) scale(0.74);
+  }
+  16% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) rotate(var(--leaf-angle)) translateY(-5vmin) scale(0.9);
+  }
+  48% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--leaf-angle)) translateY(-4.6vmin) scale(1.02);
+  }
+  72% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) rotate(var(--leaf-angle)) translateY(-4.8vmin) scale(0.88);
+  }
+}
+
+@keyframes leaf-wheel {
+  0% {
+    transform: rotate(-18deg) scale(0.98);
+  }
+  50% {
+    transform: rotate(162deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(342deg) scale(0.98);
   }
 }
 
