@@ -586,21 +586,25 @@ body[data-theme="night"] .time-panel {
     box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
 
-/* === Genetic Logo (PNG) — Spin + Gray→Purple pulse === */
-/* 1) Set your PNG path here */
-:root {
-  --genetic-logo-url: url("genetic_molecule_ring_v2.png"); /* update path if needed */
+/* Genetic molecule logo — center + spin + gray→purple pulse */
+:root{
+  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← change this */
+  --genetic-logo-size: clamp(160px, 26vmin, 420px);                  /* size control */
+  --genetic-gray:   #8a8a8a;
+  --genetic-purple: #82aba1;
 }
 
-/* 2) Apply this class to any empty element (e.g., <div class="genetic-logo"></div>) */
-.genetic-logo {
-  /* size — tweak as you like */
-  width: clamp(120px, 24vmin, 320px);
+.genetic-logo{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);         /* center on screen */
+  width: var(--genetic-logo-size);
   aspect-ratio: 1 / 1;
   display: inline-block;
 
-  /* use PNG as an alpha mask so we can tint cleanly */
-  background-color: #8a8a8a; /* base gray */
+  /* Use PNG as an alpha mask so we can tint cleanly */
+  background-color: var(--genetic-gray);
   -webkit-mask-image: var(--genetic-logo-url);
   mask-image: var(--genetic-logo-url);
   -webkit-mask-repeat: no-repeat;
@@ -610,33 +614,26 @@ body[data-theme="night"] .time-panel {
   -webkit-mask-size: contain;
   mask-size: contain;
 
-  /* motion + color pulse */
+  /* Motion + color pulse */
   animation:
     genetic-spin 60s linear infinite,
     genetic-purple-pulse 5s linear infinite;
+
   transform-origin: center center;
-  will-change: transform, background-color;
+  /* Optional: bring above other layers */
+  /* z-index: 1000; */
 }
 
-/* Slow continuous spin */
 @keyframes genetic-spin {
-  to { transform: rotate(360deg); }
+  to { rotate: 1turn; } /* modern rotate keeps the translate centering intact */
 }
 
-/* Mostly gray; turns purple briefly every 5s */
 @keyframes genetic-purple-pulse {
-  /* gray most of the time */
-  0%, 9%, 21%, 100% { background-color: #8a8a8a; }
-  /* purple flash ~0.5s in a 5s cycle (10% of 5s) */
-  100%, 80%, 60%, 40%, 20% { background-color: #82aba1; } /* purple */
+  0%, 9%, 21%, 100% { background-color: var(--genetic-gray); }
+  10%, 20%          { background-color: var(--genetic-purple); }
 }
-/* Center the wrapper fullscreen */
-.logo-center{
-  position: fixed;
-  inset: 0;                 /* top/right/bottom/left: 0 */
-  display: grid;
-  place-items: center;      /* perfect center */
-  pointer-events: none;     /* so it won't block clicks below */
-  z-index: 50;              /* bring it above background */
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .genetic-logo{ animation: none; }
 }
-/* your existing .genetic-logo CSS stays the same */
