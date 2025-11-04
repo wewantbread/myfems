@@ -23,50 +23,30 @@
           alt="Meditative silhouette with illuminated chakras"
           class="figure__image"
         />
-      <span class="figure__outline" aria-hidden="true"></span>
-      <span class="chakra chakra--third-eye" aria-hidden="true"></span>
+        <span class="figure__outline" aria-hidden="true"></span>
+        <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
-      <div class="aura aura--air" aria-hidden="true">
-        <span class="air-flow air-flow--primary"></span>
-        <span class="air-flow air-flow--secondary"></span>
-        <span class="air-trace air-trace--one"></span>
-        <span class="air-trace air-trace--two"></span>
+        <div class="aura aura--leaves" aria-hidden="true">
+          <span class="leaf" style="--index: 0"></span>
+          <span class="leaf" style="--index: 1"></span>
+          <span class="leaf" style="--index: 2"></span>
+          <span class="leaf" style="--index: 3"></span>
+          <span class="leaf" style="--index: 4"></span>
+          <span class="leaf" style="--index: 5"></span>
+          <span class="leaf" style="--index: 6"></span>
+          <span class="leaf" style="--index: 7"></span>
+          <span class="leaf" style="--index: 8"></span>
+          <span class="leaf" style="--index: 9"></span>
+          <span class="leaf" style="--index: 10"></span>
+          <span class="leaf" style="--index: 11"></span>
+          <span class="leaf" style="--index: 12"></span>
+          <span class="leaf" style="--index: 13"></span>
+          <span class="leaf" style="--index: 14"></span>
+          <span class="leaf" style="--index: 15"></span>
+        </div>
       </div>
-
-      <div class="aura aura--leaves" aria-hidden="true">
-        <span class="leaf" style="--index: 0"></span>
-        <span class="leaf" style="--index: 1"></span>
-        <span class="leaf" style="--index: 2"></span>
-        <span class="leaf" style="--index: 3"></span>
-        <span class="leaf" style="--index: 4"></span>
-        <span class="leaf" style="--index: 5"></span>
-        <span class="leaf" style="--index: 6"></span>
-        <span class="leaf" style="--index: 7"></span>
-        <span class="leaf" style="--index: 8"></span>
-        <span class="leaf" style="--index: 9"></span>
-        <span class="leaf" style="--index: 10"></span>
-        <span class="leaf" style="--index: 11"></span>
-        <span class="leaf" style="--index: 12"></span>
-        <span class="leaf" style="--index: 13"></span>
-        <span class="leaf" style="--index: 14"></span>
-        <span class="leaf" style="--index: 15"></span>
-      </div>
-
-      <div class="aura aura--water" aria-hidden="true">
-        <span class="water-ribbon water-ribbon--inner"></span>
-        <span class="water-ribbon water-ribbon--outer"></span>
-        <span class="droplet" style="--offset: 0"></span>
-        <span class="droplet" style="--offset: 1"></span>
-        <span class="droplet" style="--offset: 2"></span>
-      </div>
-
-      <div class="aura aura--fire" aria-hidden="true">
-        <span class="ember" style="--ember: 0"></span>
-        <span class="ember" style="--ember: 1"></span>
-        <span class="ember" style="--ember: 2"></span>
-        <span class="ember" style="--ember: 3"></span>
-        <span class="ember" style="--ember: 4"></span>
-        <span class="ember" style="--ember: 5"></span>
+      <div class="shop-tag" aria-hidden="true">
+        <span class="shop-tag__label">Shop</span>
       </div>
       </div>
       <div class="shop-tag" aria-hidden="true">
@@ -77,6 +57,229 @@
   <div class="time-panel" aria-live="polite" role="status"></div>
   <script>
     const body = document.body;
+    const root = document.documentElement;
+
+    const palettes = [
+      {
+        light: {
+          "bg-gradient": "radial-gradient(circle at 50% 44%, hsl(42 98% 96%) 0%, hsl(210 56% 92%) 40%, hsl(220 48% 86%) 100%), linear-gradient(180deg, hsl(210 40% 96%) 0%, hsl(210 32% 88%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 48%, hsla(0 0% 100% / 0.6) 0%, transparent 55%)",
+          "toggle-bg": "hsla(0 0% 100% / 0.45)",
+          "toggle-border": "hsla(220 40% 30% / 0.25)",
+          "toggle-icon": "hsl(40 90% 55%)",
+          "toggle-icon-night": "hsl(210 90% 82%)",
+          "text-color": "hsl(220 32% 22%)",
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(210 60% 95% / 0.75) 0%, hsla(210 40% 70% / 0.2) 55%, transparent 78%)",
+          "panel-bg": "hsla(210 60% 96% / 0.7)",
+          "panel-color": "hsla(210 28% 26% / 0.88)",
+          "panel-shadow": "0 1.6rem 3.5rem hsla(210 38% 40% / 0.25)",
+          "shop-tag-bg": "hsla(210 60% 95% / 0.55)",
+          "shop-tag-color": "hsla(210 32% 32% / 0.9)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(198 82% 70% / 0.3), hsla(198 82% 70% / 0.9), hsla(198 82% 70% / 0.3))",
+          "shop-tag-glow": "hsla(198 82% 70% / 0.45)",
+          "image-shadow": "hsla(210 58% 65% / 0.28)",
+          "image-lowlight": "rgba(0, 0, 0, 0.18)",
+          "leaf-color": "118 54% 44%",
+          "outline-color": "198 84% 78%",
+          "chakra-third-eye": "356 84% 60%",
+          "accent-focus": "hsla(210 82% 52% / 0.6)",
+          "accent-focus-soft": "hsla(210 82% 52% / 0.2)",
+        },
+        night: {
+          "bg-gradient": "#000",
+          "focus-glow": "radial-gradient(circle at 50% 46%, hsla(210 100% 85% / 0.2) 0%, transparent 65%)",
+          "toggle-bg": "hsla(230 80% 12% / 0.6)",
+          "toggle-border": "hsla(210 100% 85% / 0.3)",
+          "toggle-icon": "hsl(46 96% 62%)",
+          "toggle-icon-night": "hsl(210 90% 86%)",
+          "text-color": "hsl(220 18% 92%)",
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(198 90% 82% / 0.22) 0%, hsla(198 96% 70% / 0.12) 45%, transparent 78%)",
+          "panel-bg": "hsla(210 62% 12% / 0.66)",
+          "panel-color": "hsla(210 22% 88% / 0.94)",
+          "panel-shadow": "0 1.5rem 3.2rem hsla(210 80% 60% / 0.2)",
+          "shop-tag-bg": "hsla(210 60% 20% / 0.55)",
+          "shop-tag-color": "hsla(210 16% 88% / 0.92)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(198 82% 70% / 0.15), hsla(198 82% 70% / 0.6), hsla(198 82% 70% / 0.15))",
+          "shop-tag-glow": "hsla(198 82% 70% / 0.3)",
+          "image-shadow": "hsla(210 100% 78% / 0.38)",
+          "image-lowlight": "hsla(210 90% 10% / 0.6)",
+          "leaf-color": "118 58% 54%",
+          "outline-color": "198 82% 80%",
+          "chakra-third-eye": "356 84% 60%",
+          "accent-focus": "hsla(210 82% 72% / 0.5)",
+          "accent-focus-soft": "hsla(210 82% 72% / 0.16)",
+        },
+      },
+      {
+        light: {
+          "bg-gradient": "radial-gradient(circle at 50% 44%, hsl(332 70% 96%) 0%, hsl(312 68% 92%) 38%, hsl(286 50% 88%) 100%), linear-gradient(180deg, hsl(320 48% 96%) 0%, hsl(300 38% 90%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 48%, hsla(326 90% 92% / 0.7) 0%, transparent 60%)",
+          "toggle-bg": "hsla(326 70% 96% / 0.5)",
+          "toggle-border": "hsla(320 40% 35% / 0.25)",
+          "toggle-icon": "hsl(338 86% 58%)",
+          "toggle-icon-night": "hsl(276 64% 78%)",
+          "text-color": "hsl(320 28% 24%)",
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(326 78% 92% / 0.7) 0%, hsla(308 52% 72% / 0.22) 55%, transparent 80%)",
+          "panel-bg": "hsla(326 72% 96% / 0.75)",
+          "panel-color": "hsla(320 26% 28% / 0.9)",
+          "panel-shadow": "0 1.6rem 3.6rem hsla(322 60% 52% / 0.24)",
+          "shop-tag-bg": "hsla(326 68% 96% / 0.58)",
+          "shop-tag-color": "hsla(320 34% 30% / 0.92)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(338 90% 72% / 0.25), hsla(338 90% 72% / 0.9), hsla(338 90% 72% / 0.25))",
+          "shop-tag-glow": "hsla(338 90% 72% / 0.42)",
+          "image-shadow": "hsla(326 70% 72% / 0.28)",
+          "image-lowlight": "hsla(326 40% 22% / 0.28)",
+          "leaf-color": "338 72% 70%",
+          "outline-color": "326 78% 78%",
+          "chakra-third-eye": "262 78% 62%",
+          "accent-focus": "hsla(338 85% 62% / 0.55)",
+          "accent-focus-soft": "hsla(338 85% 62% / 0.22)",
+        },
+        night: {
+          "bg-gradient": "radial-gradient(circle at 50% 46%, hsl(276 40% 12%) 0%, hsl(312 34% 8%) 60%, hsl(300 32% 6%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 46%, hsla(318 90% 74% / 0.18) 0%, transparent 70%)",
+          "toggle-bg": "hsla(320 72% 14% / 0.6)",
+          "toggle-border": "hsla(320 90% 86% / 0.3)",
+          "toggle-icon": "hsl(338 82% 62%)",
+          "toggle-icon-night": "hsl(278 60% 74%)",
+          "text-color": "hsl(324 22% 88%)",
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(326 82% 68% / 0.18) 0%, hsla(280 54% 52% / 0.1) 42%, transparent 76%)",
+          "panel-bg": "hsla(312 68% 16% / 0.7)",
+          "panel-color": "hsla(320 22% 86% / 0.94)",
+          "panel-shadow": "0 1.5rem 3.2rem hsla(320 70% 58% / 0.22)",
+          "shop-tag-bg": "hsla(314 64% 18% / 0.58)",
+          "shop-tag-color": "hsla(324 26% 88% / 0.94)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(338 84% 72% / 0.2), hsla(338 84% 72% / 0.6), hsla(338 84% 72% / 0.2))",
+          "shop-tag-glow": "hsla(338 84% 72% / 0.32)",
+          "image-shadow": "hsla(326 72% 70% / 0.36)",
+          "image-lowlight": "hsla(320 60% 18% / 0.5)",
+          "leaf-color": "338 74% 68%",
+          "outline-color": "326 70% 78%",
+          "chakra-third-eye": "262 78% 62%",
+          "accent-focus": "hsla(338 82% 68% / 0.4)",
+          "accent-focus-soft": "hsla(338 82% 68% / 0.16)",
+        },
+      },
+      {
+        light: {
+          "bg-gradient": "radial-gradient(circle at 50% 44%, hsl(152 55% 95%) 0%, hsl(156 48% 88%) 38%, hsl(190 42% 84%) 100%), linear-gradient(180deg, hsl(146 42% 94%) 0%, hsl(160 36% 88%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 48%, hsla(152 70% 90% / 0.65) 0%, transparent 58%)",
+          "toggle-bg": "hsla(150 42% 94% / 0.5)",
+          "toggle-border": "hsla(158 32% 32% / 0.2)",
+          "toggle-icon": "hsl(154 68% 46%)",
+          "toggle-icon-night": "hsl(190 64% 78%)",
+          "text-color": "hsl(156 24% 24%)",
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(154 70% 88% / 0.72) 0%, hsla(168 48% 66% / 0.18) 55%, transparent 78%)",
+          "panel-bg": "hsla(156 58% 94% / 0.72)",
+          "panel-color": "hsla(156 28% 26% / 0.9)",
+          "panel-shadow": "0 1.6rem 3.5rem hsla(156 48% 44% / 0.24)",
+          "shop-tag-bg": "hsla(156 56% 94% / 0.58)",
+          "shop-tag-color": "hsla(156 28% 28% / 0.92)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(154 72% 50% / 0.25), hsla(154 72% 50% / 0.9), hsla(154 72% 50% / 0.25))",
+          "shop-tag-glow": "hsla(154 72% 50% / 0.42)",
+          "image-shadow": "hsla(156 60% 60% / 0.26)",
+          "image-lowlight": "hsla(152 36% 20% / 0.24)",
+          "leaf-color": "150 62% 52%",
+          "outline-color": "154 68% 68%",
+          "chakra-third-eye": "190 82% 62%",
+          "accent-focus": "hsla(154 70% 48% / 0.52)",
+          "accent-focus-soft": "hsla(154 70% 48% / 0.18)",
+        },
+        night: {
+          "bg-gradient": "radial-gradient(circle at 50% 46%, hsl(154 42% 12%) 0%, hsl(170 32% 8%) 65%, hsl(180 28% 6%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 46%, hsla(152 64% 62% / 0.2) 0%, transparent 70%)",
+          "toggle-bg": "hsla(160 54% 12% / 0.62)",
+          "toggle-border": "hsla(156 68% 82% / 0.28)",
+          "toggle-icon": "hsl(50 92% 62%)",
+          "toggle-icon-night": "hsl(152 62% 78%)",
+          "text-color": "hsl(150 18% 90%)",
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(154 64% 58% / 0.2) 0%, hsla(180 52% 52% / 0.1) 42%, transparent 75%)",
+          "panel-bg": "hsla(154 64% 16% / 0.7)",
+          "panel-color": "hsla(154 22% 86% / 0.94)",
+          "panel-shadow": "0 1.5rem 3.1rem hsla(156 54% 58% / 0.22)",
+          "shop-tag-bg": "hsla(150 64% 18% / 0.55)",
+          "shop-tag-color": "hsla(150 20% 88% / 0.94)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(154 72% 50% / 0.18), hsla(154 72% 50% / 0.58), hsla(154 72% 50% / 0.18))",
+          "shop-tag-glow": "hsla(154 72% 50% / 0.32)",
+          "image-shadow": "hsla(154 68% 60% / 0.34)",
+          "image-lowlight": "hsla(152 48% 14% / 0.5)",
+          "leaf-color": "150 62% 58%",
+          "outline-color": "154 70% 72%",
+          "chakra-third-eye": "190 82% 62%",
+          "accent-focus": "hsla(154 72% 58% / 0.4)",
+          "accent-focus-soft": "hsla(154 72% 58% / 0.16)",
+        },
+      },
+      {
+        light: {
+          "bg-gradient": "radial-gradient(circle at 50% 44%, hsl(36 98% 96%) 0%, hsl(24 82% 92%) 40%, hsl(16 68% 88%) 100%), linear-gradient(180deg, hsl(34 80% 96%) 0%, hsl(24 64% 90%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 48%, hsla(36 96% 92% / 0.7) 0%, transparent 58%)",
+          "toggle-bg": "hsla(32 82% 96% / 0.45)",
+          "toggle-border": "hsla(20 50% 36% / 0.2)",
+          "toggle-icon": "hsl(24 88% 54%)",
+          "toggle-icon-night": "hsl(42 94% 78%)",
+          "text-color": "hsl(26 34% 24%)",
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(32 84% 92% / 0.72) 0%, hsla(16 54% 72% / 0.2) 55%, transparent 78%)",
+          "panel-bg": "hsla(32 82% 96% / 0.74)",
+          "panel-color": "hsla(26 32% 30% / 0.9)",
+          "panel-shadow": "0 1.6rem 3.4rem hsla(24 54% 46% / 0.24)",
+          "shop-tag-bg": "hsla(32 76% 96% / 0.56)",
+          "shop-tag-color": "hsla(28 30% 32% / 0.9)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(32 96% 62% / 0.28), hsla(32 96% 62% / 0.92), hsla(32 96% 62% / 0.28))",
+          "shop-tag-glow": "hsla(32 96% 62% / 0.42)",
+          "image-shadow": "hsla(32 84% 64% / 0.28)",
+          "image-lowlight": "hsla(24 46% 26% / 0.28)",
+          "leaf-color": "38 76% 62%",
+          "outline-color": "32 88% 70%",
+          "chakra-third-eye": "200 84% 58%",
+          "accent-focus": "hsla(32 94% 60% / 0.6)",
+          "accent-focus-soft": "hsla(32 94% 60% / 0.22)",
+        },
+        night: {
+          "bg-gradient": "radial-gradient(circle at 50% 46%, hsl(22 42% 14%) 0%, hsl(12 32% 8%) 65%, hsl(8 28% 6%) 100%)",
+          "focus-glow": "radial-gradient(circle at 50% 46%, hsla(32 92% 64% / 0.22) 0%, transparent 72%)",
+          "toggle-bg": "hsla(18 62% 14% / 0.62)",
+          "toggle-border": "hsla(32 92% 80% / 0.3)",
+          "toggle-icon": "hsl(32 94% 60%)",
+          "toggle-icon-night": "hsl(204 70% 82%)",
+          "text-color": "hsl(28 18% 88%)",
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(32 82% 58% / 0.22) 0%, hsla(12 52% 40% / 0.14) 44%, transparent 76%)",
+          "panel-bg": "hsla(18 68% 16% / 0.72)",
+          "panel-color": "hsla(28 20% 88% / 0.94)",
+          "panel-shadow": "0 1.5rem 3.1rem hsla(28 70% 54% / 0.22)",
+          "shop-tag-bg": "hsla(18 64% 18% / 0.58)",
+          "shop-tag-color": "hsla(28 20% 90% / 0.94)",
+          "shop-tag-underline": "linear-gradient(90deg, hsla(32 96% 62% / 0.2), hsla(32 96% 62% / 0.58), hsla(32 96% 62% / 0.2))",
+          "shop-tag-glow": "hsla(32 96% 62% / 0.3)",
+          "image-shadow": "hsla(28 82% 60% / 0.34)",
+          "image-lowlight": "hsla(18 54% 20% / 0.5)",
+          "leaf-color": "38 76% 58%",
+          "outline-color": "32 78% 72%",
+          "chakra-third-eye": "200 84% 58%",
+          "accent-focus": "hsla(32 96% 66% / 0.42)",
+          "accent-focus-soft": "hsla(32 96% 66% / 0.16)",
+        },
+      },
+    ];
+
+    const applyPaletteTokens = (mode, tokens) => {
+      if (!tokens) return;
+      Object.entries(tokens).forEach(([token, value]) => {
+        root.style.setProperty(`--palette-${mode}-${token}`, value);
+      });
+    };
+
+    const applyPalette = (palette) => {
+      if (!palette) return;
+      applyPaletteTokens("light", palette.light);
+      applyPaletteTokens("night", palette.night);
+    };
+
+    if (palettes.length) {
+      const choice = palettes[Math.floor(Math.random() * palettes.length)];
+      applyPalette(choice);
+    }
+
     const storedTheme = window.localStorage.getItem("chakra-theme");
     if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       body.dataset.theme = "night";
@@ -124,7 +327,8 @@
         loader.onerror = () => resolve({ ...entry, available: false });
       });
 
-    const TRANSITION_DURATION = 900;
+    const TRANSITION_DURATION = 2200;
+    const TRANSITION_PROGRESS_RATIO = 0.45;
     let activeIndex = 0;
     let cycleTimer;
 
@@ -147,13 +351,14 @@
       const loader = new Image();
       loader.src = entry.src;
       loader.onload = () => {
+        const swapDelay = TRANSITION_DURATION * TRANSITION_PROGRESS_RATIO;
         window.setTimeout(() => {
           figureImage.src = entry.src;
           updateFigureMeta(entry);
-        }, TRANSITION_DURATION / 2);
+        }, swapDelay);
         window.setTimeout(() => {
           figure.classList.remove("is-transitioning");
-        }, TRANSITION_DURATION + 60);
+        }, TRANSITION_DURATION + 120);
       };
       loader.onerror = () => {
         window.setTimeout(() => {
