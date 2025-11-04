@@ -367,6 +367,69 @@ body[data-theme="night"] .figure__image {
   white-space: nowrap;
 }
 
+.shop-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.82rem 0.74rem;
+  border-radius: 999px;
+  background: hsla(210 60% 95% / 0.55);
+  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: clamp(0.68rem, 1.05vmin, 0.78rem);
+  color: hsla(210 32% 32% / 0.9);
+  isolation: isolate;
+}
+
+body[data-theme="night"] .shop-tag {
+  background: hsla(210 60% 20% / 0.55);
+  color: hsla(210 16% 88% / 0.92);
+}
+
+.shop-tag__label {
+  position: relative;
+  z-index: 1;
+}
+
+.shop-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.28rem;
+  width: 118%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, hsla(198 82% 70% / 0.3), hsla(198 82% 70% / 0.9), hsla(198 82% 70% / 0.3));
+  border-radius: 999px;
+  box-shadow: 0 0 0.55rem hsla(198 82% 70% / 0.45);
+}
+
+.time-panel {
+  position: fixed;
+  right: clamp(1.2rem, 3.8vw, 2rem);
+  bottom: clamp(1rem, 3.6vw, 2rem);
+  padding: 0.56rem 0.88rem;
+  min-width: 15ch;
+  border-radius: 0.78rem;
+  font-size: clamp(0.68rem, 1.2vmin, 0.82rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsla(210 28% 26% / 0.88);
+  background: hsla(210 60% 96% / 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1.6rem 3.5rem hsla(210 38% 40% / 0.25);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+body[data-theme="night"] .time-panel {
+  background: hsla(210 62% 12% / 0.66);
+  color: hsla(210 22% 88% / 0.94);
+  box-shadow: 0 1.5rem 3.2rem hsla(210 80% 60% / 0.2);
+}
+
 .figure__outline {
   position: absolute;
   inset: -11%;
