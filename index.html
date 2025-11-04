@@ -14,7 +14,7 @@
   <main class="stage" aria-label="Meditative elemental aura animation">
     <div class="figure-wrapper">
       <div
-        class="figure"
+        class="figure is-chakra-active"
         role="img"
         aria-label="Chakra aligned silhouette surrounded by elemental energy"
       >
@@ -97,9 +97,11 @@
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
 
+    const chakraSource = "chakragirl.png";
+
     const imageManifest = [
       {
-        src: "chakragirl.png",
+        src: chakraSource,
         alt: "Meditative silhouette with illuminated chakras",
         label: "Chakra aligned silhouette surrounded by elemental energy",
       },
@@ -126,11 +128,17 @@
     let activeIndex = 0;
     let cycleTimer;
 
+    const setChakraState = (isActive) => {
+      if (!figure) return;
+      figure.classList.toggle("is-chakra-active", Boolean(isActive));
+    };
+
     const updateFigureMeta = (entry) => {
       if (!figure || !figureImage) return;
       figureImage.alt = entry.alt;
       figure.setAttribute("aria-label", entry.label || entry.alt);
       figure.style.setProperty("--figure-mask", `url("${entry.src}")`);
+      setChakraState(entry.src === chakraSource);
     };
 
     const swapImage = (entry) => {

@@ -74,10 +74,10 @@ body[data-theme="night"]::before {
 
 .theme-toggle {
   position: fixed;
-  top: 2.8rem;
-  right: 2.8rem;
-  width: 3.25rem;
-  height: 3.25rem;
+  top: 2.4rem;
+  right: 2.4rem;
+  width: 3rem;
+  height: 3rem;
   border: 1px solid var(--toggle-border);
   border-radius: 999px;
   background: var(--toggle-bg);
@@ -98,8 +98,8 @@ body[data-theme="night"]::before {
 }
 
 .theme-toggle__icon {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.6rem;
+  height: 1.6rem;
   border-radius: 50%;
   position: absolute;
   transition: opacity 0.4s ease, transform 0.4s ease;
@@ -153,7 +153,7 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6vmin;
+  padding: 5vmin;
   position: relative;
   isolation: isolate;
 }
@@ -181,13 +181,13 @@ body[data-theme="night"] .stage::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1.2rem, 2vmin, 1.8rem);
+  gap: clamp(1rem, 1.8vmin, 1.5rem);
 }
 
 .figure {
   position: relative;
-  width: min(36vmin, 280px);
-  max-width: 280px;
+  width: min(32vmin, 240px);
+  max-width: 240px;
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
@@ -225,13 +225,13 @@ body[data-theme="night"] .figure__image {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.35rem 0.9rem 0.85rem;
+  padding: 0.28rem 0.82rem 0.74rem;
   border-radius: 999px;
   background: hsla(210 60% 95% / 0.55);
   backdrop-filter: blur(8px);
   text-transform: uppercase;
   letter-spacing: 0.32em;
-  font-size: clamp(0.72rem, 1.2vmin, 0.82rem);
+  font-size: clamp(0.68rem, 1.05vmin, 0.78rem);
   color: hsla(210 32% 32% / 0.9);
   isolation: isolate;
 }
@@ -250,29 +250,29 @@ body[data-theme="night"] .shop-tag {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 0.35rem;
-  width: 120%;
+  bottom: 0.28rem;
+  width: 118%;
   height: 2px;
   transform: translateX(-50%);
   background: linear-gradient(90deg, hsla(198 82% 70% / 0.3), hsla(198 82% 70% / 0.9), hsla(198 82% 70% / 0.3));
   border-radius: 999px;
-  box-shadow: 0 0 0.6rem hsla(198 82% 70% / 0.45);
+  box-shadow: 0 0 0.55rem hsla(198 82% 70% / 0.45);
 }
 
 .time-panel {
   position: fixed;
-  right: clamp(1.4rem, 4vw, 2.4rem);
-  bottom: clamp(1.2rem, 4vw, 2.2rem);
-  padding: 0.65rem 1rem;
-  min-width: 16ch;
-  border-radius: 0.85rem;
-  font-size: clamp(0.72rem, 1.4vmin, 0.88rem);
+  right: clamp(1.2rem, 3.8vw, 2rem);
+  bottom: clamp(1rem, 3.6vw, 2rem);
+  padding: 0.56rem 0.88rem;
+  min-width: 15ch;
+  border-radius: 0.78rem;
+  font-size: clamp(0.68rem, 1.2vmin, 0.82rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: hsla(210 28% 26% / 0.88);
   background: hsla(210 60% 96% / 0.7);
   backdrop-filter: blur(10px);
-  box-shadow: 0 1.8rem 4rem hsla(210 38% 40% / 0.25);
+  box-shadow: 0 1.6rem 3.5rem hsla(210 38% 40% / 0.25);
   overflow: hidden;
   white-space: nowrap;
 }
@@ -280,7 +280,7 @@ body[data-theme="night"] .shop-tag {
 body[data-theme="night"] .time-panel {
   background: hsla(210 62% 12% / 0.66);
   color: hsla(210 22% 88% / 0.94);
-  box-shadow: 0 1.8rem 4rem hsla(210 80% 60% / 0.2);
+  box-shadow: 0 1.5rem 3.2rem hsla(210 80% 60% / 0.2);
 }
 
 .figure__outline {
@@ -332,6 +332,35 @@ body[data-theme="night"] .time-panel {
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
+}
+
+.figure .aura--leaves,
+.figure .chakra {
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.figure:not(.is-chakra-active) .aura--leaves,
+.figure:not(.is-chakra-active) .chakra {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.figure:not(.is-chakra-active) .aura--leaves,
+.figure:not(.is-chakra-active) .aura--leaves *,
+.figure:not(.is-chakra-active) .chakra {
+  animation-play-state: paused;
+}
+
+.figure.is-chakra-active .aura--leaves,
+.figure.is-chakra-active .chakra {
+  opacity: 1;
+  visibility: visible;
+}
+
+.figure.is-chakra-active .aura--leaves,
+.figure.is-chakra-active .aura--leaves *,
+.figure.is-chakra-active .chakra {
+  animation-play-state: running;
 }
 
 .aura {
