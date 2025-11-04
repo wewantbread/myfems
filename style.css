@@ -585,26 +585,27 @@ body[data-theme="night"] .time-panel {
     transform: translate(-50%, -50%) scale(0.98);
     box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
-
-/* Genetic molecule logo — center + spin + gray→purple pulse */
+/* Center the logo on the page and size it up */
 :root{
-  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← change this */
-  --genetic-logo-size: clamp(700px, 26vmin, 700px);                  /* size control */
-  --genetic-gray:   #8a8a8a;
-  --genetic-purple: #82aba1;
+  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
+  --genetic-logo-size: 520px; /* make bigger/smaller here */
 }
 
-.genetic-logo{
+/* Fullscreen centering wrapper (doesn't block clicks) */
+.logo-center{
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);         /* center on screen */
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 9999; /* keep it above other layers */
+}
+
+/* The logo itself (PNG used as an alpha mask) */
+.genetic-logo{
   width: var(--genetic-logo-size);
   aspect-ratio: 1 / 1;
-  display: inline-block;
-
-  /* Use PNG as an alpha mask so we can tint cleanly */
-  background-color: var(--genetic-gray);
+  background-color: #8a8a8a;    /* gray */
   -webkit-mask-image: var(--genetic-logo-url);
   mask-image: var(--genetic-logo-url);
   -webkit-mask-repeat: no-repeat;
@@ -613,27 +614,4 @@ body[data-theme="night"] .time-panel {
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
-
-  /* Motion + color pulse */
-  animation:
-    genetic-spin 60s linear infinite,
-    genetic-purple-pulse 5s linear infinite;
-
-  transform-origin: center center;
-  /* Optional: bring above other layers */
-  /* z-index: 1000; */
-}
-
-@keyframes genetic-spin {
-  to { rotate: 1turn; } /* modern rotate keeps the translate centering intact */
-}
-
-@keyframes genetic-purple-pulse {
-  0%, 9%, 21%, 100% { background-color: var(--genetic-gray); }
-  10%, 20%          { background-color: var(--genetic-purple); }
-}
-
-/* Accessibility: respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .genetic-logo{ animation: none; }
 }
