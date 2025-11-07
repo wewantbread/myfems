@@ -132,6 +132,26 @@ body::before {
   mix-blend-mode: screen;
   opacity: 0.85;
   transition: opacity 0.6s ease, background 0.6s ease;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 18%, hsla(var(--ambient-color-1) / 0.35) 0%, transparent 62%),
+    radial-gradient(circle at 78% 28%, hsla(var(--ambient-color-2) / 0.32) 0%, transparent 68%),
+    radial-gradient(circle at 50% 82%, hsla(var(--ambient-color-3) / 0.28) 0%, transparent 72%);
+  mix-blend-mode: color-dodge;
+  opacity: 0.38;
+  filter: saturate(1.18) blur(2px);
+  transition: opacity 0.6s ease, background 0.6s ease, mix-blend-mode 0.6s ease;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 72%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 72%, transparent 100%);
 }
 
 body::after {
