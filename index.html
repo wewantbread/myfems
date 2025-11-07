@@ -107,10 +107,74 @@
       applyPalette(choice);
     }
 
+    const figure = document.querySelector(".figure");
+    const figureImage = document.querySelector(".figure__image");
+    const timePanel = document.querySelector(".time-panel");
+    const shopLabel = document.querySelector(".shop-tag__label");
+    const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
+    const ambientParticles = Array.from(
+      document.querySelectorAll(".aura--leaves .leaf")
+    );
+
+    const auraBaseStops = ["#7F7979", "#755B69", "#95A78D"];
+    const auraDayStops = [...auraBaseStops, "#DCD2C5", "#C2B3B5", "#D7E0D2"];
+    const earthToneCandidates = [
+      "#A0714C",
+      "#8F6C4F",
+      "#B58A5A",
+      "#7B6A4D",
+      "#9C8B68",
+      "#C0A77B",
+      "#7A5F4C",
+      "#B49579",
+      "#8D7657",
+      "#A88461"
+    ];
+
+    const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+    const neutralAmbientShades = ["0 0% 92%", "0 0% 76%", "0 0% 58%", "0 0% 38%"];
+
+    const setAuraStops = (stops) => {
+      const palette = stops.slice(0, 6);
+      while (palette.length < 6) {
+        palette.push(auraBaseStops[palette.length % auraBaseStops.length]);
+      }
+      palette.forEach((color, index) => {
+        root.style.setProperty(`--figure-aura-stop-${index + 1}`, color);
+      });
+    };
+
+    const randomEarthToneStops = () => {
+      const palette = [...auraBaseStops];
+      const pool = earthToneCandidates.slice();
+      while (palette.length < 6) {
+        const choiceIndex = Math.floor(Math.random() * pool.length);
+        const [tone] = pool.splice(choiceIndex, 1);
+        palette.push(tone || earthToneCandidates[Math.floor(Math.random() * earthToneCandidates.length)]);
+      }
+      return palette;
+    };
+
+    const applyAuraPaletteMode = (mode) => {
+      if (mode === "night") {
+        setAuraStops(randomEarthToneStops());
+        root.style.setProperty("--figure-aura-duration", `${randomBetween(11, 15).toFixed(1)}s`);
+        root.style.setProperty("--figure-aura-scale", randomBetween(1.85, 2.05).toFixed(2));
+      } else {
+        setAuraStops(auraDayStops);
+        root.style.setProperty("--figure-aura-duration", `${randomBetween(12, 16).toFixed(1)}s`);
+        root.style.setProperty("--figure-aura-scale", "1.82");
+      }
+    };
+
     const storedTheme = window.localStorage.getItem("chakra-theme");
     if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       body.dataset.theme = "night";
     }
+
+    const initialMode = body.dataset.theme === "night" ? "night" : "day";
+    applyAuraPaletteMode(initialMode);
 
     document.querySelector(".theme-toggle")?.addEventListener("click", () => {
       const isNight = body.dataset.theme === "night";
@@ -121,20 +185,8 @@
         delete body.dataset.theme;
       }
       window.localStorage.setItem("chakra-theme", nextTheme);
+      applyAuraPaletteMode(nextTheme);
     });
-
-    const figure = document.querySelector(".figure");
-    const figureImage = document.querySelector(".figure__image");
-    const timePanel = document.querySelector(".time-panel");
-    const shopLabel = document.querySelector(".shop-tag__label");
-    const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
-    const ambientParticles = Array.from(
-      document.querySelectorAll(".aura--leaves .leaf")
-    );
-
-    const randomBetween = (min, max) => Math.random() * (max - min) + min;
-
-    const neutralAmbientShades = ["0 0% 92%", "0 0% 76%", "0 0% 58%", "0 0% 38%"];
 
     const applyAmbientTokens = () => {
       neutralAmbientShades.forEach((shade, index) => {
@@ -188,6 +240,9 @@
       applyAmbientTokens();
       applyBeamStyles();
       configureAmbientParticles();
+      if (body.dataset.theme === "night") {
+        applyAuraPaletteMode("night");
+      }
     };
 
     const scheduleAmbientScene = () => {
