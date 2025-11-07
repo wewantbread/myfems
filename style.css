@@ -5,6 +5,18 @@
   --ambient-color-3: 0 0% 58%;
   --ambient-color-4: 0 0% 38%;
 
+  --figure-aura-stop-1: #7f7979;
+  --figure-aura-stop-2: #755b69;
+  --figure-aura-stop-3: #95a78d;
+  --figure-aura-stop-4: #b49c7a;
+  --figure-aura-stop-5: #8c725c;
+  --figure-aura-stop-6: #cabb9c;
+  --figure-aura-scale: 2.4;
+  --figure-aura-duration: 32s;
+  --figure-aura-direction: reverse;
+  --figure-aura-invert: 1;
+  --figure-aura-blend: screen;
+
   --palette-light-bg-gradient: radial-gradient(
     circle at 50% 38%,
     hsl(0 0% 100%) 0%,
@@ -167,6 +179,9 @@ body::after {
 
 body[data-theme="night"] {
   color-scheme: dark;
+  --figure-aura-direction: normal;
+  --figure-aura-invert: 0;
+  --figure-aura-blend: color-dodge;
   --bg-gradient: var(--palette-night-bg-gradient, var(--palette-light-bg-gradient));
   --focus-glow: var(--palette-night-focus-glow, var(--palette-light-focus-glow));
   --toggle-bg: var(--palette-night-toggle-bg, var(--palette-light-toggle-bg));
@@ -200,6 +215,39 @@ body[data-theme="night"]::after {
   opacity: 0.6;
   mix-blend-mode: screen;
   filter: saturate(0.85) blur(3px);
+}
+
+.figure::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% * var(--figure-aura-scale, 2.4));
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 120deg at 50% 50%,
+    var(--figure-aura-stop-1) 0deg,
+    var(--figure-aura-stop-2) 110deg,
+    var(--figure-aura-stop-3) 180deg,
+    var(--figure-aura-stop-4) 240deg,
+    var(--figure-aura-stop-5) 300deg,
+    var(--figure-aura-stop-6) 360deg
+  );
+  filter: blur(36px) saturate(1.18) brightness(1.08) invert(var(--figure-aura-invert, 0));
+  opacity: 0.78;
+  pointer-events: none;
+  mix-blend-mode: var(--figure-aura-blend, screen);
+  z-index: 1;
+  animation: figure-aura-spin var(--figure-aura-duration, 32s) linear infinite;
+  animation-direction: var(--figure-aura-direction, normal);
+  transition: filter 0.8s ease, opacity 0.8s ease;
+}
+
+body[data-theme="night"] .figure::before {
+  opacity: 0.9;
+  filter: blur(40px) saturate(1.25) brightness(1.12) invert(var(--figure-aura-invert, 0));
 }
 
 .lightshow {
@@ -835,6 +883,15 @@ body[data-theme="night"] .figure__image {
   }
   76% {
     opacity: 0.46;
+  }
+}
+
+@keyframes figure-aura-spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
