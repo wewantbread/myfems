@@ -12,57 +12,143 @@
     <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
   </button>
   <main class="stage" aria-label="Meditative elemental aura animation">
-    <div class="figure" role="img" aria-label="Chakra aligned silhouette surrounded by elemental energy">
-      <img src="chakragirl.png" alt="Meditative silhouette with illuminated chakras" class="figure__image" />
-      <span class="figure__outline" aria-hidden="true"></span>
-      <span class="chakra chakra--third-eye" aria-hidden="true"></span>
+    <div class="figure-wrapper">
+      <div
+        class="figure is-chakra-active"
+        role="img"
+        aria-label="Chakra aligned silhouette surrounded by elemental energy"
+        tabindex="0"
+      >
+        <img
+          src="chakragirl.png"
+          alt="Meditative silhouette with illuminated chakras"
+          class="figure__image"
+        />
+        <span class="figure__outline" aria-hidden="true"></span>
+        <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
-      <div class="aura aura--air" aria-hidden="true">
-        <span class="air-flow air-flow--primary"></span>
-        <span class="air-flow air-flow--secondary"></span>
-        <span class="air-trace air-trace--one"></span>
-        <span class="air-trace air-trace--two"></span>
+        <div class="aura aura--leaves" aria-hidden="true">
+          <span class="leaf" style="--index: 0"></span>
+          <span class="leaf" style="--index: 1"></span>
+          <span class="leaf" style="--index: 2"></span>
+          <span class="leaf" style="--index: 3"></span>
+          <span class="leaf" style="--index: 4"></span>
+          <span class="leaf" style="--index: 5"></span>
+          <span class="leaf" style="--index: 6"></span>
+          <span class="leaf" style="--index: 7"></span>
+          <span class="leaf" style="--index: 8"></span>
+          <span class="leaf" style="--index: 9"></span>
+          <span class="leaf" style="--index: 10"></span>
+          <span class="leaf" style="--index: 11"></span>
+          <span class="leaf" style="--index: 12"></span>
+          <span class="leaf" style="--index: 13"></span>
+          <span class="leaf" style="--index: 14"></span>
+          <span class="leaf" style="--index: 15"></span>
+        </div>
       </div>
-
-      <div class="aura aura--leaves" aria-hidden="true">
-        <span class="leaf" style="--index: 0"></span>
-        <span class="leaf" style="--index: 1"></span>
-        <span class="leaf" style="--index: 2"></span>
-        <span class="leaf" style="--index: 3"></span>
-        <span class="leaf" style="--index: 4"></span>
-        <span class="leaf" style="--index: 5"></span>
-        <span class="leaf" style="--index: 6"></span>
-        <span class="leaf" style="--index: 7"></span>
-        <span class="leaf" style="--index: 8"></span>
-        <span class="leaf" style="--index: 9"></span>
-        <span class="leaf" style="--index: 10"></span>
-        <span class="leaf" style="--index: 11"></span>
-        <span class="leaf" style="--index: 12"></span>
-        <span class="leaf" style="--index: 13"></span>
-        <span class="leaf" style="--index: 14"></span>
-        <span class="leaf" style="--index: 15"></span>
-      </div>
-
-      <div class="aura aura--water" aria-hidden="true">
-        <span class="water-ribbon water-ribbon--inner"></span>
-        <span class="water-ribbon water-ribbon--outer"></span>
-        <span class="droplet" style="--offset: 0"></span>
-        <span class="droplet" style="--offset: 1"></span>
-        <span class="droplet" style="--offset: 2"></span>
-      </div>
-
-      <div class="aura aura--fire" aria-hidden="true">
-        <span class="ember" style="--ember: 0"></span>
-        <span class="ember" style="--ember: 1"></span>
-        <span class="ember" style="--ember: 2"></span>
-        <span class="ember" style="--ember: 3"></span>
-        <span class="ember" style="--ember: 4"></span>
-        <span class="ember" style="--ember: 5"></span>
+      <div class="shop-tag" aria-hidden="true">
+        <span class="shop-tag__label">Shop</span>
       </div>
     </div>
   </main>
+  <div class="time-panel" aria-live="polite" role="status"></div>
   <script>
     const body = document.body;
+    const root = document.documentElement;
+
+    const palettes = [
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(32 92% 88% / 0.75) 0%, hsla(18 82% 60% / 0.24) 52%, transparent 78%)",
+          "leaf-color": "26 88% 58%",
+          "outline-color": "18 86% 72%",
+          "chakra-third-eye": "202 86% 58%",
+          "image-shadow": "hsla(28 74% 54% / 0.26)",
+          "image-lowlight": "hsla(24 34% 24% / 0.26)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(26 86% 58% / 0.25) 0%, hsla(18 78% 38% / 0.14) 44%, transparent 76%)",
+          "leaf-color": "20 84% 64%",
+          "outline-color": "28 88% 70%",
+          "chakra-third-eye": "202 84% 62%",
+          "image-shadow": "hsla(24 88% 64% / 0.34)",
+          "image-lowlight": "hsla(18 62% 14% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(296 88% 90% / 0.74) 0%, hsla(278 74% 72% / 0.22) 54%, transparent 80%)",
+          "leaf-color": "296 72% 70%",
+          "outline-color": "284 84% 78%",
+          "chakra-third-eye": "262 82% 64%",
+          "image-shadow": "hsla(284 72% 66% / 0.28)",
+          "image-lowlight": "hsla(282 34% 24% / 0.26)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(284 72% 58% / 0.24) 0%, hsla(268 68% 40% / 0.12) 45%, transparent 78%)",
+          "leaf-color": "288 72% 68%",
+          "outline-color": "284 82% 76%",
+          "chakra-third-eye": "262 84% 64%",
+          "image-shadow": "hsla(284 88% 66% / 0.36)",
+          "image-lowlight": "hsla(276 64% 16% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(152 68% 88% / 0.74) 0%, hsla(162 56% 70% / 0.2) 55%, transparent 78%)",
+          "leaf-color": "152 68% 54%",
+          "outline-color": "164 74% 68%",
+          "chakra-third-eye": "48 88% 56%",
+          "image-shadow": "hsla(154 62% 52% / 0.26)",
+          "image-lowlight": "hsla(150 32% 24% / 0.24)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(156 64% 52% / 0.24) 0%, hsla(170 44% 34% / 0.12) 46%, transparent 78%)",
+          "leaf-color": "152 64% 60%",
+          "outline-color": "158 70% 72%",
+          "chakra-third-eye": "48 84% 58%",
+          "image-shadow": "hsla(154 82% 60% / 0.34)",
+          "image-lowlight": "hsla(150 48% 14% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(204 92% 90% / 0.72) 0%, hsla(188 74% 76% / 0.2) 55%, transparent 80%)",
+          "leaf-color": "196 84% 64%",
+          "outline-color": "188 86% 72%",
+          "chakra-third-eye": "46 94% 58%",
+          "image-shadow": "hsla(196 76% 62% / 0.28)",
+          "image-lowlight": "hsla(188 36% 26% / 0.24)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(196 84% 60% / 0.24) 0%, hsla(188 72% 42% / 0.12) 46%, transparent 78%)",
+          "leaf-color": "192 82% 66%",
+          "outline-color": "186 84% 78%",
+          "chakra-third-eye": "46 92% 60%",
+          "image-shadow": "hsla(194 88% 70% / 0.34)",
+          "image-lowlight": "hsla(186 58% 14% / 0.5)",
+        },
+      },
+    ];
+
+    const applyPaletteTokens = (mode, tokens) => {
+      if (!tokens) return;
+      Object.entries(tokens).forEach(([token, value]) => {
+        root.style.setProperty(`--palette-${mode}-${token}`, value);
+      });
+    };
+
+    const applyPalette = (palette) => {
+      if (!palette) return;
+      applyPaletteTokens("light", palette.light);
+      applyPaletteTokens("night", palette.night);
+    };
+
+    if (palettes.length) {
+      const choice = palettes[Math.floor(Math.random() * palettes.length)];
+      applyPalette(choice);
+    }
+
     const storedTheme = window.localStorage.getItem("chakra-theme");
     if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       body.dataset.theme = "night";
@@ -78,6 +164,338 @@
       }
       window.localStorage.setItem("chakra-theme", nextTheme);
     });
+
+    const figure = document.querySelector(".figure");
+    const figureImage = document.querySelector(".figure__image");
+    const timePanel = document.querySelector(".time-panel");
+    const shopLabel = document.querySelector(".shop-tag__label");
+
+    const chakraSource = "chakragirl.png";
+
+    const imageManifest = [
+      {
+        src: chakraSource,
+        alt: "Meditative silhouette with illuminated chakras",
+        label: "Chakra aligned silhouette surrounded by elemental energy",
+      },
+      { src: "soul1.png", alt: "Radiant soul figure one" },
+      { src: "soul2.png", alt: "Radiant soul figure two" },
+      { src: "soul3.png", alt: "Radiant soul figure three" },
+      { src: "soul4.png", alt: "Radiant soul figure four" },
+      { src: "soul5.png", alt: "Radiant soul figure five" },
+      { src: "soul6.png", alt: "Radiant soul figure six" },
+      { src: "goddess.png", alt: "Divine goddess figure" },
+      { src: "deitys.png", alt: "Celestial deity figure" },
+      { src: "gods.png", alt: "Pantheon of gods illustration" },
+    ];
+
+    const preloadImage = (entry) =>
+      new Promise((resolve) => {
+        const loader = new Image();
+        loader.src = entry.src;
+        loader.onload = () => resolve({ ...entry, available: true });
+        loader.onerror = () => resolve({ ...entry, available: false });
+      });
+
+    const TRANSITION_DURATION = 3200;
+    const TRANSITION_PROGRESS_RATIO = 0.55;
+    const CYCLE_INTERVAL = 15000;
+
+    let activeIndex = 0;
+    let cycleTimer;
+    let manifestItems = [];
+    let isTransitioning = false;
+    let pendingIndex = null;
+
+    const setChakraState = (isActive) => {
+      if (!figure) return;
+      figure.classList.toggle("is-chakra-active", Boolean(isActive));
+    };
+
+    const updateFigureMeta = (entry) => {
+      if (!figure || !figureImage) return;
+      figureImage.alt = entry.alt;
+      figure.setAttribute("aria-label", entry.label || entry.alt);
+      figure.style.setProperty("--figure-mask", `url("${entry.src}")`);
+      setChakraState(entry.src === chakraSource);
+    };
+
+    function swapImage(entry) {
+      if (!figure || !figureImage) return;
+      isTransitioning = true;
+      figure.classList.add("is-transitioning");
+
+      const finalize = () => {
+        figure.classList.remove("is-transitioning");
+        isTransitioning = false;
+        if (pendingIndex !== null) {
+          const queuedIndex = pendingIndex;
+          pendingIndex = null;
+          if (queuedIndex !== activeIndex) {
+            window.requestAnimationFrame(() => advanceImage(queuedIndex));
+          }
+        }
+      };
+
+      const loader = new Image();
+      loader.src = entry.src;
+      loader.onload = () => {
+        const swapDelay = TRANSITION_DURATION * TRANSITION_PROGRESS_RATIO;
+        window.setTimeout(() => {
+          figureImage.src = entry.src;
+          updateFigureMeta(entry);
+        }, swapDelay);
+        window.setTimeout(finalize, TRANSITION_DURATION + 160);
+      };
+      loader.onerror = finalize;
+    }
+
+    function advanceImage(targetIndex) {
+      if (!manifestItems.length) return;
+      const nextIndex =
+        typeof targetIndex === "number"
+          ? (targetIndex + manifestItems.length) % manifestItems.length
+          : (activeIndex + 1) % manifestItems.length;
+
+      if (isTransitioning) {
+        if (pendingIndex !== nextIndex) {
+          pendingIndex = nextIndex;
+        }
+        return;
+      }
+
+      activeIndex = nextIndex;
+      swapImage(manifestItems[nextIndex]);
+    }
+
+    const scheduleCycle = () => {
+      if (cycleTimer) {
+        window.clearInterval(cycleTimer);
+      }
+      if (manifestItems.length < 2) {
+        return;
+      }
+      cycleTimer = window.setInterval(() => {
+        advanceImage();
+      }, CYCLE_INTERVAL);
+    };
+
+    const cycleImages = (manifest) => {
+      manifestItems = manifest.slice();
+      if (!manifestItems.length) return;
+
+      activeIndex = 0;
+      pendingIndex = null;
+      isTransitioning = false;
+      figureImage.src = manifestItems[0].src;
+      updateFigureMeta(manifestItems[0]);
+
+      scheduleCycle();
+    };
+
+    const handleAdvance = () => {
+      if (!manifestItems.length) return;
+      advanceImage();
+      scheduleCycle();
+    };
+
+    const attachInteractionHandlers = () => {
+      if (!figure) return;
+
+      if ("PointerEvent" in window) {
+        figure.addEventListener("pointerup", (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) {
+            return;
+          }
+          event.preventDefault();
+          handleAdvance();
+        });
+      } else {
+        let lastTouch = 0;
+        figure.addEventListener("touchend", (event) => {
+          lastTouch = Date.now();
+          event.preventDefault();
+          handleAdvance();
+        });
+        figure.addEventListener("click", (event) => {
+          if (Date.now() - lastTouch < 400) {
+            return;
+          }
+          handleAdvance();
+        });
+      }
+
+      figure.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " " ) {
+          event.preventDefault();
+          handleAdvance();
+        }
+      });
+    };
+
+    attachInteractionHandlers();
+
+    Promise.all(imageManifest.map(preloadImage)).then((results) => {
+      const available = results.filter((item) => item.available);
+      if (!available.length) return;
+      cycleImages(available);
+    });
+
+    const scrambleGlyphs = [
+      "卍",
+      "光",
+      "心",
+      "灵",
+      "魂",
+      "神",
+      "愛",
+      "氣",
+      "風",
+      "水",
+      "火",
+      "Ω",
+      "Ψ",
+      "Δ",
+      "Σ",
+      "Ж",
+      "Ф",
+      "Я",
+      "अ",
+      "आ",
+      "इ",
+      "ई",
+      "उ",
+      "ऊ",
+      "ॐ",
+      "ཨ",
+      "ག",
+      "ད",
+      "ན",
+      "ᚠ",
+      "ᚢ",
+      "ᚦ",
+      "ᚨ",
+      "ᛃ",
+      "ሀ",
+      "ለ",
+      "ሐ",
+      "め",
+      "ら",
+      "ん",
+      "す",
+      "星",
+      "龍",
+      "月",
+      "陽",
+      "☯",
+      "✺",
+      "✧",
+      "✦",
+      "✴",
+      "✶",
+      "✽",
+      "❂",
+      "★",
+      "✵",
+      "卄"
+    ];
+
+    const formatDateTime = () => {
+      const now = new Date();
+      return now.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZoneName: "short",
+      });
+    };
+
+    const scrambleText = (element, finalText, duration = 4000, interval = 60) => {
+      if (!element) return;
+      const structure = finalText.split("").map((char) => (/^[\s,.:/-]$/.test(char) ? char : null));
+
+      const render = () => {
+        let display = "";
+        for (let i = 0; i < finalText.length; i += 1) {
+          const preserved = structure[i];
+          if (preserved) {
+            display += preserved;
+          } else {
+            const glyph = scrambleGlyphs[Math.floor(Math.random() * scrambleGlyphs.length)];
+            display += glyph;
+          }
+        }
+        element.textContent = display;
+      };
+
+      render();
+      const timer = window.setInterval(render, interval);
+      window.setTimeout(() => {
+        window.clearInterval(timer);
+        element.textContent = finalText;
+      }, duration);
+    };
+
+    const shopTranslations = [
+      "Shop",
+      "Boutique",
+      "Magasin",
+      "Tienda",
+      "Mercado",
+      "Loja",
+      "Negozio",
+      "Butik",
+      "Kauppa",
+      "Sklep",
+      "商店",
+      "お店",
+      "상점",
+      "магазин",
+      "दुकान",
+      "مَتْجَر",
+      "ร้านค้า",
+      "שׁוּק",
+      "Butiik",
+      "Market"
+    ];
+
+    const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
+      if (!element) return;
+      const update = () => {
+        const choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
+        element.textContent = choice;
+      };
+
+      update();
+      const timer = window.setInterval(update, interval);
+      window.setTimeout(() => {
+        window.clearInterval(timer);
+        element.textContent = "Shop";
+      }, duration);
+    };
+
+    const updateClock = () => {
+      if (!timePanel) return;
+      timePanel.textContent = formatDateTime();
+    };
+
+    const initializeClock = () => {
+      if (!timePanel) return;
+      const initial = formatDateTime();
+      scrambleText(timePanel, initial, 4000);
+      window.setTimeout(() => {
+        updateClock();
+        window.setInterval(updateClock, 1000);
+      }, 4000);
+    };
+
+    scrambleShopLabel(shopLabel);
+    initializeClock();
   </script>
 </body>
 </html>
