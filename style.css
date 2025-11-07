@@ -5,13 +5,7 @@
   --ambient-color-3: 48 78% 66%;
   --ambient-color-4: 186 72% 58%;
 
-  --palette-light-bg-gradient: radial-gradient(
-      circle at 50% 44%,
-      hsl(0 0% 100%) 0%,
-      hsl(0 0% 96%) 38%,
-      hsl(0 0% 90%) 100%
-    ),
-    linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
+  --palette-light-bg-gradient: #000;
   --palette-light-focus-glow: radial-gradient(
     circle at 50% 48%,
     hsla(0 0% 100% / 0.6) 0%,
@@ -596,6 +590,8 @@ body[data-theme="night"] .figure__image {
   pointer-events: none;
   z-index: 1;
   opacity: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
 }
 
 @keyframes outline-breath {
@@ -669,6 +665,8 @@ body[data-theme="night"] .figure__image {
   opacity: 0.65;
   mix-blend-mode: screen;
   animation: haze-sparkle 22s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
 }
 
 .leaf {
