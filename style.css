@@ -463,6 +463,7 @@ body[data-theme="night"] .stage::after {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   --figure-mask: url("chakragirl.png");
+  --active-outline-color: var(--outline-color);
   --figure-raise: -2%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
@@ -560,16 +561,18 @@ body[data-theme="night"] .figure__image {
   z-index: 2;
   background: radial-gradient(
       circle at 50% calc(50% + var(--outline-focus, 0%)),
-      hsla(var(--outline-color) / 0) 58%,
-      hsla(var(--outline-color) / 0.78) 76%,
-      hsla(var(--outline-color) / 0) 96%
+      hsla(var(--active-outline-color) / 0.08) 0%,
+      hsla(var(--active-outline-color) / 0.24) 36%,
+      hsla(var(--active-outline-color) / 0.65) 64%,
+      hsla(var(--active-outline-color) / 0.18) 84%,
+      hsla(var(--active-outline-color) / 0) 100%
     );
   -webkit-mask: var(--figure-mask) center / contain no-repeat;
   mask: var(--figure-mask) center / contain no-repeat;
   filter:
-    blur(11px)
-    drop-shadow(0 0 2.2rem hsla(var(--outline-color) / 0.45))
-    drop-shadow(0 0 3.6rem hsla(var(--outline-color) / 0.24));
+    blur(18px)
+    drop-shadow(0 0 3.2rem hsla(var(--active-outline-color) / 0.55))
+    drop-shadow(0 0 5.5rem hsla(var(--active-outline-color) / 0.32));
   mix-blend-mode: screen;
   opacity: 0.68;
   visibility: visible;
@@ -578,26 +581,27 @@ body[data-theme="night"] .figure__image {
 }
 
 .figure__outline--primary {
-  --outline-focus: 4%;
+  --outline-focus: 12%;
   z-index: 3;
   filter:
-    blur(9px)
-    drop-shadow(0 0 2.6rem hsla(var(--outline-color) / 0.38))
-    drop-shadow(0 0 4rem hsla(var(--outline-color) / 0.2));
+    blur(16px)
+    drop-shadow(0 0 3.6rem hsla(var(--active-outline-color) / 0.48))
+    drop-shadow(0 0 6.2rem hsla(var(--active-outline-color) / 0.28));
 }
 
 .figure__outline--secondary {
-  --outline-focus: 5.5%;
+  --outline-focus: 16%;
   background: radial-gradient(
       circle at 50% calc(50% + var(--outline-focus, 0%)),
-      hsla(var(--outline-color) / 0) 66%,
-      hsla(var(--outline-color) / 0.52) 84%,
-      hsla(var(--outline-color) / 0) 100%
+      hsla(var(--active-outline-color) / 0.05) 0%,
+      hsla(var(--active-outline-color) / 0.18) 42%,
+      hsla(var(--active-outline-color) / 0.5) 74%,
+      hsla(var(--active-outline-color) / 0) 100%
     );
   filter:
-    blur(16px)
-    drop-shadow(0 0 2.8rem hsla(var(--outline-color) / 0.32));
-  opacity: 0.6;
+    blur(26px)
+    drop-shadow(0 0 3.8rem hsla(var(--active-outline-color) / 0.45));
+  opacity: 0.82;
   animation: outline-secondary-breath 8.4s ease-in-out infinite;
 }
 
@@ -654,16 +658,14 @@ body[data-theme="night"] .figure__image {
 }
 
 .figure:not(.is-chakra-active) .aura--leaves,
-.figure:not(.is-chakra-active) .chakra,
-.figure:not(.is-chakra-active) .figure__outline {
+.figure:not(.is-chakra-active) .chakra {
   opacity: 0;
   visibility: hidden;
 }
 
 .figure:not(.is-chakra-active) .aura--leaves,
 .figure:not(.is-chakra-active) .aura--leaves *,
-.figure:not(.is-chakra-active) .chakra,
-.figure:not(.is-chakra-active) .figure__outline {
+.figure:not(.is-chakra-active) .chakra {
   animation-play-state: paused;
 }
 

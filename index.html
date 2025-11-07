@@ -261,16 +261,17 @@
         src: chakraSource,
         alt: "Meditative silhouette with illuminated chakras",
         label: "Chakra aligned silhouette surrounded by elemental energy",
+        outlineColor: "288 78% 70%",
       },
-      { src: "soul1.png", alt: "Radiant soul figure one" },
-      { src: "soul2.png", alt: "Radiant soul figure two" },
-      { src: "soul3.png", alt: "Radiant soul figure three" },
-      { src: "soul4.png", alt: "Radiant soul figure four" },
-      { src: "soul5.png", alt: "Radiant soul figure five" },
-      { src: "soul6.png", alt: "Radiant soul figure six" },
-      { src: "goddess.png", alt: "Divine goddess figure" },
-      { src: "deitys.png", alt: "Celestial deity figure" },
-      { src: "gods.png", alt: "Pantheon of gods illustration" },
+      { src: "soul1.png", alt: "Radiant soul figure one", outlineColor: "204 86% 68%" },
+      { src: "soul2.png", alt: "Radiant soul figure two", outlineColor: "46 92% 66%" },
+      { src: "soul3.png", alt: "Radiant soul figure three", outlineColor: "128 64% 60%" },
+      { src: "soul4.png", alt: "Radiant soul figure four", outlineColor: "16 82% 68%" },
+      { src: "soul5.png", alt: "Radiant soul figure five", outlineColor: "324 76% 72%" },
+      { src: "soul6.png", alt: "Radiant soul figure six", outlineColor: "262 78% 70%" },
+      { src: "goddess.png", alt: "Divine goddess figure", outlineColor: "32 88% 70%" },
+      { src: "deitys.png", alt: "Celestial deity figure", outlineColor: "182 68% 64%" },
+      { src: "gods.png", alt: "Pantheon of gods illustration", outlineColor: "352 78% 64%" },
     ];
 
     const preloadImage = (entry) =>
@@ -301,6 +302,11 @@
       figureImage.alt = entry.alt;
       figure.setAttribute("aria-label", entry.label || entry.alt);
       figure.style.setProperty("--figure-mask", `url("${entry.src}")`);
+      if (entry.outlineColor) {
+        figure.style.setProperty("--active-outline-color", entry.outlineColor);
+      } else {
+        figure.style.removeProperty("--active-outline-color");
+      }
       setChakraState(entry.src === chakraSource);
     };
 
