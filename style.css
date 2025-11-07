@@ -444,22 +444,17 @@ body[data-theme="night"] .stage::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1rem, 1.8vmin, 1.5rem);
+  gap: clamp(0.6rem, 1.4vmin, 1.1rem);
   position: relative;
   z-index: 2;
-}
-
-.figure-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(1rem, 1.8vmin, 1.5rem);
+  padding-bottom: clamp(2.8rem, 7vmin, 4.6rem);
+  min-height: clamp(22rem, 58vmin, 32rem);
 }
 
 .figure {
   position: relative;
-  width: min(26vmin, 200px);
-  max-width: 200px;
+  width: min(22vmin, 180px);
+  max-width: 180px;
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
@@ -468,7 +463,7 @@ body[data-theme="night"] .stage::after {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   --figure-mask: url("chakragirl.png");
-  --figure-raise: -6%;
+  --figure-raise: -2%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
 }
@@ -500,11 +495,14 @@ body[data-theme="night"] .figure__image {
 }
 
 .shop-tag {
-  position: relative;
+  position: absolute;
+  top: calc(100% + clamp(0.8rem, 1.8vmin, 1.4rem));
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.28rem 0.82rem 0.74rem;
+  padding: 0.32rem 0.82rem 0.74rem;
   border-radius: 999px;
   background: var(--shop-tag-bg);
   backdrop-filter: blur(8px);
@@ -513,6 +511,10 @@ body[data-theme="night"] .figure__image {
   font-size: clamp(0.68rem, 1.05vmin, 0.78rem);
   color: var(--shop-tag-color);
   isolation: isolate;
+  width: clamp(7.5rem, 18vmin, 10.5rem);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .shop-tag__label {
@@ -599,6 +601,23 @@ body[data-theme="night"] .figure__image {
   animation: outline-secondary-breath 8.4s ease-in-out infinite;
 }
 
+.figure__earth-aura {
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.78;
+  filter: blur(34px) saturate(1.12);
+  mix-blend-mode: soft-light;
+  background:
+    radial-gradient(circle at 48% 32%, hsla(26 52% 26% / 0.85) 0%, hsla(26 52% 10% / 0) 74%),
+    radial-gradient(circle at 58% 72%, hsla(12 58% 18% / 0.55) 0%, transparent 76%);
+  -webkit-mask: var(--figure-mask) center / contain no-repeat;
+  mask: var(--figure-mask) center / contain no-repeat;
+  animation: earth-aura-cycle 26s ease-in-out infinite;
+  transition: opacity 0.8s ease, filter 0.8s ease, background 1.2s ease;
+}
+
 .chakra {
   position: absolute;
   inset: auto;
@@ -664,13 +683,13 @@ body[data-theme="night"] .figure__image {
 
 .aura {
   position: absolute;
-  inset: -24%;
+  inset: -26%;
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  filter: blur(6px);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
+  filter: blur(9px);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 72%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 72%, transparent 100%);
 }
 
 @keyframes outline-breath {
@@ -744,8 +763,8 @@ body[data-theme="night"] .figure__image {
   opacity: 0.65;
   mix-blend-mode: screen;
   animation: haze-sparkle 22s ease-in-out infinite;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 65%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 65%, transparent 100%);
 }
 
 .leaf {
