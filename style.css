@@ -124,7 +124,7 @@ body {
   justify-content: center;
   font-family: "Inter", "Helvetica Neue", system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  transition: background 0.6s ease, color 0.6s ease;
+  transition: background 0.6s ease, color 90s ease;
 }
 
 body::before {
@@ -285,6 +285,13 @@ body[data-theme="night"] .stage::before {
   gap: clamp(1rem, 1.8vmin, 1.5rem);
 }
 
+.figure-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 1.8vmin, 1.5rem);
+}
+
 .figure {
   position: relative;
   width: min(32vmin, 240px);
@@ -427,7 +434,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .chakra--third-eye {
-  top: 33.5%;
+  top: 24%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
@@ -522,6 +529,10 @@ body[data-theme="night"] .figure__image {
     transform: translate(-50%, -50%) scale(0.98);
     box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
+/* Center the logo on the page and size it up */
+:root{
+  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
+  --genetic-logo-size: 520px; /* make bigger/smaller here */
 }
 
 /* LEAVES ------------------------------------------------ */
