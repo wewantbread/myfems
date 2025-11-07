@@ -160,10 +160,12 @@
     const applyAuraPaletteMode = (mode) => {
       if (mode === "night") {
         setAuraStops(randomEarthToneStops());
-        root.style.setProperty("--figure-aura-duration", `${randomBetween(24, 34).toFixed(1)}s`);
+        root.style.setProperty("--figure-aura-duration", `${randomBetween(11, 15).toFixed(1)}s`);
+        root.style.setProperty("--figure-aura-scale", randomBetween(1.85, 2.05).toFixed(2));
       } else {
         setAuraStops(auraDayStops);
-        root.style.setProperty("--figure-aura-duration", "32s");
+        root.style.setProperty("--figure-aura-duration", `${randomBetween(12, 16).toFixed(1)}s`);
+        root.style.setProperty("--figure-aura-scale", "1.82");
       }
     };
 
