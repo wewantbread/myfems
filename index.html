@@ -12,6 +12,14 @@
     <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
   </button>
   <main class="stage" aria-label="Meditative elemental aura animation">
+    <div class="lightshow" aria-hidden="true">
+      <span class="lightshow__beam" aria-hidden="true"></span>
+      <span class="lightshow__beam" aria-hidden="true"></span>
+      <span class="lightshow__beam" aria-hidden="true"></span>
+      <span class="lightshow__beam" aria-hidden="true"></span>
+      <span class="lightshow__beam" aria-hidden="true"></span>
+      <span class="lightshow__beam" aria-hidden="true"></span>
+    </div>
     <div class="figure-wrapper">
       <div
         class="figure is-chakra-active"
@@ -169,6 +177,113 @@
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
     const shopLabel = document.querySelector(".shop-tag__label");
+    const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
+    const ambientParticles = Array.from(
+      document.querySelectorAll(".aura--leaves .leaf")
+    );
+
+    const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+    const applyAmbientTokens = (hues) => {
+      if (!Array.isArray(hues) || !hues.length) return;
+      const [primary, secondary, tertiary, quaternary] = hues;
+      const build = (hue, saturationRange, lightRange, alpha = 0.7) => {
+        const saturation = randomBetween(...saturationRange).toFixed(1);
+        const lightness = randomBetween(...lightRange).toFixed(1);
+        return `hsla(${hue.toFixed(1)} ${saturation}% ${lightness}% / ${alpha})`;
+      };
+
+      root.style.setProperty(
+        "--ambient-color-1",
+        `${primary.toFixed(1)} ${randomBetween(64, 82).toFixed(1)}% ${randomBetween(60, 78).toFixed(1)}%`
+      );
+      root.style.setProperty(
+        "--ambient-color-2",
+        `${secondary.toFixed(1)} ${randomBetween(60, 86).toFixed(1)}% ${randomBetween(58, 74).toFixed(1)}%`
+      );
+      root.style.setProperty(
+        "--ambient-color-3",
+        `${tertiary.toFixed(1)} ${randomBetween(58, 84).toFixed(1)}% ${randomBetween(55, 72).toFixed(1)}%`
+      );
+      root.style.setProperty(
+        "--ambient-color-4",
+        `${quaternary.toFixed(1)} ${randomBetween(56, 78).toFixed(1)}% ${randomBetween(48, 66).toFixed(1)}%`
+      );
+
+      const stageHaze = `radial-gradient(circle at 50% 45%, ${build(
+        primary,
+        [66, 86],
+        [64, 84],
+        0.64
+      )} 0%, ${build(secondary, [60, 80], [54, 74], 0.32)} 55%, transparent 82%)`;
+      root.style.setProperty("--ambient-stage-haze", stageHaze);
+    };
+
+    const applyBeamStyles = (hues) => {
+      if (!lightshowBeams.length) return;
+      const palette = hues.length ? hues : [Math.random() * 360];
+      lightshowBeams.forEach((beam, index) => {
+        const sourceHue = palette[index % palette.length];
+        const hue = (sourceHue + randomBetween(-14, 14) + 360) % 360;
+        const saturation = randomBetween(62, 88).toFixed(1);
+        const lightness = randomBetween(58, 80).toFixed(1);
+        beam.style.setProperty("--beam-hsl", `${hue.toFixed(1)} ${saturation}% ${lightness}%`);
+        beam.style.setProperty("--beam-duration", `${randomBetween(16, 24).toFixed(1)}s`);
+        beam.style.setProperty("--beam-delay", `${randomBetween(-8, 8).toFixed(1)}s`);
+        beam.style.setProperty("--beam-x", `${randomBetween(20, 80).toFixed(1)}%`);
+        beam.style.setProperty("--beam-y", `${randomBetween(18, 82).toFixed(1)}%`);
+      });
+    };
+
+    const configureAmbientParticles = (hues) => {
+      if (!ambientParticles.length) return;
+      const palette = hues.length ? hues : [Math.random() * 360];
+      ambientParticles.forEach((particle, index) => {
+        const sourceHue = palette[index % palette.length];
+        const hue = (sourceHue + randomBetween(-10, 18) + 360) % 360;
+        const saturation = randomBetween(58, 82).toFixed(1);
+        const lightness = randomBetween(58, 78).toFixed(1);
+        particle.style.setProperty("--particle-hsl", `${hue.toFixed(1)} ${saturation}% ${lightness}%`);
+        const duration = randomBetween(14, 22);
+        particle.style.setProperty("--particle-duration", `${duration.toFixed(1)}s`);
+        particle.style.setProperty("--particle-delay", `${(index * 0.65).toFixed(1)}s`);
+        const startRadius = randomBetween(6, 22);
+        const endRadius = startRadius + randomBetween(4, 18);
+        const angle = randomBetween(0, Math.PI * 2);
+        const driftAngle = angle + randomBetween(-0.9, 0.9);
+        const midAngle = (angle + driftAngle) / 2;
+        const midRadius = (startRadius + endRadius) / 2;
+        particle.style.setProperty("--drift-start-x", `${Math.cos(angle) * startRadius}%`);
+        particle.style.setProperty("--drift-start-y", `${Math.sin(angle) * startRadius}%`);
+        particle.style.setProperty("--drift-mid-x", `${Math.cos(midAngle) * midRadius}%`);
+        particle.style.setProperty("--drift-mid-y", `${Math.sin(midAngle) * midRadius}%`);
+        particle.style.setProperty("--drift-end-x", `${Math.cos(driftAngle) * endRadius}%`);
+        particle.style.setProperty("--drift-end-y", `${Math.sin(driftAngle) * endRadius}%`);
+        particle.style.setProperty("--particle-scale", randomBetween(0.72, 1.3).toFixed(2));
+      });
+    };
+
+    let ambientTimer;
+    const refreshAmbientScene = () => {
+      const base = randomBetween(0, 360);
+      const hues = [
+        base,
+        (base + randomBetween(28, 76)) % 360,
+        (base + randomBetween(96, 156)) % 360,
+        (base + randomBetween(180, 240)) % 360,
+      ];
+      applyAmbientTokens(hues);
+      applyBeamStyles(hues);
+      configureAmbientParticles(hues);
+    };
+
+    const scheduleAmbientScene = () => {
+      refreshAmbientScene();
+      if (ambientTimer) {
+        window.clearInterval(ambientTimer);
+      }
+      ambientTimer = window.setInterval(refreshAmbientScene, 16000);
+    };
 
     const chakraSource = "chakragirl.png";
 
@@ -197,9 +312,9 @@
         loader.onerror = () => resolve({ ...entry, available: false });
       });
 
-    const TRANSITION_DURATION = 3200;
-    const TRANSITION_PROGRESS_RATIO = 0.55;
-    const CYCLE_INTERVAL = 15000;
+    const TRANSITION_DURATION = 2200;
+    const TRANSITION_PROGRESS_RATIO = 0.45;
+    const CYCLE_INTERVAL = 14000;
 
     let activeIndex = 0;
     let cycleTimer;
@@ -240,6 +355,7 @@
       const loader = new Image();
       loader.src = entry.src;
       loader.onload = () => {
+        refreshAmbientScene();
         const swapDelay = TRANSITION_DURATION * TRANSITION_PROGRESS_RATIO;
         window.setTimeout(() => {
           figureImage.src = entry.src;
@@ -333,6 +449,7 @@
       });
     };
 
+    scheduleAmbientScene();
     attachInteractionHandlers();
 
     Promise.all(imageManifest.map(preloadImage)).then((results) => {
