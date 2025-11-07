@@ -32,7 +32,8 @@
           alt="Meditative silhouette with illuminated chakras"
           class="figure__image"
         />
-        <span class="figure__outline" aria-hidden="true"></span>
+        <span class="figure__outline figure__outline--primary" aria-hidden="true"></span>
+        <span class="figure__outline figure__outline--secondary" aria-hidden="true"></span>
         <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
         <div class="aura aura--leaves" aria-hidden="true">
@@ -569,6 +570,11 @@
       "Butik",
       "Kauppa",
       "Sklep",
+      "Winkel",
+      "Obchod",
+      "Butikk",
+      "Sklepik",
+      "Teind",
       "商店",
       "お店",
       "상점",
@@ -578,13 +584,23 @@
       "ร้านค้า",
       "שׁוּק",
       "Butiik",
+      "市场",
+      "بازار",
+      "Souk",
+      "Mercat",
+      "Tiendita",
       "Market"
     ];
 
-    const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
+    const scrambleShopLabel = (element, duration = 4000, interval = 140) => {
       if (!element) return;
+      let lastChoice = "";
       const update = () => {
-        const choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
+        let choice = lastChoice;
+        while (choice === lastChoice) {
+          choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
+        }
+        lastChoice = choice;
         element.textContent = choice;
       };
 

@@ -84,9 +84,7 @@
   --palette-night-chakra-third-eye: 212 68% 64%;
   --palette-night-accent-focus: hsla(0 0% 72% / 0.45);
   --palette-night-accent-focus-soft: hsla(0 0% 72% / 0.18);
-}
-
-
+:root {
   --bg-gradient: var(--palette-light-bg-gradient);
   --focus-glow: var(--palette-light-focus-glow);
   --toggle-bg: var(--palette-light-toggle-bg);
@@ -142,6 +140,22 @@ body::before {
   transition: opacity 0.6s ease, background 0.6s ease;
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 18%, hsla(var(--ambient-color-1) / 0.35) 0%, transparent 62%),
+    radial-gradient(circle at 78% 28%, hsla(var(--ambient-color-2) / 0.32) 0%, transparent 68%),
+    radial-gradient(circle at 50% 82%, hsla(var(--ambient-color-3) / 0.28) 0%, transparent 72%);
+  mix-blend-mode: color-dodge;
+  opacity: 0.38;
+  filter: saturate(1.18) blur(2px);
+  transition: opacity 0.6s ease, background 0.6s ease, mix-blend-mode 0.6s ease;
+  z-index: 0;
+}
+
 body[data-theme="night"] {
   color-scheme: dark;
   --bg-gradient: var(--palette-night-bg-gradient, var(--palette-light-bg-gradient));
@@ -173,6 +187,12 @@ body[data-theme="night"]::before {
   mix-blend-mode: screen;
 }
 
+body[data-theme="night"]::after {
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  filter: saturate(1.1) blur(3px);
+}
+
 .lightshow {
   position: absolute;
   inset: 0;
@@ -198,6 +218,8 @@ body[data-theme="night"]::before {
   );
   filter: blur(48px);
   opacity: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
   animation: beam-breathe var(--beam-duration, 18s) ease-in-out infinite;
   animation-delay: var(--beam-delay, 0s);
 }
@@ -294,6 +316,7 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   padding: 5vmin;
   position: relative;
   isolation: isolate;
+  z-index: 1;
 }
 
 .stage::before {
@@ -317,6 +340,32 @@ body[data-theme="night"] .stage::before {
   opacity: 0.76;
   mix-blend-mode: screen;
   transform: translate(-50%, -50%);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: clamp(22rem, 64vmin, 46rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 44% 38%, hsla(var(--ambient-color-4) / 0.4) 0%, transparent 56%),
+    radial-gradient(circle at 66% 64%, hsla(var(--ambient-color-2) / 0.28) 0%, transparent 68%);
+  mix-blend-mode: screen;
+  filter: blur(52px) saturate(1.1);
+  opacity: 0.48;
+  transform: translate(-50%, -48%) scale(1.1);
+  transition: opacity 0.6s ease, background 0.6s ease, transform 0.6s ease;
+  animation: stage-contrast-breathe 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+body[data-theme="night"] .stage::after {
+  opacity: 0.6;
+  mix-blend-mode: color-dodge;
+  transform: translate(-50%, -48%) scale(1.16);
 }
 
 .figure-wrapper {
@@ -432,14 +481,14 @@ body[data-theme="night"] .figure__image {
 
 .figure__outline {
   position: absolute;
-  inset: -11%;
+  inset: -12%;
   pointer-events: none;
-  z-index: 3;
+  z-index: 2;
   background: radial-gradient(
-      closest-side,
-      hsla(var(--outline-color) / 0) 56%,
-      hsla(var(--outline-color) / 0.86) 74%,
-      hsla(var(--outline-color) / 0) 96%
+      circle at 50% calc(50% + var(--outline-focus, 0%)),
+      hsla(var(--outline-color) / 0) 54%,
+      hsla(var(--outline-color) / 0.82) 74%,
+      hsla(var(--outline-color) / 0) 98%
     );
   -webkit-mask: var(--figure-mask) center / contain no-repeat;
   mask: var(--figure-mask) center / contain no-repeat;
@@ -450,15 +499,39 @@ body[data-theme="night"] .figure__image {
   mix-blend-mode: screen;
   opacity: 0.78;
   visibility: visible;
-  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease;
+  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease, background 0.8s ease;
   animation: outline-breath 6.6s ease-in-out infinite;
+}
+
+.figure__outline--primary {
+  --outline-focus: 4%;
+  z-index: 3;
+  filter:
+    blur(10px)
+    drop-shadow(0 0 2.1rem hsla(var(--outline-color) / 0.38))
+    drop-shadow(0 0 4rem hsla(var(--outline-color) / 0.2));
+}
+
+.figure__outline--secondary {
+  --outline-focus: 5.5%;
+  background: radial-gradient(
+      circle at 50% calc(50% + var(--outline-focus, 0%)),
+      hsla(var(--outline-color) / 0) 62%,
+      hsla(var(--outline-color) / 0.6) 82%,
+      hsla(var(--outline-color) / 0) 100%
+    );
+  filter:
+    blur(18px)
+    drop-shadow(0 0 2.8rem hsla(var(--outline-color) / 0.35));
+  opacity: 0.62;
+  animation: outline-secondary-breath 8.4s ease-in-out infinite;
 }
 
 .chakra {
   position: absolute;
   inset: auto;
-  width: clamp(14px, 2.7vmin, 22px);
-  height: clamp(14px, 2.7vmin, 22px);
+  width: clamp(12px, 2.3vmin, 18px);
+  height: clamp(12px, 2.3vmin, 18px);
   border-radius: 999px;
   pointer-events: none;
   z-index: 4;
@@ -477,7 +550,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .chakra--third-eye {
-  top: 24%;
+  top: 22%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
@@ -528,37 +601,55 @@ body[data-theme="night"] .figure__image {
 @keyframes outline-breath {
   0%,
   100% {
-    opacity: 0.62;
-    transform: scale(0.995);
+    opacity: 0.64;
+    transform: scale(0.992);
   }
   45% {
-    opacity: 0.86;
-    transform: scale(1.02);
+    opacity: 0.88;
+    transform: scale(1.024);
   }
   70% {
-    opacity: 0.75;
-    transform: scale(1.005);
+    opacity: 0.78;
+    transform: scale(1.006);
+  }
+}
+
+@keyframes outline-secondary-breath {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  42% {
+    opacity: 0.74;
+    transform: scale(1.08);
+  }
+  68% {
+    opacity: 0.6;
+    transform: scale(1.04);
   }
 }
 
 @keyframes chakra-breath {
   0%,
   100% {
-    transform: translate(-50%, -50%) scale(0.88);
-    box-shadow: 0 0 0.8rem hsla(var(--chakra-third-eye) / 0.62), 0 0 2.2rem hsla(var(--chakra-third-eye) / 0.18);
+    transform: translate(-50%, -50%) scale(0.85);
+    box-shadow: 0 0 0.72rem hsla(var(--chakra-third-eye) / 0.58), 0 0 2rem hsla(var(--chakra-third-eye) / 0.18);
   }
   42% {
-    transform: translate(-50%, -50%) scale(1.06);
-    box-shadow: 0 0 1.6rem hsla(var(--chakra-third-eye) / 0.75), 0 0 3.4rem hsla(var(--chakra-third-eye) / 0.32);
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 0 1.4rem hsla(var(--chakra-third-eye) / 0.7), 0 0 3rem hsla(var(--chakra-third-eye) / 0.3);
   }
   68% {
-    transform: translate(-50%, -50%) scale(0.98);
-    box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
+    transform: translate(-50%, -50%) scale(0.94);
+    box-shadow: 0 0 1rem hsla(var(--chakra-third-eye) / 0.64), 0 0 2.4rem hsla(var(--chakra-third-eye) / 0.24);
   }
-/* Center the logo on the page and size it up */
-:root{
-  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
-  --genetic-logo-size: 520px; /* make bigger/smaller here */
+}
+
+.stage::after,
+.figure__outline--secondary,
+.figure__outline--primary {
+  will-change: transform, opacity;
 }
 
 /* Ambient breathing haze */
@@ -688,11 +779,28 @@ body[data-theme="night"] .figure__image {
   }
 }
 
+@keyframes stage-contrast-breathe {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translate(-50%, -48%) scale(1.08);
+  }
+  46% {
+    opacity: 0.68;
+    transform: translate(-50%, -48%) scale(1.14);
+  }
+  72% {
+    opacity: 0.55;
+    transform: translate(-50%, -48%) scale(1.12);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .aura,
   .figure__outline,
   .leaf,
-  .chakra {
+  .chakra,
+  .stage::after {
     animation: none !important;
     opacity: 0 !important;
   }
