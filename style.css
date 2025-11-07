@@ -1,13 +1,11 @@
 :root {
   --cycle-duration: 20s;
+  --ambient-color-1: 210 72% 70%;
+  --ambient-color-2: 306 68% 68%;
+  --ambient-color-3: 48 78% 66%;
+  --ambient-color-4: 186 72% 58%;
 
-  --palette-light-bg-gradient: radial-gradient(
-      circle at 50% 44%,
-      hsl(0 0% 100%) 0%,
-      hsl(0 0% 96%) 38%,
-      hsl(0 0% 90%) 100%
-    ),
-    linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
+  --palette-light-bg-gradient: #000;
   --palette-light-focus-glow: radial-gradient(
     circle at 50% 48%,
     hsla(0 0% 100% / 0.6) 0%,
@@ -80,9 +78,7 @@
   --palette-night-chakra-third-eye: 212 68% 64%;
   --palette-night-accent-focus: hsla(0 0% 72% / 0.45);
   --palette-night-accent-focus-soft: hsla(0 0% 72% / 0.18);
-}
-
-
+:root {
   --bg-gradient: var(--palette-light-bg-gradient);
   --focus-glow: var(--palette-light-focus-glow);
   --toggle-bg: var(--palette-light-toggle-bg);
@@ -124,7 +120,7 @@ body {
   justify-content: center;
   font-family: "Inter", "Helvetica Neue", system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  transition: background 0.6s ease, color 90s ease;
+  transition: background 1.6s ease, color 90s ease;
 }
 
 body::before {
@@ -136,6 +132,26 @@ body::before {
   mix-blend-mode: screen;
   opacity: 0.85;
   transition: opacity 0.6s ease, background 0.6s ease;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 18%, hsla(var(--ambient-color-1) / 0.35) 0%, transparent 62%),
+    radial-gradient(circle at 78% 28%, hsla(var(--ambient-color-2) / 0.32) 0%, transparent 68%),
+    radial-gradient(circle at 50% 82%, hsla(var(--ambient-color-3) / 0.28) 0%, transparent 72%);
+  mix-blend-mode: color-dodge;
+  opacity: 0.38;
+  filter: saturate(1.18) blur(2px);
+  transition: opacity 0.6s ease, background 0.6s ease, mix-blend-mode 0.6s ease;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 72%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 72%, transparent 100%);
 }
 
 body[data-theme="night"] {
@@ -166,6 +182,51 @@ body[data-theme="night"] {
 
 body[data-theme="night"]::before {
   opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+body[data-theme="night"]::after {
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  filter: saturate(1.1) blur(3px);
+}
+
+.lightshow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  filter: saturate(1.2) brightness(1.05);
+}
+
+.lightshow__beam {
+  position: absolute;
+  top: var(--beam-y, 50%);
+  left: var(--beam-x, 50%);
+  width: 65vmax;
+  height: 65vmax;
+  transform: translate(-50%, -50%) scale(0.82);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    hsla(var(--beam-hsl, var(--ambient-color-1)) / 0.78) 0%,
+    hsla(var(--beam-hsl, var(--ambient-color-1)) / 0.05) 72%
+  );
+  filter: blur(48px);
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
+  animation: beam-breathe var(--beam-duration, 18s) ease-in-out infinite;
+  animation-delay: var(--beam-delay, 0s);
+}
+
+.lightshow__beam:nth-of-type(odd) {
+  mix-blend-mode: color-dodge;
+}
+
+.lightshow__beam:nth-of-type(even) {
   mix-blend-mode: screen;
 }
 
@@ -253,6 +314,7 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   padding: 5vmin;
   position: relative;
   isolation: isolate;
+  z-index: 1;
 }
 
 .stage::before {
@@ -263,7 +325,7 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   width: clamp(18rem, 52vmin, 38rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--stage-haze);
+  background: var(--ambient-stage-haze, var(--stage-haze));
   filter: blur(42px);
   opacity: 0.72;
   mix-blend-mode: screen;
@@ -278,11 +340,39 @@ body[data-theme="night"] .stage::before {
   transform: translate(-50%, -50%);
 }
 
+.stage::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: clamp(22rem, 64vmin, 46rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 44% 38%, hsla(var(--ambient-color-4) / 0.4) 0%, transparent 56%),
+    radial-gradient(circle at 66% 64%, hsla(var(--ambient-color-2) / 0.28) 0%, transparent 68%);
+  mix-blend-mode: screen;
+  filter: blur(52px) saturate(1.1);
+  opacity: 0.48;
+  transform: translate(-50%, -48%) scale(1.1);
+  transition: opacity 0.6s ease, background 0.6s ease, transform 0.6s ease;
+  animation: stage-contrast-breathe 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+body[data-theme="night"] .stage::after {
+  opacity: 0.6;
+  mix-blend-mode: color-dodge;
+  transform: translate(-50%, -48%) scale(1.16);
+}
+
 .figure-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(1rem, 1.8vmin, 1.5rem);
+  position: relative;
+  z-index: 2;
 }
 
 .figure-wrapper {
@@ -306,11 +396,11 @@ body[data-theme="night"] .stage::before {
   --figure-mask: url("chakragirl.png");
   --figure-raise: -6%;
   transform: translateY(var(--figure-raise));
-  transition: transform 2.4s ease;
+  transition: transform 1.8s ease;
 }
 
 .figure.is-transitioning {
-  transform: translateY(var(--figure-raise)) scale(0.985);
+  transform: translateY(var(--figure-raise)) scale(0.99);
 }
 
 .figure__image {
@@ -320,14 +410,14 @@ body[data-theme="night"] .stage::before {
   height: 100%;
   object-fit: contain;
   display: block;
-  transition: opacity 2.4s ease-in-out, transform 2.4s ease-in-out;
+  transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
   filter: drop-shadow(0 0 1.5rem var(--image-lowlight))
     drop-shadow(0 0 3.5rem var(--image-shadow));
 }
 
 .figure.is-transitioning .figure__image {
-  opacity: 0.15;
-  transform: scale(0.97);
+  opacity: 0.7;
+  transform: scale(0.985);
 }
 
 body[data-theme="night"] .figure__image {
@@ -389,14 +479,14 @@ body[data-theme="night"] .figure__image {
 
 .figure__outline {
   position: absolute;
-  inset: -11%;
+  inset: -12%;
   pointer-events: none;
-  z-index: 3;
+  z-index: 2;
   background: radial-gradient(
-      closest-side,
-      hsla(var(--outline-color) / 0) 56%,
-      hsla(var(--outline-color) / 0.86) 74%,
-      hsla(var(--outline-color) / 0) 96%
+      circle at 50% calc(50% + var(--outline-focus, 0%)),
+      hsla(var(--outline-color) / 0) 54%,
+      hsla(var(--outline-color) / 0.82) 74%,
+      hsla(var(--outline-color) / 0) 98%
     );
   -webkit-mask: var(--figure-mask) center / contain no-repeat;
   mask: var(--figure-mask) center / contain no-repeat;
@@ -407,15 +497,39 @@ body[data-theme="night"] .figure__image {
   mix-blend-mode: screen;
   opacity: 0.78;
   visibility: visible;
-  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease;
+  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease, background 0.8s ease;
   animation: outline-breath 6.6s ease-in-out infinite;
+}
+
+.figure__outline--primary {
+  --outline-focus: 4%;
+  z-index: 3;
+  filter:
+    blur(10px)
+    drop-shadow(0 0 2.1rem hsla(var(--outline-color) / 0.38))
+    drop-shadow(0 0 4rem hsla(var(--outline-color) / 0.2));
+}
+
+.figure__outline--secondary {
+  --outline-focus: 5.5%;
+  background: radial-gradient(
+      circle at 50% calc(50% + var(--outline-focus, 0%)),
+      hsla(var(--outline-color) / 0) 62%,
+      hsla(var(--outline-color) / 0.6) 82%,
+      hsla(var(--outline-color) / 0) 100%
+    );
+  filter:
+    blur(18px)
+    drop-shadow(0 0 2.8rem hsla(var(--outline-color) / 0.35));
+  opacity: 0.62;
+  animation: outline-secondary-breath 8.4s ease-in-out infinite;
 }
 
 .chakra {
   position: absolute;
   inset: auto;
-  width: clamp(14px, 2.7vmin, 22px);
-  height: clamp(14px, 2.7vmin, 22px);
+  width: clamp(12px, 2.3vmin, 18px);
+  height: clamp(12px, 2.3vmin, 18px);
   border-radius: 999px;
   pointer-events: none;
   z-index: 4;
@@ -434,7 +548,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .chakra--third-eye {
-  top: 24%;
+  top: 22%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
@@ -480,164 +594,206 @@ body[data-theme="night"] .figure__image {
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-}
-
-/* shared breathing helper */
-@keyframes breath-pulse {
-  0%,
-  100% {
-    opacity: 0.65;
-    transform: scale(0.98);
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1.02);
-  }
-  60% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.96) 60%, transparent 100%);
 }
 
 @keyframes outline-breath {
   0%,
   100% {
-    opacity: 0.62;
-    transform: scale(0.995);
+    opacity: 0.64;
+    transform: scale(0.992);
   }
   45% {
-    opacity: 0.86;
-    transform: scale(1.02);
+    opacity: 0.88;
+    transform: scale(1.024);
   }
   70% {
-    opacity: 0.75;
-    transform: scale(1.005);
+    opacity: 0.78;
+    transform: scale(1.006);
+  }
+}
+
+@keyframes outline-secondary-breath {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  42% {
+    opacity: 0.74;
+    transform: scale(1.08);
+  }
+  68% {
+    opacity: 0.6;
+    transform: scale(1.04);
   }
 }
 
 @keyframes chakra-breath {
   0%,
   100% {
-    transform: translate(-50%, -50%) scale(0.88);
-    box-shadow: 0 0 0.8rem hsla(var(--chakra-third-eye) / 0.62), 0 0 2.2rem hsla(var(--chakra-third-eye) / 0.18);
+    transform: translate(-50%, -50%) scale(0.85);
+    box-shadow: 0 0 0.72rem hsla(var(--chakra-third-eye) / 0.58), 0 0 2rem hsla(var(--chakra-third-eye) / 0.18);
   }
   42% {
-    transform: translate(-50%, -50%) scale(1.06);
-    box-shadow: 0 0 1.6rem hsla(var(--chakra-third-eye) / 0.75), 0 0 3.4rem hsla(var(--chakra-third-eye) / 0.32);
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 0 1.4rem hsla(var(--chakra-third-eye) / 0.7), 0 0 3rem hsla(var(--chakra-third-eye) / 0.3);
   }
   68% {
-    transform: translate(-50%, -50%) scale(0.98);
-    box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
+    transform: translate(-50%, -50%) scale(0.94);
+    box-shadow: 0 0 1rem hsla(var(--chakra-third-eye) / 0.64), 0 0 2.4rem hsla(var(--chakra-third-eye) / 0.24);
   }
-/* Center the logo on the page and size it up */
-:root{
-  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
-  --genetic-logo-size: 520px; /* make bigger/smaller here */
 }
 
-/* LEAVES ------------------------------------------------ */
+.stage::after,
+.figure__outline--secondary,
+.figure__outline--primary {
+  will-change: transform, opacity;
+}
+
+/* Ambient breathing haze */
 .aura--leaves {
-  animation: leaf-cycle var(--cycle-duration) linear infinite;
+  animation: haze-breathe 18s ease-in-out infinite;
 }
 
 .aura--leaves::after {
   content: "";
   position: absolute;
-  inset: -18%;
+  inset: -22%;
   background:
-    radial-gradient(circle at 30% 70%, hsla(var(--leaf-color) / 0.38) 0%, transparent 55%),
-    radial-gradient(circle at 70% 60%, hsla(var(--leaf-color) / 0.28) 0%, transparent 60%),
-    radial-gradient(circle at 50% 40%, hsla(var(--leaf-color) / 0.22) 0%, transparent 65%);
-  filter: blur(10px);
-  opacity: 0;
+    radial-gradient(circle at 25% 65%, hsla(var(--ambient-color-1) / 0.35) 0%, transparent 58%),
+    radial-gradient(circle at 72% 60%, hsla(var(--ambient-color-2) / 0.28) 0%, transparent 62%),
+    radial-gradient(circle at 48% 32%, hsla(var(--ambient-color-3) / 0.22) 0%, transparent 68%);
+  filter: blur(16px);
+  opacity: 0.65;
   mix-blend-mode: screen;
-  animation: leaf-dust var(--cycle-duration) linear infinite;
-}
-
-@keyframes leaf-cycle {
-  0%,
-  24% {
-    opacity: 0;
-  }
-  26% {
-    opacity: 0.45;
-  }
-  29%,
-  49% {
-    opacity: 1;
-  }
-  51% {
-    opacity: 0.4;
-  }
-  54%,
-  100% {
-    opacity: 0;
-  }
+  animation: haze-sparkle 22s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 55%, transparent 100%);
 }
 
 .leaf {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(8px, 2vmin, 18px);
-  height: clamp(16px, 3.4vmin, 26px);
-  background: radial-gradient(circle at 30% 30%, hsl(var(--leaf-color) / 0.92) 0%, hsl(var(--leaf-color) / 0.6) 55%, hsl(var(--leaf-color) / 0.08) 100%);
-  border-radius: 48% 52% 46% 54%;
-  transform-origin: center calc(120% + var(--index) * 0.4px);
+  width: clamp(2.4rem, 8vmin, 4.8rem);
+  height: clamp(2.4rem, 8vmin, 4.8rem);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    hsla(var(--particle-hsl, var(--ambient-color-2)) / 0.66) 0%,
+    hsla(var(--particle-hsl, var(--ambient-color-2)) / 0.08) 70%
+  );
   opacity: 0;
-  filter: blur(0.2px) saturate(1.2);
-  animation: leaf-spiral 5s ease-in-out infinite;
-  animation-delay: calc(var(--index) * 0.12s);
+  filter: blur(22px) saturate(1.2);
+  transform: translate(-50%, -50%) scale(calc(var(--particle-scale, 1) * 0.7));
+  animation: particle-breathe var(--particle-duration, 18s) ease-in-out infinite;
+  animation-delay: var(--particle-delay, 0s);
 }
 
 .leaf::after {
   content: "";
   position: absolute;
-  inset: 18% 42% 18% 42%;
+  inset: 18% 18% 18% 18%;
   border-radius: 50%;
-  background: hsl(var(--leaf-color) / 0.32);
+  background: hsla(var(--particle-hsl, var(--ambient-color-2)) / 0.24);
+  filter: blur(6px);
 }
 
-@keyframes leaf-spiral {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(0deg) translateX(3.4vmin) rotate(0deg) scale(0.7);
+@keyframes haze-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.95);
   }
-  18% {
-    opacity: 1;
+  45% {
+    opacity: 0.85;
+    transform: scale(1.02);
   }
-  52% {
-    transform: translate(-50%, -50%) rotate(300deg) translateX(2.2vmin) rotate(-300deg) scale(0.92);
-    opacity: 0.88;
+  65% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes haze-sparkle {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  40% {
+    opacity: 0.68;
+    transform: scale(1.05);
   }
   70% {
-    transform: translate(-50%, -50%) rotate(420deg) translateX(1.2vmin) rotate(-420deg) scale(0.7);
-    opacity: 0.35;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(540deg) translateX(3.4vmin) rotate(-540deg) scale(0.7);
+    opacity: 0.52;
+    transform: scale(1.01);
   }
 }
 
-@keyframes leaf-dust {
-  0%,
-  24% {
+@keyframes particle-breathe {
+  0% {
     opacity: 0;
-    transform: translateY(16%) scale(0.9);
+    transform: translate(
+        calc(-50% + var(--drift-start-x, 0%)),
+        calc(-50% + var(--drift-start-y, 0%))
+      )
+      scale(calc(var(--particle-scale, 1) * 0.6));
   }
-  30% {
-    opacity: 0.55;
-    transform: translateY(0%) scale(1);
+  40% {
+    opacity: 0.58;
   }
-  48% {
-    opacity: 0.12;
-    transform: translateY(-20%) scale(1.14);
+  52% {
+    opacity: 0.85;
+    transform: translate(
+        calc(-50% + var(--drift-mid-x, 0%)),
+        calc(-50% + var(--drift-mid-y, 0%))
+      )
+      scale(calc(var(--particle-scale, 1) * 1.08));
   }
-  54%,
   100% {
     opacity: 0;
-    transform: translateY(16%) scale(0.9);
+    transform: translate(
+        calc(-50% + var(--drift-end-x, 0%)),
+        calc(-50% + var(--drift-end-y, 0%))
+      )
+      scale(calc(var(--particle-scale, 1) * 0.75));
+  }
+}
+
+@keyframes beam-breathe {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.74);
+  }
+  38% {
+    opacity: 0.62;
+  }
+  52% {
+    opacity: 0.82;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  76% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes stage-contrast-breathe {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translate(-50%, -48%) scale(1.08);
+  }
+  46% {
+    opacity: 0.68;
+    transform: translate(-50%, -48%) scale(1.14);
+  }
+  72% {
+    opacity: 0.55;
+    transform: translate(-50%, -48%) scale(1.12);
   }
 }
 
@@ -645,7 +801,8 @@ body[data-theme="night"] .figure__image {
   .aura,
   .figure__outline,
   .leaf,
-  .chakra {
+  .chakra,
+  .stage::after {
     animation: none !important;
     opacity: 0 !important;
   }
