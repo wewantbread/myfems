@@ -480,6 +480,9 @@ body[data-theme="night"] .stage::after {
   height: 100%;
   object-fit: contain;
   display: block;
+  image-rendering: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
   filter: drop-shadow(0 0 1rem var(--image-lowlight))
     drop-shadow(0 0 2.6rem var(--image-shadow));
