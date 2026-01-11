@@ -347,7 +347,7 @@ body[data-theme="night"] .stage::before {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   --figure-mask: url("chakragirl.png");
-  --figure-raise: -6%;
+  --figure-raise: 0%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
 }
@@ -396,6 +396,7 @@ body[data-theme="night"] .figure__image {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
   padding: 0.28rem 0.82rem 0.74rem;
   border-radius: 999px;
   background: var(--shop-tag-bg);
