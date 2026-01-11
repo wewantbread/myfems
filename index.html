@@ -21,9 +21,8 @@
       <span class="lightshow__beam" aria-hidden="true"></span>
     </div>
     <div class="figure-wrapper">
-     
-
-       
+      <div class="figure" tabindex="0" role="img" aria-label="Genetic molecule ring">
+        <img class="figure__image" src="genetic_molecule_ring_v2.png" alt="Genetic molecule ring" />
       </div>
       <div class="shop-tag" aria-hidden="true">
         <span class="shop-tag__label">Shop</span>
@@ -256,23 +255,14 @@
       ambientTimer = window.setInterval(refreshAmbientScene, 16000);
     };
 
-    const chakraSource = "chakragirl.png";
+    const chakraSource = "genetic_molecule_ring_v2.png";
 
     const imageManifest = [
       {
         src: chakraSource,
-        alt: "Meditative silhouette with illuminated chakras",
-        label: "Chakra aligned silhouette surrounded by elemental energy",
+        alt: "Genetic molecule ring",
+        label: "Genetic molecule ring pulsing with light",
       },
-      { src: "soul1.png", alt: "Radiant soul figure one" },
-      { src: "soul2.png", alt: "Radiant soul figure two" },
-      { src: "soul3.png", alt: "Radiant soul figure three" },
-      { src: "soul4.png", alt: "Radiant soul figure four" },
-      { src: "soul5.png", alt: "Radiant soul figure five" },
-      { src: "soul6.png", alt: "Radiant soul figure six" },
-      { src: "goddess.png", alt: "Divine goddess figure" },
-      { src: "deitys.png", alt: "Celestial deity figure" },
-      { src: "gods.png", alt: "Pantheon of gods illustration" },
     ];
 
     const preloadImage = (entry) =>
