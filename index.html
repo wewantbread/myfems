@@ -32,9 +32,7 @@
           alt="Meditative silhouette with illuminated chakras"
           class="figure__image"
         />
-        <span class="figure__outline figure__outline--primary" aria-hidden="true"></span>
-        <span class="figure__outline figure__outline--secondary" aria-hidden="true"></span>
-        <span class="figure__earth-aura" aria-hidden="true"></span>
+        <span class="figure__outline" aria-hidden="true"></span>
         <span class="chakra chakra--third-eye" aria-hidden="true"></span>
 
         <div class="aura aura--leaves" aria-hidden="true">
@@ -69,20 +67,74 @@
     const palettes = [
       {
         light: {
-          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(0 0% 92% / 0.6) 0%, hsla(0 0% 78% / 0.2) 55%, transparent 80%)",
-          "leaf-color": "0 0% 70%",
-          "outline-color": "0 0% 82%",
-          "chakra-third-eye": "0 76% 52%",
-          "image-shadow": "hsla(0 0% 0% / 0.24)",
-          "image-lowlight": "hsla(0 0% 0% / 0.22)",
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(32 92% 88% / 0.75) 0%, hsla(18 82% 60% / 0.24) 52%, transparent 78%)",
+          "leaf-color": "26 88% 58%",
+          "outline-color": "18 86% 72%",
+          "chakra-third-eye": "202 86% 58%",
+          "image-shadow": "hsla(28 74% 54% / 0.26)",
+          "image-lowlight": "hsla(24 34% 24% / 0.26)",
         },
         night: {
-          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(0 0% 40% / 0.22) 0%, hsla(0 0% 22% / 0.12) 45%, transparent 76%)",
-          "leaf-color": "0 0% 58%",
-          "outline-color": "0 0% 74%",
-          "chakra-third-eye": "0 74% 50%",
-          "image-shadow": "hsla(0 0% 100% / 0.36)",
-          "image-lowlight": "hsla(0 0% 0% / 0.6)",
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(26 86% 58% / 0.25) 0%, hsla(18 78% 38% / 0.14) 44%, transparent 76%)",
+          "leaf-color": "20 84% 64%",
+          "outline-color": "28 88% 70%",
+          "chakra-third-eye": "202 84% 62%",
+          "image-shadow": "hsla(24 88% 64% / 0.34)",
+          "image-lowlight": "hsla(18 62% 14% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(296 88% 90% / 0.74) 0%, hsla(278 74% 72% / 0.22) 54%, transparent 80%)",
+          "leaf-color": "296 72% 70%",
+          "outline-color": "284 84% 78%",
+          "chakra-third-eye": "262 82% 64%",
+          "image-shadow": "hsla(284 72% 66% / 0.28)",
+          "image-lowlight": "hsla(282 34% 24% / 0.26)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(284 72% 58% / 0.24) 0%, hsla(268 68% 40% / 0.12) 45%, transparent 78%)",
+          "leaf-color": "288 72% 68%",
+          "outline-color": "284 82% 76%",
+          "chakra-third-eye": "262 84% 64%",
+          "image-shadow": "hsla(284 88% 66% / 0.36)",
+          "image-lowlight": "hsla(276 64% 16% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(152 68% 88% / 0.74) 0%, hsla(162 56% 70% / 0.2) 55%, transparent 78%)",
+          "leaf-color": "152 68% 54%",
+          "outline-color": "164 74% 68%",
+          "chakra-third-eye": "48 88% 56%",
+          "image-shadow": "hsla(154 62% 52% / 0.26)",
+          "image-lowlight": "hsla(150 32% 24% / 0.24)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(156 64% 52% / 0.24) 0%, hsla(170 44% 34% / 0.12) 46%, transparent 78%)",
+          "leaf-color": "152 64% 60%",
+          "outline-color": "158 70% 72%",
+          "chakra-third-eye": "48 84% 58%",
+          "image-shadow": "hsla(154 82% 60% / 0.34)",
+          "image-lowlight": "hsla(150 48% 14% / 0.5)",
+        },
+      },
+      {
+        light: {
+          "stage-haze": "radial-gradient(circle at 50% 45%, hsla(204 92% 90% / 0.72) 0%, hsla(188 74% 76% / 0.2) 55%, transparent 80%)",
+          "leaf-color": "196 84% 64%",
+          "outline-color": "188 86% 72%",
+          "chakra-third-eye": "46 94% 58%",
+          "image-shadow": "hsla(196 76% 62% / 0.28)",
+          "image-lowlight": "hsla(188 36% 26% / 0.24)",
+        },
+        night: {
+          "stage-haze": "radial-gradient(circle at 50% 46%, hsla(196 84% 60% / 0.24) 0%, hsla(188 72% 42% / 0.12) 46%, transparent 78%)",
+          "leaf-color": "192 82% 66%",
+          "outline-color": "186 84% 78%",
+          "chakra-third-eye": "46 92% 60%",
+          "image-shadow": "hsla(194 88% 70% / 0.34)",
+          "image-lowlight": "hsla(186 58% 14% / 0.5)",
         },
       },
     ];
@@ -90,9 +142,6 @@
     const applyPaletteTokens = (mode, tokens) => {
       if (!tokens) return;
       Object.entries(tokens).forEach(([token, value]) => {
-        if (token === "chakra-third-eye") {
-          return;
-        }
         root.style.setProperty(`--palette-${mode}-${token}`, value);
       });
     };
@@ -108,74 +157,10 @@
       applyPalette(choice);
     }
 
-    const figure = document.querySelector(".figure");
-    const figureImage = document.querySelector(".figure__image");
-    const timePanel = document.querySelector(".time-panel");
-    const shopLabel = document.querySelector(".shop-tag__label");
-    const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
-    const ambientParticles = Array.from(
-      document.querySelectorAll(".aura--leaves .leaf")
-    );
-
-    const auraBaseStops = ["#7F7979", "#755B69", "#95A78D"];
-    const auraDayStops = [...auraBaseStops, "#DCD2C5", "#C2B3B5", "#D7E0D2"];
-    const earthToneCandidates = [
-      "#A0714C",
-      "#8F6C4F",
-      "#B58A5A",
-      "#7B6A4D",
-      "#9C8B68",
-      "#C0A77B",
-      "#7A5F4C",
-      "#B49579",
-      "#8D7657",
-      "#A88461"
-    ];
-
-    const randomBetween = (min, max) => Math.random() * (max - min) + min;
-
-    const neutralAmbientShades = ["0 0% 92%", "0 0% 76%", "0 0% 58%", "0 0% 38%"];
-
-    const setAuraStops = (stops) => {
-      const palette = stops.slice(0, 6);
-      while (palette.length < 6) {
-        palette.push(auraBaseStops[palette.length % auraBaseStops.length]);
-      }
-      palette.forEach((color, index) => {
-        root.style.setProperty(`--figure-aura-stop-${index + 1}`, color);
-      });
-    };
-
-    const randomEarthToneStops = () => {
-      const palette = [...auraBaseStops];
-      const pool = earthToneCandidates.slice();
-      while (palette.length < 6) {
-        const choiceIndex = Math.floor(Math.random() * pool.length);
-        const [tone] = pool.splice(choiceIndex, 1);
-        palette.push(tone || earthToneCandidates[Math.floor(Math.random() * earthToneCandidates.length)]);
-      }
-      return palette;
-    };
-
-    const applyAuraPaletteMode = (mode) => {
-      if (mode === "night") {
-        setAuraStops(randomEarthToneStops());
-        root.style.setProperty("--figure-aura-duration", `${randomBetween(11, 15).toFixed(1)}s`);
-        root.style.setProperty("--figure-aura-scale", randomBetween(1.85, 2.05).toFixed(2));
-      } else {
-        setAuraStops(auraDayStops);
-        root.style.setProperty("--figure-aura-duration", `${randomBetween(12, 16).toFixed(1)}s`);
-        root.style.setProperty("--figure-aura-scale", "1.82");
-      }
-    };
-
     const storedTheme = window.localStorage.getItem("chakra-theme");
     if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       body.dataset.theme = "night";
     }
-
-    const initialMode = body.dataset.theme === "night" ? "night" : "day";
-    applyAuraPaletteMode(initialMode);
 
     document.querySelector(".theme-toggle")?.addEventListener("click", () => {
       const isNight = body.dataset.theme === "night";
@@ -186,25 +171,63 @@
         delete body.dataset.theme;
       }
       window.localStorage.setItem("chakra-theme", nextTheme);
-      applyAuraPaletteMode(nextTheme);
     });
 
-    const applyAmbientTokens = () => {
-      neutralAmbientShades.forEach((shade, index) => {
-        root.style.setProperty(`--ambient-color-${index + 1}`, shade);
-      });
+    const figure = document.querySelector(".figure");
+    const figureImage = document.querySelector(".figure__image");
+    const timePanel = document.querySelector(".time-panel");
+    const shopLabel = document.querySelector(".shop-tag__label");
+    const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
+    const ambientParticles = Array.from(
+      document.querySelectorAll(".aura--leaves .leaf")
+    );
+
+    const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+    const applyAmbientTokens = (hues) => {
+      if (!Array.isArray(hues) || !hues.length) return;
+      const [primary, secondary, tertiary, quaternary] = hues;
+      const build = (hue, saturationRange, lightRange, alpha = 0.7) => {
+        const saturation = randomBetween(...saturationRange).toFixed(1);
+        const lightness = randomBetween(...lightRange).toFixed(1);
+        return `hsla(${hue.toFixed(1)} ${saturation}% ${lightness}% / ${alpha})`;
+      };
 
       root.style.setProperty(
-        "--ambient-stage-haze",
-        "radial-gradient(circle at 50% 45%, hsla(0 0% 92% / 0.55) 0%, hsla(0 0% 72% / 0.2) 55%, transparent 82%)"
+        "--ambient-color-1",
+        `${primary.toFixed(1)} ${randomBetween(64, 82).toFixed(1)}% ${randomBetween(60, 78).toFixed(1)}%`
       );
+      root.style.setProperty(
+        "--ambient-color-2",
+        `${secondary.toFixed(1)} ${randomBetween(60, 86).toFixed(1)}% ${randomBetween(58, 74).toFixed(1)}%`
+      );
+      root.style.setProperty(
+        "--ambient-color-3",
+        `${tertiary.toFixed(1)} ${randomBetween(58, 84).toFixed(1)}% ${randomBetween(55, 72).toFixed(1)}%`
+      );
+      root.style.setProperty(
+        "--ambient-color-4",
+        `${quaternary.toFixed(1)} ${randomBetween(56, 78).toFixed(1)}% ${randomBetween(48, 66).toFixed(1)}%`
+      );
+
+      const stageHaze = `radial-gradient(circle at 50% 45%, ${build(
+        primary,
+        [66, 86],
+        [64, 84],
+        0.64
+      )} 0%, ${build(secondary, [60, 80], [54, 74], 0.32)} 55%, transparent 82%)`;
+      root.style.setProperty("--ambient-stage-haze", stageHaze);
     };
 
-    const applyBeamStyles = () => {
+    const applyBeamStyles = (hues) => {
       if (!lightshowBeams.length) return;
-      lightshowBeams.forEach((beam) => {
-        const lightness = randomBetween(52, 78).toFixed(1);
-        beam.style.setProperty("--beam-hsl", `0 0% ${lightness}%`);
+      const palette = hues.length ? hues : [Math.random() * 360];
+      lightshowBeams.forEach((beam, index) => {
+        const sourceHue = palette[index % palette.length];
+        const hue = (sourceHue + randomBetween(-14, 14) + 360) % 360;
+        const saturation = randomBetween(62, 88).toFixed(1);
+        const lightness = randomBetween(58, 80).toFixed(1);
+        beam.style.setProperty("--beam-hsl", `${hue.toFixed(1)} ${saturation}% ${lightness}%`);
         beam.style.setProperty("--beam-duration", `${randomBetween(16, 24).toFixed(1)}s`);
         beam.style.setProperty("--beam-delay", `${randomBetween(-8, 8).toFixed(1)}s`);
         beam.style.setProperty("--beam-x", `${randomBetween(20, 80).toFixed(1)}%`);
@@ -212,11 +235,15 @@
       });
     };
 
-    const configureAmbientParticles = () => {
+    const configureAmbientParticles = (hues) => {
       if (!ambientParticles.length) return;
+      const palette = hues.length ? hues : [Math.random() * 360];
       ambientParticles.forEach((particle, index) => {
-        const lightness = randomBetween(46, 72).toFixed(1);
-        particle.style.setProperty("--particle-hsl", `0 0% ${lightness}%`);
+        const sourceHue = palette[index % palette.length];
+        const hue = (sourceHue + randomBetween(-10, 18) + 360) % 360;
+        const saturation = randomBetween(58, 82).toFixed(1);
+        const lightness = randomBetween(58, 78).toFixed(1);
+        particle.style.setProperty("--particle-hsl", `${hue.toFixed(1)} ${saturation}% ${lightness}%`);
         const duration = randomBetween(14, 22);
         particle.style.setProperty("--particle-duration", `${duration.toFixed(1)}s`);
         particle.style.setProperty("--particle-delay", `${(index * 0.65).toFixed(1)}s`);
@@ -238,12 +265,16 @@
 
     let ambientTimer;
     const refreshAmbientScene = () => {
-      applyAmbientTokens();
-      applyBeamStyles();
-      configureAmbientParticles();
-      if (body.dataset.theme === "night") {
-        applyAuraPaletteMode("night");
-      }
+      const base = randomBetween(0, 360);
+      const hues = [
+        base,
+        (base + randomBetween(28, 76)) % 360,
+        (base + randomBetween(96, 156)) % 360,
+        (base + randomBetween(180, 240)) % 360,
+      ];
+      applyAmbientTokens(hues);
+      applyBeamStyles(hues);
+      configureAmbientParticles(hues);
     };
 
     const scheduleAmbientScene = () => {
@@ -261,17 +292,16 @@
         src: chakraSource,
         alt: "Meditative silhouette with illuminated chakras",
         label: "Chakra aligned silhouette surrounded by elemental energy",
-        outlineColor: "288 78% 70%",
       },
-      { src: "soul1.png", alt: "Radiant soul figure one", outlineColor: "204 86% 68%" },
-      { src: "soul2.png", alt: "Radiant soul figure two", outlineColor: "46 92% 66%" },
-      { src: "soul3.png", alt: "Radiant soul figure three", outlineColor: "128 64% 60%" },
-      { src: "soul4.png", alt: "Radiant soul figure four", outlineColor: "16 82% 68%" },
-      { src: "soul5.png", alt: "Radiant soul figure five", outlineColor: "324 76% 72%" },
-      { src: "soul6.png", alt: "Radiant soul figure six", outlineColor: "262 78% 70%" },
-      { src: "goddess.png", alt: "Divine goddess figure", outlineColor: "32 88% 70%" },
-      { src: "deitys.png", alt: "Celestial deity figure", outlineColor: "182 68% 64%" },
-      { src: "gods.png", alt: "Pantheon of gods illustration", outlineColor: "352 78% 64%" },
+      { src: "soul1.png", alt: "Radiant soul figure one" },
+      { src: "soul2.png", alt: "Radiant soul figure two" },
+      { src: "soul3.png", alt: "Radiant soul figure three" },
+      { src: "soul4.png", alt: "Radiant soul figure four" },
+      { src: "soul5.png", alt: "Radiant soul figure five" },
+      { src: "soul6.png", alt: "Radiant soul figure six" },
+      { src: "goddess.png", alt: "Divine goddess figure" },
+      { src: "deitys.png", alt: "Celestial deity figure" },
+      { src: "gods.png", alt: "Pantheon of gods illustration" },
     ];
 
     const preloadImage = (entry) =>
@@ -302,11 +332,6 @@
       figureImage.alt = entry.alt;
       figure.setAttribute("aria-label", entry.label || entry.alt);
       figure.style.setProperty("--figure-mask", `url("${entry.src}")`);
-      if (entry.outlineColor) {
-        figure.style.setProperty("--active-outline-color", entry.outlineColor);
-      } else {
-        figure.style.removeProperty("--active-outline-color");
-      }
       setChakraState(entry.src === chakraSource);
     };
 
@@ -544,11 +569,6 @@
       "Butik",
       "Kauppa",
       "Sklep",
-      "Winkel",
-      "Obchod",
-      "Butikk",
-      "Sklepik",
-      "Teind",
       "商店",
       "お店",
       "상점",
@@ -558,23 +578,13 @@
       "ร้านค้า",
       "שׁוּק",
       "Butiik",
-      "市场",
-      "بازار",
-      "Souk",
-      "Mercat",
-      "Tiendita",
       "Market"
     ];
 
-    const scrambleShopLabel = (element, duration = 4000, interval = 140) => {
+    const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
       if (!element) return;
-      let lastChoice = "";
       const update = () => {
-        let choice = lastChoice;
-        while (choice === lastChoice) {
-          choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
-        }
-        lastChoice = choice;
+        const choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
         element.textContent = choice;
       };
 
@@ -605,4 +615,4 @@
     initializeClock();
   </script>
 </body>
-</html>
+</html>	
