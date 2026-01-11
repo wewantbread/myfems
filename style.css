@@ -1,28 +1,17 @@
 :root {
   --cycle-duration: 20s;
-  --ambient-color-1: 0 0% 92%;
-  --ambient-color-2: 0 0% 76%;
-  --ambient-color-3: 0 0% 58%;
-  --ambient-color-4: 0 0% 38%;
-
-  --figure-aura-stop-1: #7f7979;
-  --figure-aura-stop-2: #755b69;
-  --figure-aura-stop-3: #95a78d;
-  --figure-aura-stop-4: #b49c7a;
-  --figure-aura-stop-5: #8c725c;
-  --figure-aura-stop-6: #cabb9c;
-  --figure-aura-scale: 1.9;
-  --figure-aura-duration: 14s;
-  --figure-aura-invert: 1;
-  --figure-aura-blend: screen;
+  --ambient-color-1: 210 72% 70%;
+  --ambient-color-2: 306 68% 68%;
+  --ambient-color-3: 48 78% 66%;
+  --ambient-color-4: 186 72% 58%;
 
   --palette-light-bg-gradient: radial-gradient(
-    circle at 50% 38%,
-    hsl(0 0% 100%) 0%,
-    hsl(0 0% 96%) 32%,
-    hsl(0 0% 88%) 68%,
-    hsl(0 0% 82%) 100%
-  );
+      circle at 50% 44%,
+      hsl(0 0% 100%) 0%,
+      hsl(0 0% 96%) 38%,
+      hsl(0 0% 90%) 100%
+    ),
+    linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
   --palette-light-focus-glow: radial-gradient(
     circle at 50% 48%,
     hsla(0 0% 100% / 0.6) 0%,
@@ -53,18 +42,13 @@
   --palette-light-shop-tag-glow: hsla(0 0% 54% / 0.35);
   --palette-light-image-shadow: hsla(0 0% 0% / 0.24);
   --palette-light-image-lowlight: hsla(0 0% 0% / 0.22);
-  --palette-light-leaf-color: 0 0% 70%;
+  --palette-light-leaf-color: 140 32% 52%;
   --palette-light-outline-color: 0 0% 72%;
-  --palette-light-chakra-third-eye: 0 76% 52%;
+  --palette-light-chakra-third-eye: 212 68% 56%;
   --palette-light-accent-focus: hsla(0 0% 24% / 0.48);
   --palette-light-accent-focus-soft: hsla(0 0% 24% / 0.16);
 
-  --palette-night-bg-gradient: radial-gradient(
-    circle at 50% 42%,
-    hsl(0 0% 16%) 0%,
-    hsl(0 0% 10%) 50%,
-    hsl(0 0% 4%) 100%
-  );
+  --palette-night-bg-gradient: #000;
   --palette-night-focus-glow: radial-gradient(
     circle at 50% 46%,
     hsla(0 0% 100% / 0.18) 0%,
@@ -95,12 +79,14 @@
   --palette-night-shop-tag-glow: hsla(0 0% 72% / 0.28);
   --palette-night-image-shadow: hsla(0 0% 100% / 0.36);
   --palette-night-image-lowlight: hsla(0 0% 0% / 0.58);
-  --palette-night-leaf-color: 0 0% 58%;
+  --palette-night-leaf-color: 150 32% 62%;
   --palette-night-outline-color: 0 0% 82%;
-  --palette-night-chakra-third-eye: 0 74% 50%;
+  --palette-night-chakra-third-eye: 212 68% 64%;
   --palette-night-accent-focus: hsla(0 0% 72% / 0.45);
   --palette-night-accent-focus-soft: hsla(0 0% 72% / 0.18);
-:root {
+}
+
+
   --bg-gradient: var(--palette-light-bg-gradient);
   --focus-glow: var(--palette-light-focus-glow);
   --toggle-bg: var(--palette-light-toggle-bg);
@@ -137,9 +123,6 @@ body {
   color-scheme: light;
   color: var(--text-color);
   background: var(--bg-gradient);
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,42 +136,14 @@ body::before {
   position: fixed;
   inset: 0;
   background: var(--focus-glow);
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
   pointer-events: none;
   mix-blend-mode: screen;
   opacity: 0.85;
   transition: opacity 0.6s ease, background 0.6s ease;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 68%, transparent 100%);
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 18%, hsla(var(--ambient-color-1) / 0.28) 0%, transparent 60%),
-    radial-gradient(circle at 78% 28%, hsla(var(--ambient-color-2) / 0.22) 0%, transparent 66%),
-    radial-gradient(circle at 50% 82%, hsla(var(--ambient-color-3) / 0.18) 0%, transparent 70%);
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
-  mix-blend-mode: screen;
-  opacity: 0.28;
-  filter: saturate(0.9) blur(2px);
-  transition: opacity 0.6s ease, background 0.6s ease, mix-blend-mode 0.6s ease;
-  z-index: 0;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.92) 70%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.92) 70%, transparent 100%);
 }
 
 body[data-theme="night"] {
   color-scheme: dark;
-  --figure-aura-invert: 0;
-  --figure-aura-blend: color-dodge;
   --bg-gradient: var(--palette-night-bg-gradient, var(--palette-light-bg-gradient));
   --focus-glow: var(--palette-night-focus-glow, var(--palette-light-focus-glow));
   --toggle-bg: var(--palette-night-toggle-bg, var(--palette-light-toggle-bg));
@@ -218,47 +173,6 @@ body[data-theme="night"]::before {
   mix-blend-mode: screen;
 }
 
-body[data-theme="night"]::after {
-  opacity: 0.6;
-  mix-blend-mode: screen;
-  filter: saturate(0.85) blur(3px);
-}
-
-.figure::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(100% * var(--figure-aura-scale, 1.9));
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0.92);
-  background: conic-gradient(
-    from 120deg at 50% 50%,
-    var(--figure-aura-stop-1) 0deg,
-    var(--figure-aura-stop-2) 110deg,
-    var(--figure-aura-stop-3) 180deg,
-    var(--figure-aura-stop-4) 240deg,
-    var(--figure-aura-stop-5) 300deg,
-    var(--figure-aura-stop-6) 360deg
-  );
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: blur(30px) saturate(1.14) brightness(1.06) invert(var(--figure-aura-invert, 0));
-  opacity: 0.7;
-  pointer-events: none;
-  mix-blend-mode: var(--figure-aura-blend, screen);
-  z-index: 1;
-  animation: figure-aura-breathe var(--figure-aura-duration, 14s) ease-in-out infinite;
-  transition: filter 0.8s ease, opacity 0.8s ease;
-}
-
-body[data-theme="night"] .figure::before {
-  opacity: 0.84;
-  filter: blur(36px) saturate(1.22) brightness(1.1) invert(var(--figure-aura-invert, 0));
-}
-
 .lightshow {
   position: absolute;
   inset: 0;
@@ -266,7 +180,7 @@ body[data-theme="night"] .figure::before {
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: screen;
-  filter: saturate(0.85) brightness(1.05);
+  filter: saturate(1.2) brightness(1.05);
 }
 
 .lightshow__beam {
@@ -284,8 +198,6 @@ body[data-theme="night"] .figure::before {
   );
   filter: blur(48px);
   opacity: 0;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.98) 62%, transparent 96%);
   animation: beam-breathe var(--beam-duration, 18s) ease-in-out infinite;
   animation-delay: var(--beam-delay, 0s);
 }
@@ -382,7 +294,6 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   padding: 5vmin;
   position: relative;
   isolation: isolate;
-  z-index: 1;
 }
 
 .stage::before {
@@ -394,9 +305,6 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--ambient-stage-haze, var(--stage-haze));
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
   filter: blur(42px);
   opacity: 0.72;
   mix-blend-mode: screen;
@@ -411,50 +319,26 @@ body[data-theme="night"] .stage::before {
   transform: translate(-50%, -50%);
 }
 
-.stage::after {
-  content: "";
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  width: clamp(22rem, 64vmin, 46rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 44% 38%, hsla(var(--ambient-color-4) / 0.4) 0%, transparent 56%),
-    radial-gradient(circle at 66% 64%, hsla(var(--ambient-color-2) / 0.28) 0%, transparent 68%);
-  background-size: 8000px 8000px;
-  background-repeat: no-repeat;
-  background-position: center;
-  mix-blend-mode: screen;
-  filter: blur(52px) saturate(1.1);
-  opacity: 0.48;
-  transform: translate(-50%, -48%) scale(1.1);
-  transition: opacity 0.6s ease, background 0.6s ease, transform 0.6s ease;
-  animation: stage-contrast-breathe 20s ease-in-out infinite;
-  z-index: 0;
-}
-
-body[data-theme="night"] .stage::after {
-  opacity: 0.6;
-  mix-blend-mode: color-dodge;
-  transform: translate(-50%, -48%) scale(1.16);
+.figure-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 1.8vmin, 1.5rem);
+  position: relative;
+  z-index: 2;
 }
 
 .figure-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(0.6rem, 1.4vmin, 1.1rem);
-  position: relative;
-  z-index: 2;
-  padding-bottom: clamp(2.8rem, 7vmin, 4.6rem);
-  min-height: clamp(22rem, 58vmin, 32rem);
+  gap: clamp(1rem, 1.8vmin, 1.5rem);
 }
 
 .figure {
   position: relative;
-  width: min(22vmin, 180px);
-  max-width: 180px;
+  width: min(32vmin, 240px);
+  max-width: 240px;
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
@@ -463,8 +347,7 @@ body[data-theme="night"] .stage::after {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   --figure-mask: url("chakragirl.png");
-  --active-outline-color: var(--outline-color);
-  --figure-raise: -2%;
+  --figure-raise: -6%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
 }
@@ -475,17 +358,14 @@ body[data-theme="night"] .stage::after {
 
 .figure__image {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
-  image-rendering: auto;
-  transform: translateZ(0);
-  backface-visibility: hidden;
   transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
-  filter: drop-shadow(0 0 1rem var(--image-lowlight))
-    drop-shadow(0 0 2.6rem var(--image-shadow));
+  filter: drop-shadow(0 0 1.5rem var(--image-lowlight))
+    drop-shadow(0 0 3.5rem var(--image-shadow));
 }
 
 .figure.is-transitioning .figure__image {
@@ -494,19 +374,16 @@ body[data-theme="night"] .stage::after {
 }
 
 body[data-theme="night"] .figure__image {
-  filter: drop-shadow(0 0 1.1rem var(--image-lowlight))
-    drop-shadow(0 0 3.2rem var(--image-shadow));
+  filter: drop-shadow(0 0 1.4rem var(--image-lowlight))
+    drop-shadow(0 0 4.2rem var(--image-shadow));
 }
 
 .shop-tag {
-  position: absolute;
-  top: calc(100% + clamp(0.8rem, 1.8vmin, 1.4rem));
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.32rem 0.82rem 0.74rem;
+  padding: 0.28rem 0.82rem 0.74rem;
   border-radius: 999px;
   background: var(--shop-tag-bg);
   backdrop-filter: blur(8px);
@@ -515,10 +392,6 @@ body[data-theme="night"] .figure__image {
   font-size: clamp(0.68rem, 1.05vmin, 0.78rem);
   color: var(--shop-tag-color);
   isolation: isolate;
-  width: clamp(7.5rem, 18vmin, 10.5rem);
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 .shop-tag__label {
@@ -559,77 +432,33 @@ body[data-theme="night"] .figure__image {
 
 .figure__outline {
   position: absolute;
-  inset: -12%;
+  inset: -11%;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
   background: radial-gradient(
-      circle at 50% calc(50% + var(--outline-focus, 0%)),
-      hsla(var(--active-outline-color) / 0.08) 0%,
-      hsla(var(--active-outline-color) / 0.24) 36%,
-      hsla(var(--active-outline-color) / 0.65) 64%,
-      hsla(var(--active-outline-color) / 0.18) 84%,
-      hsla(var(--active-outline-color) / 0) 100%
+      closest-side,
+      hsla(var(--outline-color) / 0) 56%,
+      hsla(var(--outline-color) / 0.86) 74%,
+      hsla(var(--outline-color) / 0) 96%
     );
   -webkit-mask: var(--figure-mask) center / contain no-repeat;
   mask: var(--figure-mask) center / contain no-repeat;
   filter:
-    blur(18px)
-    drop-shadow(0 0 3.2rem hsla(var(--active-outline-color) / 0.55))
-    drop-shadow(0 0 5.5rem hsla(var(--active-outline-color) / 0.32));
+    blur(12px)
+    drop-shadow(0 0 1.8rem hsla(var(--outline-color) / 0.42))
+    drop-shadow(0 0 3.8rem hsla(var(--outline-color) / 0.22));
   mix-blend-mode: screen;
-  opacity: 0.68;
-  visibility: visible;
-  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease, background 0.8s ease;
-  animation: outline-breath 6.6s ease-in-out infinite;
-}
-
-.figure__outline--primary {
-  --outline-focus: 12%;
-  z-index: 2;
-  filter:
-    blur(16px)
-    drop-shadow(0 0 3.6rem hsla(var(--active-outline-color) / 0.48))
-    drop-shadow(0 0 6.2rem hsla(var(--active-outline-color) / 0.28));
-}
-
-.figure__outline--secondary {
-  --outline-focus: 16%;
-  background: radial-gradient(
-      circle at 50% calc(50% + var(--outline-focus, 0%)),
-      hsla(var(--active-outline-color) / 0.05) 0%,
-      hsla(var(--active-outline-color) / 0.18) 42%,
-      hsla(var(--active-outline-color) / 0.5) 74%,
-      hsla(var(--active-outline-color) / 0) 100%
-    );
-  filter:
-    blur(26px)
-    drop-shadow(0 0 3.8rem hsla(var(--active-outline-color) / 0.45));
-  opacity: 0.82;
-  animation: outline-secondary-breath 8.4s ease-in-out infinite;
-}
-
-.figure__earth-aura {
-  position: absolute;
-  inset: -30%;
-  pointer-events: none;
-  z-index: 1;
   opacity: 0.78;
-  filter: blur(34px) saturate(1.12);
-  mix-blend-mode: soft-light;
-  background:
-    radial-gradient(circle at 48% 32%, hsla(26 52% 26% / 0.85) 0%, hsla(26 52% 10% / 0) 74%),
-    radial-gradient(circle at 58% 72%, hsla(12 58% 18% / 0.55) 0%, transparent 76%);
-  -webkit-mask: var(--figure-mask) center / contain no-repeat;
-  mask: var(--figure-mask) center / contain no-repeat;
-  animation: earth-aura-cycle 26s ease-in-out infinite;
-  transition: opacity 0.8s ease, filter 0.8s ease, background 1.2s ease;
+  visibility: visible;
+  transition: opacity 0.8s ease, visibility 0.8s ease, filter 0.8s ease;
+  animation: outline-breath 6.6s ease-in-out infinite;
 }
 
 .chakra {
   position: absolute;
   inset: auto;
-  width: clamp(12px, 2.3vmin, 18px);
-  height: clamp(12px, 2.3vmin, 18px);
+  width: clamp(14px, 2.7vmin, 22px);
+  height: clamp(14px, 2.7vmin, 22px);
   border-radius: 999px;
   pointer-events: none;
   z-index: 4;
@@ -648,7 +477,7 @@ body[data-theme="night"] .figure__image {
 }
 
 .chakra--third-eye {
-  top: 20%;
+  top: 24%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: chakra-breath 4.8s ease-in-out infinite;
@@ -661,14 +490,16 @@ body[data-theme="night"] .figure__image {
 }
 
 .figure:not(.is-chakra-active) .aura--leaves,
-.figure:not(.is-chakra-active) .chakra {
+.figure:not(.is-chakra-active) .chakra,
+.figure:not(.is-chakra-active) .figure__outline {
   opacity: 0;
   visibility: hidden;
 }
 
 .figure:not(.is-chakra-active) .aura--leaves,
 .figure:not(.is-chakra-active) .aura--leaves *,
-.figure:not(.is-chakra-active) .chakra {
+.figure:not(.is-chakra-active) .chakra,
+.figure:not(.is-chakra-active) .figure__outline {
   animation-play-state: paused;
 }
 
@@ -688,67 +519,46 @@ body[data-theme="night"] .figure__image {
 
 .aura {
   position: absolute;
-  inset: -26%;
+  inset: -14%;
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  filter: blur(9px);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 72%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 72%, transparent 100%);
 }
 
 @keyframes outline-breath {
   0%,
   100% {
-    opacity: 0.6;
-    transform: scale(0.97);
+    opacity: 0.62;
+    transform: scale(0.995);
   }
   45% {
-    opacity: 0.85;
-    transform: scale(1.06);
+    opacity: 0.86;
+    transform: scale(1.02);
   }
   70% {
-    opacity: 0.72;
-    transform: scale(1.02);
-  }
-}
-
-@keyframes outline-secondary-breath {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: scale(1.02);
-  }
-  42% {
-    opacity: 0.74;
-    transform: scale(1.08);
-  }
-  68% {
-    opacity: 0.6;
-    transform: scale(1.04);
+    opacity: 0.75;
+    transform: scale(1.005);
   }
 }
 
 @keyframes chakra-breath {
   0%,
   100% {
-    transform: translate(-50%, -50%) scale(0.85);
-    box-shadow: 0 0 0.72rem hsla(var(--chakra-third-eye) / 0.58), 0 0 2rem hsla(var(--chakra-third-eye) / 0.18);
+    transform: translate(-50%, -50%) scale(0.88);
+    box-shadow: 0 0 0.8rem hsla(var(--chakra-third-eye) / 0.62), 0 0 2.2rem hsla(var(--chakra-third-eye) / 0.18);
   }
   42% {
-    transform: translate(-50%, -50%) scale(1.08);
-    box-shadow: 0 0 1.4rem hsla(var(--chakra-third-eye) / 0.7), 0 0 3rem hsla(var(--chakra-third-eye) / 0.3);
+    transform: translate(-50%, -50%) scale(1.06);
+    box-shadow: 0 0 1.6rem hsla(var(--chakra-third-eye) / 0.75), 0 0 3.4rem hsla(var(--chakra-third-eye) / 0.32);
   }
   68% {
-    transform: translate(-50%, -50%) scale(0.94);
-    box-shadow: 0 0 1rem hsla(var(--chakra-third-eye) / 0.64), 0 0 2.4rem hsla(var(--chakra-third-eye) / 0.24);
+    transform: translate(-50%, -50%) scale(0.98);
+    box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
-}
-
-.stage::after,
-.figure__outline--secondary,
-.figure__outline--primary {
-  will-change: transform, opacity;
+/* Center the logo on the page and size it up */
+:root{
+  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
+  --genetic-logo-size: 520px; /* make bigger/smaller here */
 }
 
 /* Ambient breathing haze */
@@ -768,8 +578,6 @@ body[data-theme="night"] .figure__image {
   opacity: 0.65;
   mix-blend-mode: screen;
   animation: haze-sparkle 22s ease-in-out infinite;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 65%, transparent 100%);
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.94) 65%, transparent 100%);
 }
 
 .leaf {
@@ -803,32 +611,32 @@ body[data-theme="night"] .figure__image {
 @keyframes haze-breathe {
   0%,
   100% {
-    opacity: 0.58;
-    transform: scale(0.9);
+    opacity: 0.6;
+    transform: scale(0.95);
   }
   45% {
-    opacity: 0.95;
-    transform: scale(1.12);
+    opacity: 0.85;
+    transform: scale(1.02);
   }
   65% {
-    opacity: 0.72;
-    transform: scale(1.04);
+    opacity: 0.7;
+    transform: scale(1);
   }
 }
 
 @keyframes haze-sparkle {
   0%,
   100% {
-    opacity: 0.42;
-    transform: scale(0.94);
+    opacity: 0.45;
+    transform: scale(0.96);
   }
   40% {
-    opacity: 0.78;
-    transform: scale(1.12);
+    opacity: 0.68;
+    transform: scale(1.05);
   }
   70% {
-    opacity: 0.6;
-    transform: scale(1.06);
+    opacity: 0.52;
+    transform: scale(1.01);
   }
 }
 
@@ -866,49 +674,17 @@ body[data-theme="night"] .figure__image {
   0%,
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.7);
+    transform: translate(-50%, -50%) scale(0.74);
   }
   38% {
-    opacity: 0.68;
+    opacity: 0.62;
   }
   52% {
-    opacity: 0.88;
-    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.82;
+    transform: translate(-50%, -50%) scale(1.08);
   }
   76% {
-    opacity: 0.46;
-  }
-}
-
-@keyframes figure-aura-breathe {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(0.88);
-    opacity: 0.64;
-  }
-  44% {
-    transform: translate(-50%, -50%) scale(1.04);
-    opacity: 0.86;
-  }
-  68% {
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0.74;
-  }
-}
-
-@keyframes stage-contrast-breathe {
-  0%,
-  100% {
-    opacity: 0.42;
-    transform: translate(-50%, -48%) scale(1.08);
-  }
-  46% {
-    opacity: 0.68;
-    transform: translate(-50%, -48%) scale(1.14);
-  }
-  72% {
-    opacity: 0.55;
-    transform: translate(-50%, -48%) scale(1.12);
+    opacity: 0.4;
   }
 }
 
@@ -916,8 +692,7 @@ body[data-theme="night"] .figure__image {
   .aura,
   .figure__outline,
   .leaf,
-  .chakra,
-  .stage::after {
+  .chakra {
     animation: none !important;
     opacity: 0 !important;
   }
