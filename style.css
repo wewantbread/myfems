@@ -86,7 +86,7 @@
   --palette-night-accent-focus-soft: hsla(0 0% 72% / 0.18);
 }
 
-
+:root {
   --bg-gradient: var(--palette-light-bg-gradient);
   --focus-glow: var(--palette-light-focus-glow);
   --toggle-bg: var(--palette-light-toggle-bg);
@@ -364,6 +364,7 @@ body[data-theme="night"] .stage::before {
   object-fit: contain;
   display: block;
   transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
+  animation: genetic-breathe 12s ease-in-out infinite;
   filter: drop-shadow(0 0 1.5rem var(--image-lowlight))
     drop-shadow(0 0 3.5rem var(--image-shadow));
 }
@@ -555,10 +556,22 @@ body[data-theme="night"] .figure__image {
     transform: translate(-50%, -50%) scale(0.98);
     box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
-/* Center the logo on the page and size it up */
-:root{
-  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
-  --genetic-logo-size: 520px; /* make bigger/smaller here */
+}
+
+@keyframes genetic-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.98);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    opacity: 0.72;
+    transform: scale(1.01);
+  }
 }
 
 /* Ambient breathing haze */
