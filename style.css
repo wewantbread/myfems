@@ -352,6 +352,21 @@ body[data-theme="night"] .stage::before {
   transition: transform 1.8s ease;
 }
 
+.figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--genetic-color, #cdb2ab);
+  -webkit-mask: var(--figure-mask) center / contain no-repeat;
+  mask: var(--figure-mask) center / contain no-repeat;
+  filter: drop-shadow(0 0 1.4rem var(--image-lowlight))
+    drop-shadow(0 0 3.2rem var(--image-shadow));
+  animation:
+    genetic-spin 34s linear infinite,
+    genetic-tint 22s ease-in-out infinite,
+    genetic-breathe 12s ease-in-out infinite;
+}
+
 .figure.is-transitioning {
   transform: translateY(var(--figure-raise)) scale(0.99);
 }
@@ -363,10 +378,7 @@ body[data-theme="night"] .stage::before {
   height: 100%;
   object-fit: contain;
   display: block;
-  transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
-  animation: genetic-breathe 12s ease-in-out infinite;
-  filter: drop-shadow(0 0 1.5rem var(--image-lowlight))
-    drop-shadow(0 0 3.5rem var(--image-shadow));
+  opacity: 0;
 }
 
 .figure.is-transitioning .figure__image {
@@ -574,6 +586,31 @@ body[data-theme="night"] .figure__image {
   }
 }
 
+@keyframes genetic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes genetic-tint {
+  0%,
+  100% {
+    background: #cdb2ab;
+  }
+  25% {
+    background: #adc698;
+  }
+  50% {
+    background: #bcd2ee;
+  }
+  75% {
+    background: #bbb891;
+  }
+  90% {
+    background: #968e85;
+  }
+}
+
 /* Ambient breathing haze */
 .aura--leaves {
   animation: haze-breathe 18s ease-in-out infinite;
@@ -703,6 +740,7 @@ body[data-theme="night"] .figure__image {
 
 @media (prefers-reduced-motion: reduce) {
   .aura,
+  .figure::before,
   .figure__outline,
   .leaf,
   .chakra {
