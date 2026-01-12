@@ -86,7 +86,7 @@
   --palette-night-accent-focus-soft: hsla(0 0% 72% / 0.18);
 }
 
-
+:root {
   --bg-gradient: var(--palette-light-bg-gradient);
   --focus-glow: var(--palette-light-focus-glow);
   --toggle-bg: var(--palette-light-toggle-bg);
@@ -335,6 +335,39 @@ body[data-theme="night"] .stage::before {
   gap: clamp(1rem, 1.8vmin, 1.5rem);
 }
 
+.molecule-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vmin, 1.2rem);
+  text-align: center;
+}
+
+.molecule-figure {
+  width: min(22vmin, 170px);
+  max-width: 170px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.molecule-figure__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 1.2rem var(--image-lowlight))
+    drop-shadow(0 0 3rem var(--image-shadow));
+}
+
+.molecule-plus {
+  font-size: clamp(1.2rem, 3vmin, 2.2rem);
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.75;
+  text-shadow: 0 0 0.65rem var(--image-shadow);
+}
+
 .figure {
   position: relative;
   width: min(32vmin, 240px);
@@ -346,10 +379,25 @@ body[data-theme="night"] .stage::before {
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  --figure-mask: url("chakragirl.png");
-  --figure-raise: -6%;
+  --figure-mask: url("humanmolecule.png");
+  --figure-raise: 0%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
+}
+
+.figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--genetic-color, #cdb2ab);
+  -webkit-mask: var(--figure-mask) center / contain no-repeat;
+  mask: var(--figure-mask) center / contain no-repeat;
+  filter: drop-shadow(0 0 1.4rem var(--image-lowlight))
+    drop-shadow(0 0 3.2rem var(--image-shadow));
+  animation:
+    genetic-spin 34s linear infinite,
+    genetic-tint 22s ease-in-out infinite,
+    genetic-breathe 12s ease-in-out infinite;
 }
 
 .figure.is-transitioning {
@@ -363,9 +411,7 @@ body[data-theme="night"] .stage::before {
   height: 100%;
   object-fit: contain;
   display: block;
-  transition: opacity 1.6s ease-in-out, transform 1.6s ease-in-out;
-  filter: drop-shadow(0 0 1.5rem var(--image-lowlight))
-    drop-shadow(0 0 3.5rem var(--image-shadow));
+  opacity: 0;
 }
 
 .figure.is-transitioning .figure__image {
@@ -383,6 +429,7 @@ body[data-theme="night"] .figure__image {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
   padding: 0.28rem 0.82rem 0.74rem;
   border-radius: 999px;
   background: var(--shop-tag-bg);
@@ -555,10 +602,47 @@ body[data-theme="night"] .figure__image {
     transform: translate(-50%, -50%) scale(0.98);
     box-shadow: 0 0 1.1rem hsla(var(--chakra-third-eye) / 0.7), 0 0 2.6rem hsla(var(--chakra-third-eye) / 0.26);
   }
-/* Center the logo on the page and size it up */
-:root{
-  --genetic-logo-url: url("/path/to/genetic_molecule_ring_v2.png"); /* ← update this */
-  --genetic-logo-size: 520px; /* make bigger/smaller here */
+}
+
+@keyframes genetic-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.98);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    opacity: 0.72;
+    transform: scale(1.01);
+  }
+}
+
+@keyframes genetic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes genetic-tint {
+  0%,
+  100% {
+    background: #cdb2ab;
+  }
+  25% {
+    background: #adc698;
+  }
+  50% {
+    background: #bcd2ee;
+  }
+  75% {
+    background: #bbb891;
+  }
+  90% {
+    background: #968e85;
+  }
 }
 
 /* Ambient breathing haze */
@@ -690,6 +774,7 @@ body[data-theme="night"] .figure__image {
 
 @media (prefers-reduced-motion: reduce) {
   .aura,
+  .figure::before,
   .figure__outline,
   .leaf,
   .chakra {

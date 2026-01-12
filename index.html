@@ -21,9 +21,18 @@
       <span class="lightshow__beam" aria-hidden="true"></span>
     </div>
     <div class="figure-wrapper">
-     
-
-       
+      <div class="molecule-row" role="group" aria-label="Molecule collage">
+        <div class="molecule-figure">
+          <img class="molecule-figure__image" src="chakragirl.png" alt="Chakra girl molecule" />
+        </div>
+        <span class="molecule-plus" aria-hidden="true">+</span>
+        <div class="figure" tabindex="0" role="img" aria-label="Human molecule">
+          <img class="figure__image" src="humanmolecule.png" alt="Human molecule" />
+        </div>
+        <span class="molecule-plus" aria-hidden="true">+</span>
+        <div class="molecule-figure">
+          <img class="molecule-figure__image" src="thcmolecule.png" alt="THC molecule" />
+        </div>
       </div>
       <div class="shop-tag" aria-hidden="true">
         <span class="shop-tag__label">Shop</span>
@@ -256,23 +265,14 @@
       ambientTimer = window.setInterval(refreshAmbientScene, 16000);
     };
 
-    const chakraSource = "chakragirl.png";
+    const chakraSource = "humanmolecule.png";
 
     const imageManifest = [
       {
         src: chakraSource,
-        alt: "Meditative silhouette with illuminated chakras",
-        label: "Chakra aligned silhouette surrounded by elemental energy",
+        alt: "Human molecule",
+        label: "Human molecule pulsing with light",
       },
-      { src: "soul1.png", alt: "Radiant soul figure one" },
-      { src: "soul2.png", alt: "Radiant soul figure two" },
-      { src: "soul3.png", alt: "Radiant soul figure three" },
-      { src: "soul4.png", alt: "Radiant soul figure four" },
-      { src: "soul5.png", alt: "Radiant soul figure five" },
-      { src: "soul6.png", alt: "Radiant soul figure six" },
-      { src: "goddess.png", alt: "Divine goddess figure" },
-      { src: "deitys.png", alt: "Celestial deity figure" },
-      { src: "gods.png", alt: "Pantheon of gods illustration" },
     ];
 
     const preloadImage = (entry) =>
