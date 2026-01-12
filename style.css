@@ -335,6 +335,41 @@ body[data-theme="night"] .stage::before {
   gap: clamp(1rem, 1.8vmin, 1.5rem);
 }
 
+.molecule-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vmin, 1.2rem);
+  text-align: center;
+}
+
+.molecule-figure {
+  width: min(22vmin, 170px);
+  max-width: 170px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.molecule-figure__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  animation: molecule-appear 1.8s ease forwards;
+  filter: drop-shadow(0 0 1.2rem var(--image-lowlight))
+    drop-shadow(0 0 3rem var(--image-shadow));
+}
+
+.molecule-plus {
+  font-size: clamp(1.2rem, 3vmin, 2.2rem);
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.75;
+  text-shadow: 0 0 0.65rem var(--image-shadow);
+}
+
 .figure {
   position: relative;
   width: min(32vmin, 240px);
@@ -346,7 +381,7 @@ body[data-theme="night"] .stage::before {
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  --figure-mask: url("chakragirl.png");
+  --figure-mask: url("humanmolecule.png");
   --figure-raise: 0%;
   transform: translateY(var(--figure-raise));
   transition: transform 1.8s ease;
@@ -379,6 +414,7 @@ body[data-theme="night"] .stage::before {
   object-fit: contain;
   display: block;
   opacity: 0;
+  animation: molecule-appear 1.8s ease forwards;
 }
 
 .figure.is-transitioning .figure__image {
@@ -587,6 +623,17 @@ body[data-theme="night"] .figure__image {
   }
 }
 
+@keyframes molecule-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes genetic-spin {
   to {
     transform: rotate(360deg);
@@ -749,7 +796,14 @@ body[data-theme="night"] .figure__image {
     opacity: 0 !important;
   }
 
+  .molecule-figure__image,
+  .figure__image {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .figure,
+  .molecule-figure__image,
   .figure__image {
     transition: none !important;
   }
