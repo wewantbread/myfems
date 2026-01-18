@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="xaza-bg" aria-hidden="true"></div>
   <button class="theme-toggle" type="button" aria-label="Toggle between night and day">
     <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
     <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
@@ -41,6 +42,16 @@
     </div>
   </main>
   <div class="time-panel" aria-live="polite" role="status"></div>
+  <input
+    class="xaza-hue-slider"
+    type="range"
+    min="0"
+    max="360"
+    step="0.1"
+    value="0"
+    aria-hidden="true"
+    tabindex="-1"
+  />
   <script>
     const body = document.body;
     const root = document.documentElement;
@@ -159,6 +170,7 @@
     const timePanel = document.querySelector(".time-panel");
     const shopLabel = document.querySelector(".shop-tag__label");
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
+    const hueSlider = document.querySelector(".xaza-hue-slider");
     const ambientParticles = Array.from(
       document.querySelectorAll(".aura--leaves .leaf")
     );
@@ -423,6 +435,51 @@
 
     scheduleAmbientScene();
     attachInteractionHandlers();
+
+    const setXazaHue = (value) => {
+      const hue = Number.parseFloat(value);
+      if (Number.isNaN(hue)) return;
+      root.style.setProperty("--xaza-hue", `${hue}deg`);
+    };
+
+    const initializeHueSlider = () => {
+      if (!hueSlider) return;
+      const updateHueFromSlider = () => setXazaHue(hueSlider.value);
+      hueSlider.addEventListener("input", updateHueFromSlider);
+      updateHueFromSlider();
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let hueTimer = null;
+
+      const startHueLoop = () => {
+        if (hueTimer) return;
+        hueTimer = window.setInterval(() => {
+          const nextValue = (Number.parseFloat(hueSlider.value) + 0.4) % 360;
+          hueSlider.value = nextValue.toFixed(1);
+          updateHueFromSlider();
+        }, 80);
+      };
+
+      const stopHueLoop = () => {
+        if (!hueTimer) return;
+        window.clearInterval(hueTimer);
+        hueTimer = null;
+      };
+
+      if (!prefersReduced.matches) {
+        startHueLoop();
+      }
+
+      prefersReduced.addEventListener("change", (event) => {
+        if (event.matches) {
+          stopHueLoop();
+        } else {
+          startHueLoop();
+        }
+      });
+    };
+
+    initializeHueSlider();
 
     Promise.all(imageManifest.map(preloadImage)).then((results) => {
       const available = results.filter((item) => item.available);
