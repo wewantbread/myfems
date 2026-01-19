@@ -454,10 +454,10 @@
       const startHueLoop = () => {
         if (hueTimer) return;
         hueTimer = window.setInterval(() => {
-          const nextValue = (Number.parseFloat(hueSlider.value) + 0.4) % 360;
+          const nextValue = randomBetween(0, 360);
           hueSlider.value = nextValue.toFixed(1);
           updateHueFromSlider();
-        }, 80);
+        }, 15000);
       };
 
       const stopHueLoop = () => {
