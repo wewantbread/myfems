@@ -145,6 +145,14 @@ body {
   transition: opacity 1.2s ease, filter 0.8s ease;
 }
 
+.pixel-wave {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -189,13 +197,7 @@ body[data-theme="night"]::before {
 }
 
 .lightshow {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: screen;
-  filter: saturate(1.2) brightness(1.05);
+  display: none;
 }
 
 .lightshow__beam {
@@ -309,7 +311,7 @@ body[data-theme="night"] .theme-toggle__icon--moon {
   padding: 5vmin;
   position: relative;
   isolation: isolate;
-  z-index: 2;
+  z-index: 3;
 }
 
 .stage::before {

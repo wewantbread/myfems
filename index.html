@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="xaza-bg" aria-hidden="true"></div>
+  <canvas class="pixel-wave" aria-hidden="true"></canvas>
   <button class="theme-toggle" type="button" aria-label="Toggle between night and day">
     <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
     <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
@@ -171,6 +172,7 @@
     const shopLabel = document.querySelector(".shop-tag__label");
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
     const hueSlider = document.querySelector(".xaza-hue-slider");
+    const pixelWave = document.querySelector(".pixel-wave");
     const ambientParticles = Array.from(
       document.querySelectorAll(".aura--leaves .leaf")
     );
@@ -433,7 +435,7 @@
       });
     };
 
-    scheduleAmbientScene();
+    refreshAmbientScene();
     attachInteractionHandlers();
 
     const setXazaHue = (value) => {
@@ -480,6 +482,114 @@
     };
 
     initializeHueSlider();
+
+    const initPixelWave = () => {
+      if (!pixelWave) return;
+      const context = pixelWave.getContext("2d");
+      if (!context) return;
+
+      const buffer = document.createElement("canvas");
+      const bufferContext = buffer.getContext("2d");
+      if (!bufferContext) return;
+
+      const points = [];
+      const trailLifetime = 1400;
+      const spawnDelay = 40;
+      const pixelScale = 10;
+      let lastSpawn = 0;
+      const pointer = {
+        x: window.innerWidth * 0.5,
+        y: window.innerHeight * 0.5,
+        active: false,
+      };
+
+      const resize = () => {
+        const { innerWidth, innerHeight, devicePixelRatio } = window;
+        pixelWave.width = innerWidth * devicePixelRatio;
+        pixelWave.height = innerHeight * devicePixelRatio;
+        pixelWave.style.width = `${innerWidth}px`;
+        pixelWave.style.height = `${innerHeight}px`;
+        buffer.width = Math.ceil(innerWidth / pixelScale);
+        buffer.height = Math.ceil(innerHeight / pixelScale);
+        context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      };
+
+      const addPoint = (x, y, time) => {
+        points.push({ x, y, time });
+      };
+
+      const handlePointerMove = (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        pointer.active = true;
+        const now = performance.now();
+        if (now - lastSpawn >= spawnDelay) {
+          addPoint(pointer.x, pointer.y, now);
+          lastSpawn = now;
+        }
+      };
+
+      const handlePointerLeave = () => {
+        pointer.active = false;
+      };
+
+      const draw = (time) => {
+        bufferContext.clearRect(0, 0, buffer.width, buffer.height);
+        bufferContext.fillStyle = "rgba(255, 255, 255, 0.35)";
+        const activePoints = [];
+
+        points.forEach((point) => {
+          const age = time - point.time;
+          if (age > trailLifetime) {
+            return;
+          }
+          const progress = age / trailLifetime;
+          const wave = Math.sin(progress * Math.PI * 2) * 2.2;
+          const size = 1.4 + progress * 2.6;
+          const alpha = (1 - progress) * 0.45;
+          const x = point.x / pixelScale;
+          const y = (point.y + wave * pixelScale) / pixelScale;
+          bufferContext.globalAlpha = alpha;
+          bufferContext.fillRect(x - size / 2, y - size / 2, size, size);
+          activePoints.push(point);
+        });
+
+        points.length = 0;
+        points.push(...activePoints);
+
+        if (pointer.active && time - lastSpawn >= spawnDelay) {
+          addPoint(pointer.x, pointer.y, time);
+          lastSpawn = time;
+        }
+
+        context.clearRect(0, 0, pixelWave.width, pixelWave.height);
+        context.imageSmoothingEnabled = false;
+        context.globalCompositeOperation = "screen";
+        context.drawImage(
+          buffer,
+          0,
+          0,
+          buffer.width,
+          buffer.height,
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
+        context.globalCompositeOperation = "source-over";
+        window.requestAnimationFrame(draw);
+      };
+
+      resize();
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("pointerdown", handlePointerMove);
+      window.addEventListener("pointerleave", handlePointerLeave);
+      window.addEventListener("blur", handlePointerLeave);
+      window.requestAnimationFrame(draw);
+    };
+
+    initPixelWave();
 
     Promise.all(imageManifest.map(preloadImage)).then((results) => {
       const available = results.filter((item) => item.available);
