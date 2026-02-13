@@ -241,7 +241,7 @@ body[data-theme="night"]::before {
   place-items: center;
   cursor: pointer;
   transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  z-index: 3;
+  z-index: 6;
 }
 
 .theme-toggle:hover,
@@ -445,11 +445,13 @@ body[data-theme="night"] .figure__image {
 .shop-tag {
   position: relative;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   align-self: center;
-  padding: 0.28rem 0.82rem 0.74rem;
-  border-radius: 999px;
+  gap: 0.4rem;
+  padding: 0.42rem 0.82rem 0.74rem;
+  border-radius: 1rem;
   background: var(--shop-tag-bg);
   backdrop-filter: blur(8px);
   text-transform: uppercase;
@@ -463,6 +465,31 @@ body[data-theme="night"] .figure__image {
 .shop-tag__label {
   position: relative;
   z-index: 1;
+}
+
+.shop-tag__gallery {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2rem;
+}
+
+.shop-tag__thumb {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 0.4rem;
+  object-fit: cover;
+  border: 1px solid hsla(0 0% 100% / 0.38);
+  box-shadow: 0 0.45rem 0.9rem hsla(0 0% 0% / 0.2);
+  animation: gallery-float 3.4s ease-in-out infinite;
+}
+
+.shop-tag__thumb:nth-child(2n) {
+  animation-delay: 0.7s;
+}
+
+.shop-tag__thumb:nth-child(3n) {
+  animation-delay: 1.4s;
 }
 
 .shop-tag::after {
@@ -798,6 +825,16 @@ body[data-theme="night"] .figure__image {
   }
   76% {
     opacity: 0.4;
+  }
+}
+
+@keyframes gallery-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.25rem) scale(1.04);
   }
 }
 
