@@ -37,10 +37,18 @@
         </div>
       </div>
     </div>
-      <div class="shop-tag" aria-hidden="true">
-        <span class="shop-tag__label">Shop</span>
+      <div class="shop-tag" aria-label="Gallery preview">
+        <span class="shop-tag__label">Gallery</span>
+        <div class="shop-tag__gallery" aria-hidden="true">
+          <img class="shop-tag__thumb" src="IMG_6186.PNG" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6392.JPG" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6520.HEIC" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6521.HEIC" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6527.HEIC" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6528.HEIC" alt="" loading="lazy" />
+          <img class="shop-tag__thumb" src="IMG_6533.HEIC" alt="" loading="lazy" />
+        </div>
       </div>
-    </div>
   </main>
   <div class="time-panel" aria-live="polite" role="status"></div>
   <input
@@ -151,7 +159,10 @@
     }
 
     const storedTheme = window.localStorage.getItem("chakra-theme");
-    if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (storedTheme === "day") {
+      delete body.dataset.theme;
+    } else if (storedTheme === "night" || (!storedTheme && prefersDark)) {
       body.dataset.theme = "night";
     }
 
@@ -170,6 +181,7 @@
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
     const shopLabel = document.querySelector(".shop-tag__label");
+    const galleryThumbs = Array.from(document.querySelectorAll(".shop-tag__thumb"));
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
     const hueSlider = document.querySelector(".xaza-hue-slider");
     const pixelWave = document.querySelector(".pixel-wave");
@@ -296,6 +308,19 @@
         loader.src = entry.src;
         loader.onload = () => resolve({ ...entry, available: true });
         loader.onerror = () => resolve({ ...entry, available: false });
+      });
+
+    const preloadElementImage = (element) =>
+      new Promise((resolve) => {
+        const source = element?.getAttribute("src");
+        if (!source || !element) {
+          resolve(false);
+          return;
+        }
+        const loader = new Image();
+        loader.src = source;
+        loader.onload = () => resolve(true);
+        loader.onerror = () => resolve(false);
       });
 
     const TRANSITION_DURATION = 2200;
@@ -597,6 +622,14 @@
       cycleImages(available);
     });
 
+    Promise.all(galleryThumbs.map(preloadElementImage)).then((results) => {
+      galleryThumbs.forEach((thumb, index) => {
+        if (!results[index]) {
+          thumb.remove();
+        }
+      });
+    });
+
     const scrambleGlyphs = [
       "卍",
       "光",
@@ -698,26 +731,20 @@
     };
 
     const shopTranslations = [
-      "Shop",
-      "Boutique",
-      "Magasin",
-      "Tienda",
-      "Mercado",
-      "Loja",
-      "Negozio",
-      "Butik",
-      "Kauppa",
-      "Sklep",
-      "商店",
-      "お店",
-      "상점",
-      "магазин",
-      "दुकान",
-      "مَتْجَر",
-      "ร้านค้า",
-      "שׁוּק",
-      "Butiik",
-      "Market"
+      "Gallery",
+      "Galerie",
+      "Galería",
+      "Galleria",
+      "Galeria",
+      "Galleri",
+      "ギャラリー",
+      "갤러리",
+      "галерея",
+      "معرض",
+      "גלריה",
+      "Gallerij",
+      "展示馆",
+      "चित्रशाला"
     ];
 
     const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
@@ -731,7 +758,7 @@
       const timer = window.setInterval(update, interval);
       window.setTimeout(() => {
         window.clearInterval(timer);
-        element.textContent = "Shop";
+        element.textContent = "Gallery";
       }, duration);
     };
 
