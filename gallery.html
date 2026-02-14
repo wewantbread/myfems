@@ -1,1 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Sacred Element Cycle</title>
+  <style>
+    :root {
+      --text: #ebf7f1;
+      --muted: #c6ddd1;
+      --line: rgba(220, 248, 237, 0.28);
+      --card-bg: rgba(14, 44, 36, 0.44);
+      --card-bg-active: rgba(28, 86, 68, 0.58);
+      --panel-bg: rgba(8, 24, 20, 0.72);
+      --xaza-hue: 0deg;
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 50% 20%, #174538, #061814 70%);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .xaza-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: url("xaza.png") center/cover no-repeat;
+      opacity: 0.72;
+      filter: hue-rotate(var(--xaza-hue));
+      transition: filter 0.7s ease;
+    }
+
+    .pixel-wave {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(98, 224, 172, 0.26), transparent 38%),
+        radial-gradient(circle at 80% 14%, rgba(117, 177, 255, 0.2), transparent 35%);
+      animation: glowShift 14s ease-in-out infinite alternate;
+    }
+
+    .page {
+      position: relative;
+      z-index: 3;
+      width: min(1120px, 94vw);
+      margin: 1.4rem auto 2rem;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4.2vw, 2.95rem);
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .back-home {
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      padding: 0.5rem 0.95rem;
+      font-size: 0.86rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .collections {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .collection-button {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card-bg);
+      color: var(--text);
+      text-align: left;
+      padding: 1rem;
+      min-height: 96px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: transform 190ms ease, background 190ms ease, box-shadow 190ms ease;
+    }
+
+    .collection-button:hover,
+    .collection-button:focus-visible,
+    .collection-button.is-active {
+      transform: translateY(-3px);
+      background: var(--card-bg-active);
+      box-shadow: 0 0.7rem 1.7rem rgba(6, 20, 16, 0.42);
+    }
+
+    .collection-button h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.03rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #84e7c0;
+    }
+
+    .collection-button p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .items-panel {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-bg);
+      padding: 1rem;
+      backdrop-filter: blur(8px);
+      min-height: 320px;
+      animation: riseIn 360ms ease;
+    }
+
+    .panel-title {
+      margin: 0 0 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 1rem;
+      color: #7de4ba;
+    }
+
+    .text-list {
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .text-item {
+      border: 1px solid rgba(208, 245, 227, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.65rem 0.75rem;
+      cursor: pointer;
+      transition: background 150ms ease;
+    }
+
+    .text-item:hover,
+    .text-item:focus-visible {
+      background: rgba(132, 231, 192, 0.13);
+      outline: none;
+    }
+
+    .text-item strong {
+      display: block;
+      font-size: 0.94rem;
+      color: #d8f7e9;
+      letter-spacing: 0.03em;
+    }
+
+    .text-item span {
+      display: block;
+      margin-top: 0.28rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .empty-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(3, 10, 9, 0.78);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox__panel {
+      width: min(92vw, 900px);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(6, 20, 16, 0.95);
+      transform: scale(0.88);
+      transition: transform 240ms ease;
+    }
+
+    .lightbox.open .lightbox__panel { transform: scale(1); }
+
+    .lightbox__panel img {
+      width: 100%;
+      max-height: min(72vh, 760px);
+      object-fit: contain;
+      display: block;
+      background: #010302;
+    }
+
+    .lightbox__meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.72rem 0.9rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .lightbox button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      padding: 0.36rem 0.75rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-size: 0.75rem;
+    }
+
+    @keyframes glowShift {
+      from { opacity: 0.42; }
+      to { opacity: 0.72; }
+    }
+
+    @keyframes riseIn {
+      from { transform: translateY(8px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .collections { grid-template-columns: 1fr; }
+      .items-panel { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="xaza-bg" aria-hidden="true"></div>
+  <canvas class="pixel-wave" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <header class="topbar">
+      <h1>Gallery Collections</h1>
+      <a class="back-home" href="index.html">Back Home</a>
+    </header>
+
+    <section class="collections" aria-label="Collection selector">
+      <button class="collection-button is-active" type="button" data-collection="veg">
+        <h2>Veg</h2>
+        <p>Click to view text list</p>
+      </button>
+      <button class="collection-button" type="button" data-collection="training">
+        <h2>Training</h2>
+        <p>Click to view text list</p>
+      </button>
+      <button class="collection-button" type="button" data-collection="flower">
+        <h2>Flower</h2>
+        <p>Click to view all submitted photos</p>
+      </button>
+    </section>
+
+    <section class="items-panel" id="items-panel" aria-live="polite"></section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox__panel">
+      <img id="lightbox-image" src="" alt="Selected gallery image" />
+      <div class="lightbox__meta">
+        <span id="lightbox-desc"></span>
+        <button type="button" id="close-lightbox">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const collections = {
+      veg: {
+        title: "Veg",
+        items: [],
+        empty: "No photos are assigned to Veg right now."
+      },
+      training: {
+        title: "Training",
+        items: [],
+        empty: "No photos are assigned to Training right now."
+      },
+      flower: {
+        title: "Flower",
+        items: [
+          { file: "fb2s1.jpg", label: "fb2s1.jpg", desc: "Flower image from your first set" },
+          { file: "fb2s1v2.jpg", label: "fb2s1v2.jpg", desc: "Flower image from your first set" },
+          { file: "fb2s1v3.jpg", label: "fb2s1v3.jpg", desc: "Flower image from your first set" },
+          { file: "fb2s1v4.jpg", label: "fb2s1v4.jpg", desc: "Flower image from your first set" },
+          { file: "IMG_3364.jpeg", label: "IMG_3364.jpeg", desc: "Flower image from your additional upload" },
+          { file: "IMG_3566.jpeg", label: "IMG_3566.jpeg", desc: "Flower image from your additional upload" },
+          { file: "IMG_3568.jpeg", label: "IMG_3568.jpeg", desc: "Flower image from your additional upload" },
+          { file: "IMG_3569.jpeg", label: "IMG_3569.jpeg", desc: "Flower image from your additional upload" },
+          { file: "IMG_3571.jpeg", label: "IMG_3571.jpeg", desc: "Flower image from your additional upload" },
+          { file: "IMG_3588.jpeg", label: "IMG_3588.jpeg", desc: "Flower image from your additional upload" }
+        ]
+      }
+    };
+
+    const panel = document.getElementById("items-panel");
+    const buttons = Array.from(document.querySelectorAll(".collection-button"));
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxDesc = document.getElementById("lightbox-desc");
+    const closeButton = document.getElementById("close-lightbox");
+    const root = document.documentElement;
+    const pixelWave = document.querySelector(".pixel-wave");
+
+    const renderCollection = (key) => {
+      const config = collections[key];
+      if (!config) return;
+
+      buttons.forEach((btn) => {
+        btn.classList.toggle("is-active", btn.dataset.collection === key);
+      });
+
+      const heading = `<h2 class="panel-title">${config.title} Collection</h2>`;
+
+      if (!config.items.length) {
+        panel.innerHTML = `${heading}<p class="empty-note">${config.empty}</p>`;
+        return;
+      }
+
+      const itemsMarkup = config.items
+        .map((item, index) => `
+          <button class="text-item" type="button" data-file="${item.file}" data-desc="${item.desc}">
+            <strong>${index + 1}. ${item.label}</strong>
+            <span>${item.desc}</span>
+          </button>
+        `)
+        .join("");
+
+      panel.innerHTML = `${heading}<div class="text-list">${itemsMarkup}</div>`;
+
+      panel.querySelectorAll(".text-item").forEach((node) => {
+        node.addEventListener("click", () => {
+          lightboxImage.src = node.dataset.file;
+          lightboxDesc.textContent = `${node.querySelector("strong")?.textContent || "Image"} — ${node.dataset.desc || ""}`;
+          lightbox.classList.add("open");
+          lightbox.setAttribute("aria-hidden", "false");
+        });
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => renderCollection(button.dataset.collection));
+    });
+
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+    };
+
+    closeButton.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+    });
+
+    renderCollection("veg");
+
+    const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+    const initializeHueLoop = () => {
+      const setHue = (value) => root.style.setProperty("--xaza-hue", `${value}deg`);
+      setHue(0);
+      window.setInterval(() => {
+        setHue(randomBetween(0, 360).toFixed(1));
+      }, 15000);
+    };
+
+    const initPixelWave = () => {
+      if (!pixelWave) return;
+      const context = pixelWave.getContext("2d");
+      if (!context) return;
+
+      const buffer = document.createElement("canvas");
+      const bufferContext = buffer.getContext("2d");
+      if (!bufferContext) return;
+
+      const points = [];
+      const trailLifetime = 1400;
+      const spawnDelay = 40;
+      const pixelScale = 10;
+      let lastSpawn = 0;
+      const pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, active: false };
+
+      const resize = () => {
+        const { innerWidth, innerHeight, devicePixelRatio } = window;
+        pixelWave.width = innerWidth * devicePixelRatio;
+        pixelWave.height = innerHeight * devicePixelRatio;
+        pixelWave.style.width = `${innerWidth}px`;
+        pixelWave.style.height = `${innerHeight}px`;
+        buffer.width = Math.ceil(innerWidth / pixelScale);
+        buffer.height = Math.ceil(innerHeight / pixelScale);
+        context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      };
+
+      const addPoint = (x, y, time) => points.push({ x, y, time });
+
+      const handlePointerMove = (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        pointer.active = true;
+        const now = performance.now();
+        if (now - lastSpawn >= spawnDelay) {
+          addPoint(pointer.x, pointer.y, now);
+          lastSpawn = now;
+        }
+      };
+
+      const handlePointerLeave = () => { pointer.active = false; };
+
+      const draw = (time) => {
+        bufferContext.clearRect(0, 0, buffer.width, buffer.height);
+        bufferContext.fillStyle = "rgba(255, 255, 255, 0.35)";
+        const activePoints = [];
+
+        points.forEach((point) => {
+          const age = time - point.time;
+          if (age > trailLifetime) return;
+          const progress = age / trailLifetime;
+          const wave = Math.sin(progress * Math.PI * 2) * 2.2;
+          const size = 1.4 + progress * 2.6;
+          const alpha = (1 - progress) * 0.45;
+          const x = point.x / pixelScale;
+          const y = (point.y + wave * pixelScale) / pixelScale;
+          bufferContext.globalAlpha = alpha;
+          bufferContext.fillRect(x - size / 2, y - size / 2, size, size);
+          activePoints.push(point);
+        });
+
+        points.length = 0;
+        points.push(...activePoints);
+
+        if (pointer.active && time - lastSpawn >= spawnDelay) {
+          addPoint(pointer.x, pointer.y, time);
+          lastSpawn = time;
+        }
+
+        context.clearRect(0, 0, pixelWave.width, pixelWave.height);
+        context.imageSmoothingEnabled = false;
+        context.globalCompositeOperation = "screen";
+        context.drawImage(buffer, 0, 0, buffer.width, buffer.height, 0, 0, window.innerWidth, window.innerHeight);
+        context.globalCompositeOperation = "source-over";
+        window.requestAnimationFrame(draw);
+      };
+
+      resize();
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("pointerdown", handlePointerMove);
+      window.addEventListener("pointerleave", handlePointerLeave);
+      window.addEventListener("blur", handlePointerLeave);
+      window.requestAnimationFrame(draw);
+    };
+
+    initializeHueLoop();
+    initPixelWave();
+  </script>
+</body>
+</html>

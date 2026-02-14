@@ -460,6 +460,23 @@ body[data-theme="night"] .figure__image {
   transform: translateY(15%);
 }
 
+.shop-tag--link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.shop-tag--link:hover,
+.shop-tag--link:focus-visible {
+  transform: translateY(9%) scale(1.03);
+  box-shadow: 0 0.4rem 1.2rem hsla(0 0% 0% / 0.2);
+}
+
+.shop-tag--link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
 .shop-tag__label {
   position: relative;
   z-index: 1;
