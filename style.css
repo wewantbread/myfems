@@ -465,38 +465,6 @@ body[data-theme="night"] .figure__image {
   z-index: 1;
 }
 
-.shop-tag__gallery {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 0.55rem;
-  min-height: 22px;
-}
-
-.shop-tag__gallery-thumbs {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.shop-tag__thumb {
-  width: 18px;
-  height: 18px;
-  object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid hsla(0 0% 100% / 0.3);
-}
-
-.shop-tag__gallery-fallback {
-  font-size: 0.88rem;
-  line-height: 1;
-  opacity: 0.8;
-}
-
-.shop-tag__gallery--fallback .shop-tag__gallery-fallback {
-  display: inline-block;
-}
-
 .shop-tag::after {
   content: "";
   position: absolute;
