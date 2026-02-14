@@ -39,6 +39,10 @@
     </div>
       <div class="shop-tag" aria-hidden="true">
         <span class="shop-tag__label">Shop</span>
+        <div class="shop-tag__gallery">
+          <div class="shop-tag__gallery-thumbs"></div>
+          <span class="shop-tag__gallery-fallback" hidden>◌</span>
+        </div>
       </div>
     </div>
   </main>
@@ -170,6 +174,9 @@
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
     const shopLabel = document.querySelector(".shop-tag__label");
+    const galleryStrip = document.querySelector(".shop-tag__gallery");
+    const galleryThumbs = document.querySelector(".shop-tag__gallery-thumbs");
+    const galleryFallback = document.querySelector(".shop-tag__gallery-fallback");
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
     const hueSlider = document.querySelector(".xaza-hue-slider");
     const pixelWave = document.querySelector(".pixel-wave");
@@ -281,6 +288,45 @@
     };
 
     const chakraSource = "humanmolecule.png";
+
+    const galleryImageSources = [
+      "soul1.png",
+      "soul2.png",
+      "soul3.png",
+      "soul4.png",
+      "soul5.png",
+      "soul6.png",
+    ];
+
+    const preloadElementImage = (src) =>
+      new Promise((resolve) => {
+        const loader = new Image();
+        loader.src = src;
+        loader.onload = () => resolve({ src, available: true });
+        loader.onerror = () => resolve({ src, available: false });
+      });
+
+    const renderGalleryThumbs = (sources) => {
+      if (!galleryThumbs) return;
+      galleryThumbs.textContent = "";
+      sources.forEach((src, index) => {
+        const thumb = document.createElement("img");
+        thumb.className = "shop-tag__thumb";
+        thumb.src = src;
+        thumb.alt = `Gallery preview ${index + 1}`;
+        thumb.loading = "lazy";
+        thumb.decoding = "async";
+        galleryThumbs.appendChild(thumb);
+      });
+    };
+
+    const updateGalleryFallback = (availableCount) => {
+      if (!galleryStrip || !galleryThumbs || !galleryFallback) return;
+      const hasEnoughImages = availableCount >= 2;
+      galleryStrip.classList.toggle("shop-tag__gallery--fallback", !hasEnoughImages);
+      galleryThumbs.hidden = !hasEnoughImages;
+      galleryFallback.hidden = hasEnoughImages;
+    };
 
     const imageManifest = [
       {
@@ -590,6 +636,12 @@
     };
 
     initPixelWave();
+
+    Promise.all(galleryImageSources.map(preloadElementImage)).then((results) => {
+      const availableGallery = results.filter((item) => item.available).map((item) => item.src);
+      renderGalleryThumbs(availableGallery);
+      updateGalleryFallback(availableGallery.length);
+    });
 
     Promise.all(imageManifest.map(preloadImage)).then((results) => {
       const available = results.filter((item) => item.available);
