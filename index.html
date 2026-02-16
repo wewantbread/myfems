@@ -37,9 +37,9 @@
         </div>
       </div>
     </div>
-      <div class="shop-tag" aria-hidden="true">
-        <span class="shop-tag__label">Shop</span>
-      </div>
+      <a class="shop-tag shop-tag--link" href="gallery.html">
+        <span class="shop-tag__label">Gallery</span>
+      </a>
     </div>
   </main>
   <div class="time-panel" aria-live="polite" role="status"></div>
@@ -169,7 +169,6 @@
     const figure = document.querySelector(".figure");
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
-    const shopLabel = document.querySelector(".shop-tag__label");
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
     const hueSlider = document.querySelector(".xaza-hue-slider");
     const pixelWave = document.querySelector(".pixel-wave");
@@ -697,43 +696,6 @@
       }, duration);
     };
 
-    const shopTranslations = [
-      "Shop",
-      "Boutique",
-      "Magasin",
-      "Tienda",
-      "Mercado",
-      "Loja",
-      "Negozio",
-      "Butik",
-      "Kauppa",
-      "Sklep",
-      "商店",
-      "お店",
-      "상점",
-      "магазин",
-      "दुकान",
-      "مَتْجَر",
-      "ร้านค้า",
-      "שׁוּק",
-      "Butiik",
-      "Market"
-    ];
-
-    const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
-      if (!element) return;
-      const update = () => {
-        const choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
-        element.textContent = choice;
-      };
-
-      update();
-      const timer = window.setInterval(update, interval);
-      window.setTimeout(() => {
-        window.clearInterval(timer);
-        element.textContent = "Shop";
-      }, duration);
-    };
 
     const updateClock = () => {
       if (!timePanel) return;
@@ -750,7 +712,6 @@
       }, 4000);
     };
 
-    scrambleShopLabel(shopLabel);
     initializeClock();
   </script>
 </body>
