@@ -47,13 +47,29 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: url("xaza.png") center/cover no-repeat;
+      background: url("logomiupv2dude.png") center/cover no-repeat;
       opacity: 0.66;
-      filter: hue-rotate(var(--xaza-hue));
+      --bg-breathe-opacity: 0.66;
+      filter: hue-rotate(var(--logo-hue, 0deg));
+      animation: bg-breathe 6s ease-in-out infinite;
+      transition: filter 0.7s ease, opacity 0.5s ease;
+    }
+
+    .molecule-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: url("chuuchmolecule.png") center/cover no-repeat;
+      opacity: 0.4;
+      --bg-breathe-opacity: 0.4;
+      filter: hue-rotate(var(--molecule-hue, 0deg));
+      animation: bg-breathe 8s ease-in-out infinite reverse;
       transition: filter 0.7s ease, opacity 0.5s ease;
     }
 
     body[data-theme="night"] .xaza-bg { opacity: 0.58; }
+    body[data-theme="night"] .molecule-bg { opacity: 0.36; }
 
     .pixel-wave {
       position: fixed;
@@ -344,6 +360,11 @@
       font-size: 0.75rem;
     }
 
+    @keyframes bg-breathe {
+      0%, 100% { transform: scale(1); opacity: var(--bg-breathe-opacity, 0.66); }
+      50% { transform: scale(1.018); opacity: calc(var(--bg-breathe-opacity, 0.66) + 0.06); }
+    }
+
     @keyframes riseIn {
       from { transform: translateY(8px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -366,6 +387,7 @@
 </head>
 <body>
   <div class="xaza-bg" aria-hidden="true"></div>
+  <div class="molecule-bg" aria-hidden="true"></div>
   <canvas class="pixel-wave" aria-hidden="true"></canvas>
 
   <main class="page">
@@ -516,11 +538,16 @@
     const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
     const initializeHueLoop = () => {
-      const setHue = (value) => root.style.setProperty("--xaza-hue", `${value}deg`);
-      setHue(0);
+      const setLogoHue = (value) => root.style.setProperty("--logo-hue", `${value}deg`);
+      const setMoleculeHue = (value) => root.style.setProperty("--molecule-hue", `${value}deg`);
+      setLogoHue(0);
+      setMoleculeHue(0);
       window.setInterval(() => {
-        setHue(randomBetween(0, 360).toFixed(1));
-      }, 15000);
+        setLogoHue(randomBetween(0, 360).toFixed(1));
+      }, 3000);
+      window.setInterval(() => {
+        setMoleculeHue(randomBetween(0, 360).toFixed(1));
+      }, 10000);
     };
 
     const initPixelWave = () => {
