@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="xaza-bg" aria-hidden="true"></div>
+  <div class="molecule-bg" aria-hidden="true"></div>
   <canvas class="pixel-wave" aria-hidden="true"></canvas>
   <button class="theme-toggle" type="button" aria-label="Toggle between night and day">
     <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
@@ -37,9 +38,9 @@
         </div>
       </div>
     </div>
-      <div class="shop-tag" aria-hidden="true">
-        <span class="shop-tag__label">Shop</span>
-      </div>
+      <a class="shop-tag shop-tag--link" href="gallery.html">
+        <span class="shop-tag__label">Gallery</span>
+      </a>
     </div>
   </main>
   <div class="time-panel" aria-live="polite" role="status"></div>
@@ -169,7 +170,6 @@
     const figure = document.querySelector(".figure");
     const figureImage = document.querySelector(".figure__image");
     const timePanel = document.querySelector(".time-panel");
-    const shopLabel = document.querySelector(".shop-tag__label");
     const lightshowBeams = Array.from(document.querySelectorAll(".lightshow__beam"));
     const hueSlider = document.querySelector(".xaza-hue-slider");
     const pixelWave = document.querySelector(".pixel-wave");
@@ -438,45 +438,65 @@
     refreshAmbientScene();
     attachInteractionHandlers();
 
-    const setXazaHue = (value) => {
+    const setLogoHue = (value) => {
       const hue = Number.parseFloat(value);
       if (Number.isNaN(hue)) return;
-      root.style.setProperty("--xaza-hue", `${hue}deg`);
+      root.style.setProperty("--logo-hue", `${hue}deg`);
+    };
+
+    const setMoleculeHue = (value) => {
+      const hue = Number.parseFloat(value);
+      if (Number.isNaN(hue)) return;
+      root.style.setProperty("--molecule-hue", `${hue}deg`);
     };
 
     const initializeHueSlider = () => {
       if (!hueSlider) return;
-      const updateHueFromSlider = () => setXazaHue(hueSlider.value);
+      const updateHueFromSlider = () => setLogoHue(hueSlider.value);
       hueSlider.addEventListener("input", updateHueFromSlider);
       updateHueFromSlider();
+      setMoleculeHue(0);
 
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-      let hueTimer = null;
+      let logoHueTimer = null;
+      let moleculeHueTimer = null;
 
-      const startHueLoop = () => {
-        if (hueTimer) return;
-        hueTimer = window.setInterval(() => {
-          const nextValue = randomBetween(0, 360);
-          hueSlider.value = nextValue.toFixed(1);
-          updateHueFromSlider();
-        }, 15000);
+      const startHueLoops = () => {
+        if (!logoHueTimer) {
+          logoHueTimer = window.setInterval(() => {
+            const nextValue = randomBetween(0, 360);
+            hueSlider.value = nextValue.toFixed(1);
+            updateHueFromSlider();
+          }, 3000);
+        }
+
+        if (!moleculeHueTimer) {
+          moleculeHueTimer = window.setInterval(() => {
+            setMoleculeHue(randomBetween(0, 360).toFixed(1));
+          }, 10000);
+        }
       };
 
-      const stopHueLoop = () => {
-        if (!hueTimer) return;
-        window.clearInterval(hueTimer);
-        hueTimer = null;
+      const stopHueLoops = () => {
+        if (logoHueTimer) {
+          window.clearInterval(logoHueTimer);
+          logoHueTimer = null;
+        }
+        if (moleculeHueTimer) {
+          window.clearInterval(moleculeHueTimer);
+          moleculeHueTimer = null;
+        }
       };
 
       if (!prefersReduced.matches) {
-        startHueLoop();
+        startHueLoops();
       }
 
       prefersReduced.addEventListener("change", (event) => {
         if (event.matches) {
-          stopHueLoop();
+          stopHueLoops();
         } else {
-          startHueLoop();
+          startHueLoops();
         }
       });
     };
@@ -496,6 +516,7 @@
       const trailLifetime = 1400;
       const spawnDelay = 40;
       const pixelScale = 10;
+      const maxPoints = 220;
       let lastSpawn = 0;
       const pointer = {
         x: window.innerWidth * 0.5,
@@ -516,12 +537,14 @@
 
       const addPoint = (x, y, time) => {
         points.push({ x, y, time });
+        if (points.length > maxPoints) {
+          points.splice(0, points.length - maxPoints);
+        }
       };
 
       const handlePointerMove = (event) => {
         pointer.x = event.clientX;
         pointer.y = event.clientY;
-        pointer.active = true;
         const now = performance.now();
         if (now - lastSpawn >= spawnDelay) {
           addPoint(pointer.x, pointer.y, now);
@@ -529,9 +552,7 @@
         }
       };
 
-      const handlePointerLeave = () => {
-        pointer.active = false;
-      };
+      const handlePointerLeave = () => {};
 
       const draw = (time) => {
         bufferContext.clearRect(0, 0, buffer.width, buffer.height);
@@ -557,12 +578,7 @@
         points.length = 0;
         points.push(...activePoints);
 
-        if (pointer.active && time - lastSpawn >= spawnDelay) {
-          addPoint(pointer.x, pointer.y, time);
-          lastSpawn = time;
-        }
-
-        context.clearRect(0, 0, pixelWave.width, pixelWave.height);
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         context.imageSmoothingEnabled = false;
         context.globalCompositeOperation = "screen";
         context.drawImage(
@@ -697,43 +713,6 @@
       }, duration);
     };
 
-    const shopTranslations = [
-      "Shop",
-      "Boutique",
-      "Magasin",
-      "Tienda",
-      "Mercado",
-      "Loja",
-      "Negozio",
-      "Butik",
-      "Kauppa",
-      "Sklep",
-      "商店",
-      "お店",
-      "상점",
-      "магазин",
-      "दुकान",
-      "مَتْجَر",
-      "ร้านค้า",
-      "שׁוּק",
-      "Butiik",
-      "Market"
-    ];
-
-    const scrambleShopLabel = (element, duration = 4000, interval = 260) => {
-      if (!element) return;
-      const update = () => {
-        const choice = shopTranslations[Math.floor(Math.random() * shopTranslations.length)];
-        element.textContent = choice;
-      };
-
-      update();
-      const timer = window.setInterval(update, interval);
-      window.setTimeout(() => {
-        window.clearInterval(timer);
-        element.textContent = "Shop";
-      }, duration);
-    };
 
     const updateClock = () => {
       if (!timePanel) return;
@@ -750,7 +729,6 @@
       }, 4000);
     };
 
-    scrambleShopLabel(shopLabel);
     initializeClock();
   </script>
 </body>

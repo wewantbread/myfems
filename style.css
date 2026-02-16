@@ -134,14 +134,32 @@ body {
 .xaza-bg {
   position: fixed;
   inset: 0;
-  background-image: url("xaza.png");
+  background-image: url("logomiupv2dude.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0.72;
-  filter: hue-rotate(var(--xaza-hue, 0deg));
+  opacity: 0.68;
+  --bg-breathe-opacity: 0.68;
+  filter: hue-rotate(var(--logo-hue, 0deg));
   z-index: 1;
   pointer-events: none;
+  animation: bg-breathe 6s ease-in-out infinite;
+  transition: opacity 1.2s ease, filter 0.8s ease;
+}
+
+.molecule-bg {
+  position: fixed;
+  inset: 0;
+  background-image: url("chuuchmolecule.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+  --bg-breathe-opacity: 0.42;
+  filter: hue-rotate(var(--molecule-hue, 0deg));
+  z-index: 1;
+  pointer-events: none;
+  animation: bg-breathe 8s ease-in-out infinite reverse;
   transition: opacity 1.2s ease, filter 0.8s ease;
 }
 
@@ -241,7 +259,7 @@ body[data-theme="night"]::before {
   place-items: center;
   cursor: pointer;
   transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  z-index: 3;
+  z-index: 6;
 }
 
 .theme-toggle:hover,
@@ -458,6 +476,23 @@ body[data-theme="night"] .figure__image {
   color: var(--shop-tag-color);
   isolation: isolate;
   transform: translateY(15%);
+}
+
+.shop-tag--link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.shop-tag--link:hover,
+.shop-tag--link:focus-visible {
+  transform: translateY(9%) scale(1.03);
+  box-shadow: 0 0.4rem 1.2rem hsla(0 0% 0% / 0.2);
+}
+
+.shop-tag--link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
 
 .shop-tag__label {
@@ -815,4 +850,10 @@ body[data-theme="night"] .figure__image {
   .figure__image {
     transition: none !important;
   }
+}
+
+
+@keyframes bg-breathe {
+  0%, 100% { transform: scale(1); opacity: var(--bg-breathe-opacity, 0.68); }
+  50% { transform: scale(1.018); opacity: calc(var(--bg-breathe-opacity, 0.68) + 0.06); }
 }
