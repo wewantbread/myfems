@@ -12,6 +12,7 @@
       --card-bg: rgba(14, 44, 36, 0.44);
       --card-bg-active: rgba(28, 86, 68, 0.58);
       --panel-bg: rgba(8, 24, 20, 0.72);
+      --accent: #84e7c0;
       --xaza-hue: 0deg;
     }
 
@@ -25,6 +26,18 @@
       background: radial-gradient(circle at 50% 20%, #174538, #061814 70%);
       overflow-x: hidden;
       position: relative;
+      transition: color 0.35s ease, background 0.35s ease;
+    }
+
+    body[data-theme="night"] {
+      --text: #edf4ff;
+      --muted: #c5d2ed;
+      --line: rgba(178, 210, 255, 0.33);
+      --card-bg: rgba(18, 30, 56, 0.42);
+      --card-bg-active: rgba(38, 74, 140, 0.55);
+      --panel-bg: rgba(9, 20, 42, 0.72);
+      --accent: #97c4ff;
+      background: radial-gradient(circle at 50% 14%, #132346, #050b1b 72%);
     }
 
     .xaza-bg {
@@ -35,8 +48,10 @@
       background: url("xaza.png") center/cover no-repeat;
       opacity: 0.72;
       filter: hue-rotate(var(--xaza-hue));
-      transition: filter 0.7s ease;
+      transition: filter 0.7s ease, opacity 0.5s ease;
     }
+
+    body[data-theme="night"] .xaza-bg { opacity: 0.63; }
 
     .pixel-wave {
       position: fixed;
@@ -58,11 +73,17 @@
       animation: glowShift 14s ease-in-out infinite alternate;
     }
 
+    body[data-theme="night"]::before {
+      background:
+        radial-gradient(circle at 22% 30%, rgba(120, 175, 255, 0.25), transparent 38%),
+        radial-gradient(circle at 80% 16%, rgba(147, 133, 255, 0.2), transparent 35%);
+    }
+
     .page {
       position: relative;
       z-index: 3;
       width: min(1120px, 94vw);
-      margin: 1.4rem auto 2rem;
+      margin: 1.2rem auto 2rem;
     }
 
     .topbar {
@@ -73,28 +94,86 @@
       margin-bottom: 1rem;
     }
 
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .back-home {
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.07);
+      transition: transform 180ms ease, background 180ms ease;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .back-home:hover,
+    .back-home:focus-visible {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.17);
+      outline: none;
+    }
+
     h1 {
       margin: 0;
-      font-size: clamp(1.7rem, 4.2vw, 2.95rem);
+      font-size: clamp(1.55rem, 4vw, 2.7rem);
       letter-spacing: 0.11em;
       text-transform: uppercase;
     }
 
-    .back {
-      color: var(--text);
-      text-decoration: none;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.06);
+    .theme-toggle {
+      position: relative;
+      width: 62px;
+      height: 34px;
       border-radius: 999px;
-      padding: 0.5rem 0.95rem;
-      font-size: 0.86rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      transition: background 220ms ease;
+    }
+
+    .theme-toggle::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.25);
+      transition: transform 220ms ease, background 220ms ease;
+    }
+
+    body[data-theme="night"] .theme-toggle::after {
+      transform: translateX(28px);
+      background: #dce8ff;
+    }
+
+    .theme-toggle__icon {
+      position: relative;
+      z-index: 1;
+      font-size: 0.85rem;
+      opacity: 0.86;
+      user-select: none;
     }
 
     .collections {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
     }
 
@@ -117,6 +196,7 @@
       transform: translateY(-3px);
       background: var(--card-bg-active);
       box-shadow: 0 0.7rem 1.7rem rgba(6, 20, 16, 0.42);
+      outline: none;
     }
 
     .collection-button h2 {
@@ -124,7 +204,7 @@
       font-size: 1.03rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: #84e7c0;
+      color: var(--accent);
     }
 
     .collection-button p {
@@ -149,7 +229,7 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-size: 1rem;
-      color: #7de4ba;
+      color: var(--accent);
     }
 
     .text-list {
@@ -164,6 +244,8 @@
       padding: 0.65rem 0.75rem;
       cursor: pointer;
       transition: background 150ms ease;
+      text-align: left;
+      color: var(--text);
     }
 
     .text-item:hover,
@@ -178,6 +260,8 @@
       color: #d8f7e9;
       letter-spacing: 0.03em;
     }
+
+    body[data-theme="night"] .text-item strong { color: #e3ecff; }
 
     .text-item span {
       display: block;
@@ -267,6 +351,7 @@
     @media (max-width: 900px) {
       .collections { grid-template-columns: 1fr; }
       .items-panel { min-height: 260px; }
+      .topbar { align-items: flex-start; }
     }
   </style>
 </head>
@@ -276,22 +361,24 @@
 
   <main class="page">
     <header class="topbar">
-      <h1>Gallery Collections</h1>
-      <a class="back" href="index.html">Back Home</a>
+      <div class="topbar-left">
+        <a class="back-home" href="index.html" aria-label="Back home" title="Back home">↩</a>
+        <h1>Gallery Collections</h1>
+      </div>
+      <button class="theme-toggle" type="button" aria-label="Toggle day and night mode">
+        <span class="theme-toggle__icon" aria-hidden="true">☀️</span>
+        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+      </button>
     </header>
 
     <section class="collections" aria-label="Collection selector">
       <button class="collection-button is-active" type="button" data-collection="veg">
         <h2>Veg</h2>
-    
-      </button>
-      <button class="collection-button" type="button" data-collection="training">
-        <h2>Training</h2>
-    
+        <p>Click to view text list</p>
       </button>
       <button class="collection-button" type="button" data-collection="flower">
         <h2>Flower</h2>
-      
+        <p>Click to view all submitted photos</p>
       </button>
     </section>
 
@@ -309,16 +396,31 @@
   </div>
 
   <script>
+    const body = document.body;
+    const root = document.documentElement;
+    const pixelWave = document.querySelector(".pixel-wave");
+
+    const storedTheme = window.localStorage.getItem("chakra-theme");
+    if (storedTheme === "night" || (!storedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      body.dataset.theme = "night";
+    }
+
+    document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+      const isNight = body.dataset.theme === "night";
+      const nextTheme = isNight ? "day" : "night";
+      if (nextTheme === "night") {
+        body.dataset.theme = "night";
+      } else {
+        delete body.dataset.theme;
+      }
+      window.localStorage.setItem("chakra-theme", nextTheme);
+    });
+
     const collections = {
       veg: {
         title: "Veg",
         items: [],
-      
-      },
-      training: {
-        title: "Training",
-        items: [],
-        empty: 
+        empty: "No photos are assigned to Veg right now."
       },
       flower: {
         title: "Flower",
@@ -343,8 +445,6 @@
     const lightboxImage = document.getElementById("lightbox-image");
     const lightboxDesc = document.getElementById("lightbox-desc");
     const closeButton = document.getElementById("close-lightbox");
-    const root = document.documentElement;
-    const pixelWave = document.querySelector(".pixel-wave");
 
     const renderCollection = (key) => {
       const config = collections[key];

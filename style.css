@@ -241,7 +241,7 @@ body[data-theme="night"]::before {
   place-items: center;
   cursor: pointer;
   transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  z-index: 3;
+  z-index: 6;
 }
 
 .theme-toggle:hover,
