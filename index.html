@@ -495,6 +495,7 @@
       const trailLifetime = 1400;
       const spawnDelay = 40;
       const pixelScale = 10;
+      const maxPoints = 220;
       let lastSpawn = 0;
       const pointer = {
         x: window.innerWidth * 0.5,
@@ -515,12 +516,14 @@
 
       const addPoint = (x, y, time) => {
         points.push({ x, y, time });
+        if (points.length > maxPoints) {
+          points.splice(0, points.length - maxPoints);
+        }
       };
 
       const handlePointerMove = (event) => {
         pointer.x = event.clientX;
         pointer.y = event.clientY;
-        pointer.active = true;
         const now = performance.now();
         if (now - lastSpawn >= spawnDelay) {
           addPoint(pointer.x, pointer.y, now);
@@ -528,9 +531,7 @@
         }
       };
 
-      const handlePointerLeave = () => {
-        pointer.active = false;
-      };
+      const handlePointerLeave = () => {};
 
       const draw = (time) => {
         bufferContext.clearRect(0, 0, buffer.width, buffer.height);
@@ -556,12 +557,7 @@
         points.length = 0;
         points.push(...activePoints);
 
-        if (pointer.active && time - lastSpawn >= spawnDelay) {
-          addPoint(pointer.x, pointer.y, time);
-          lastSpawn = time;
-        }
-
-        context.clearRect(0, 0, pixelWave.width, pixelWave.height);
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         context.imageSmoothingEnabled = false;
         context.globalCompositeOperation = "screen";
         context.drawImage(

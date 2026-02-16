@@ -6,13 +6,13 @@
   <title>Gallery | Sacred Element Cycle</title>
   <style>
     :root {
-      --text: #ebf7f1;
-      --muted: #c6ddd1;
-      --line: rgba(220, 248, 237, 0.28);
-      --card-bg: rgba(14, 44, 36, 0.44);
-      --card-bg-active: rgba(28, 86, 68, 0.58);
-      --panel-bg: rgba(8, 24, 20, 0.72);
-      --accent: #84e7c0;
+      --text: hsl(0 0% 14%);
+      --muted: hsla(0 0% 16% / 0.85);
+      --line: hsla(0 0% 18% / 0.2);
+      --card-bg: hsla(0 0% 100% / 0.42);
+      --card-bg-active: hsla(0 0% 100% / 0.64);
+      --panel-bg: hsla(0 0% 100% / 0.62);
+      --accent: hsl(0 0% 18%);
       --xaza-hue: 0deg;
     }
 
@@ -23,21 +23,23 @@
       min-height: 100vh;
       font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 50% 20%, #174538, #061814 70%);
+      background:
+        radial-gradient(circle at 50% 44%, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 38%, hsl(0 0% 90%) 100%),
+        linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
       overflow-x: hidden;
       position: relative;
       transition: color 0.35s ease, background 0.35s ease;
     }
 
     body[data-theme="night"] {
-      --text: #edf4ff;
-      --muted: #c5d2ed;
-      --line: rgba(178, 210, 255, 0.33);
-      --card-bg: rgba(18, 30, 56, 0.42);
-      --card-bg-active: rgba(38, 74, 140, 0.55);
-      --panel-bg: rgba(9, 20, 42, 0.72);
-      --accent: #97c4ff;
-      background: radial-gradient(circle at 50% 14%, #132346, #050b1b 72%);
+      --text: hsl(0 0% 92%);
+      --muted: hsla(0 0% 88% / 0.88);
+      --line: hsla(0 0% 70% / 0.26);
+      --card-bg: hsla(0 0% 16% / 0.5);
+      --card-bg-active: hsla(0 0% 24% / 0.65);
+      --panel-bg: hsla(0 0% 10% / 0.7);
+      --accent: hsl(0 0% 92%);
+      background: #000;
     }
 
     .xaza-bg {
@@ -46,12 +48,12 @@
       z-index: 0;
       pointer-events: none;
       background: url("xaza.png") center/cover no-repeat;
-      opacity: 0.72;
+      opacity: 0.66;
       filter: hue-rotate(var(--xaza-hue));
       transition: filter 0.7s ease, opacity 0.5s ease;
     }
 
-    body[data-theme="night"] .xaza-bg { opacity: 0.63; }
+    body[data-theme="night"] .xaza-bg { opacity: 0.58; }
 
     .pixel-wave {
       position: fixed;
@@ -67,22 +69,13 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(98, 224, 172, 0.26), transparent 38%),
-        radial-gradient(circle at 80% 14%, rgba(117, 177, 255, 0.2), transparent 35%);
-      animation: glowShift 14s ease-in-out infinite alternate;
-    }
-
-    body[data-theme="night"]::before {
-      background:
-        radial-gradient(circle at 22% 30%, rgba(120, 175, 255, 0.25), transparent 38%),
-        radial-gradient(circle at 80% 16%, rgba(147, 133, 255, 0.2), transparent 35%);
+      background: radial-gradient(circle at 50% 46%, hsla(0 0% 100% / 0.18) 0%, transparent 70%);
     }
 
     .page {
       position: relative;
       z-index: 3;
-      width: min(1120px, 94vw);
+      width: min(1160px, 95vw);
       margin: 1.2rem auto 2rem;
     }
 
@@ -110,7 +103,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.07);
+      background: var(--card-bg);
       transition: transform 180ms ease, background 180ms ease;
       font-size: 1.25rem;
       line-height: 1;
@@ -119,7 +112,7 @@
     .back-home:hover,
     .back-home:focus-visible {
       transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.17);
+      background: var(--card-bg-active);
       outline: none;
     }
 
@@ -136,13 +129,14 @@
       height: 34px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--card-bg);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 8px;
       transition: background 220ms ease;
+      color: var(--text);
     }
 
     .theme-toggle::after {
@@ -195,7 +189,7 @@
     .collection-button.is-active {
       transform: translateY(-3px);
       background: var(--card-bg-active);
-      box-shadow: 0 0.7rem 1.7rem rgba(6, 20, 16, 0.42);
+      box-shadow: 0 0.7rem 1.7rem rgba(6, 20, 16, 0.25);
       outline: none;
     }
 
@@ -232,50 +226,62 @@
       color: var(--accent);
     }
 
-    .text-list {
-      display: grid;
-      gap: 0.62rem;
-    }
-
-    .text-item {
-      border: 1px solid rgba(208, 245, 227, 0.2);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 0.65rem 0.75rem;
-      cursor: pointer;
-      transition: background 150ms ease;
-      text-align: left;
-      color: var(--text);
-    }
-
-    .text-item:hover,
-    .text-item:focus-visible {
-      background: rgba(132, 231, 192, 0.13);
-      outline: none;
-    }
-
-    .text-item strong {
-      display: block;
-      font-size: 0.94rem;
-      color: #d8f7e9;
-      letter-spacing: 0.03em;
-    }
-
-    body[data-theme="night"] .text-item strong { color: #e3ecff; }
-
-    .text-item span {
-      display: block;
-      margin-top: 0.28rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.3;
-    }
-
     .empty-note {
       margin: 0;
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.5;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .media-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card-bg);
+      overflow: hidden;
+      cursor: pointer;
+      color: var(--text);
+      text-align: left;
+      padding: 0;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .media-item:hover,
+    .media-item:focus-visible {
+      transform: translateY(-2px);
+      background: var(--card-bg-active);
+      outline: none;
+    }
+
+    .media-item img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #101010;
+    }
+
+    .media-item__meta {
+      padding: 0.52rem 0.62rem 0.66rem;
+    }
+
+    .media-item__meta strong {
+      display: block;
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .media-item__meta span {
+      display: block;
+      font-size: 0.77rem;
+      line-height: 1.3;
+      color: var(--muted);
     }
 
     .lightbox {
@@ -322,7 +328,7 @@
       gap: 0.85rem;
       align-items: center;
       padding: 0.72rem 0.9rem;
-      color: var(--muted);
+      color: #d5d5d5;
       font-size: 0.9rem;
     }
 
@@ -330,7 +336,7 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.07);
-      color: var(--text);
+      color: #f1f1f1;
       padding: 0.36rem 0.75rem;
       cursor: pointer;
       text-transform: uppercase;
@@ -338,20 +344,23 @@
       font-size: 0.75rem;
     }
 
-    @keyframes glowShift {
-      from { opacity: 0.42; }
-      to { opacity: 0.72; }
-    }
-
     @keyframes riseIn {
       from { transform: translateY(8px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 980px) {
+      .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 900px) {
       .collections { grid-template-columns: 1fr; }
       .items-panel { min-height: 260px; }
       .topbar { align-items: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .media-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -374,7 +383,7 @@
     <section class="collections" aria-label="Collection selector">
       <button class="collection-button is-active" type="button" data-collection="veg">
         <h2>Veg</h2>
-        <p>Click to view text list</p>
+        <p>Click to view collection</p>
       </button>
       <button class="collection-button" type="button" data-collection="flower">
         <h2>Flower</h2>
@@ -463,16 +472,19 @@
 
       const itemsMarkup = config.items
         .map((item, index) => `
-          <button class="text-item" type="button" data-file="${item.file}" data-desc="${item.desc}">
-            <strong>${index + 1}. ${item.label}</strong>
-            <span>${item.desc}</span>
+          <button class="media-item" type="button" data-file="${item.file}" data-desc="${item.desc}">
+            <img src="${item.file}" alt="${item.label}" loading="lazy" />
+            <div class="media-item__meta">
+              <strong>${index + 1}. ${item.label}</strong>
+              <span>${item.desc}</span>
+            </div>
           </button>
         `)
         .join("");
 
-      panel.innerHTML = `${heading}<div class="text-list">${itemsMarkup}</div>`;
+      panel.innerHTML = `${heading}<div class="media-grid">${itemsMarkup}</div>`;
 
-      panel.querySelectorAll(".text-item").forEach((node) => {
+      panel.querySelectorAll(".media-item").forEach((node) => {
         node.addEventListener("click", () => {
           lightboxImage.src = node.dataset.file;
           lightboxDesc.textContent = `${node.querySelector("strong")?.textContent || "Image"} — ${node.dataset.desc || ""}`;
@@ -524,8 +536,8 @@
       const trailLifetime = 1400;
       const spawnDelay = 40;
       const pixelScale = 10;
+      const maxPoints = 220;
       let lastSpawn = 0;
-      const pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, active: false };
 
       const resize = () => {
         const { innerWidth, innerHeight, devicePixelRatio } = window;
@@ -538,20 +550,20 @@
         context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
       };
 
-      const addPoint = (x, y, time) => points.push({ x, y, time });
-
-      const handlePointerMove = (event) => {
-        pointer.x = event.clientX;
-        pointer.y = event.clientY;
-        pointer.active = true;
-        const now = performance.now();
-        if (now - lastSpawn >= spawnDelay) {
-          addPoint(pointer.x, pointer.y, now);
-          lastSpawn = now;
+      const addPoint = (x, y, time) => {
+        points.push({ x, y, time });
+        if (points.length > maxPoints) {
+          points.splice(0, points.length - maxPoints);
         }
       };
 
-      const handlePointerLeave = () => { pointer.active = false; };
+      const handlePointerMove = (event) => {
+        const now = performance.now();
+        if (now - lastSpawn >= spawnDelay) {
+          addPoint(event.clientX, event.clientY, now);
+          lastSpawn = now;
+        }
+      };
 
       const draw = (time) => {
         bufferContext.clearRect(0, 0, buffer.width, buffer.height);
@@ -575,12 +587,7 @@
         points.length = 0;
         points.push(...activePoints);
 
-        if (pointer.active && time - lastSpawn >= spawnDelay) {
-          addPoint(pointer.x, pointer.y, time);
-          lastSpawn = time;
-        }
-
-        context.clearRect(0, 0, pixelWave.width, pixelWave.height);
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         context.imageSmoothingEnabled = false;
         context.globalCompositeOperation = "screen";
         context.drawImage(buffer, 0, 0, buffer.width, buffer.height, 0, 0, window.innerWidth, window.innerHeight);
@@ -592,8 +599,6 @@
       window.addEventListener("resize", resize);
       window.addEventListener("pointermove", handlePointerMove);
       window.addEventListener("pointerdown", handlePointerMove);
-      window.addEventListener("pointerleave", handlePointerLeave);
-      window.addEventListener("blur", handlePointerLeave);
       window.requestAnimationFrame(draw);
     };
 
