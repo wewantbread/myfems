@@ -426,6 +426,24 @@
       padding: 0.45rem 0.75rem;
     }
 
+    /* Dense 5-column grid view */
+    .media-grid.view-dense {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.3rem;
+    }
+
+    .media-grid.view-dense .media-item img {
+      aspect-ratio: 1 / 1;
+    }
+
+    .media-grid.view-dense .media-item__meta {
+      display: none;
+    }
+
+    .media-grid.view-dense .media-item {
+      border-radius: 8px;
+    }
+
     @keyframes bg-breathe {
       0%, 100% { transform: scale(1); opacity: var(--bg-breathe-opacity, 0.66); }
       50% { transform: scale(1.018); opacity: calc(var(--bg-breathe-opacity, 0.66) + 0.06); }
@@ -547,16 +565,22 @@
     const lightboxDesc = document.getElementById("lightbox-desc");
     const closeButton = document.getElementById("close-lightbox");
 
+    const VIEW_CYCLE = ["grid", "list", "dense"];
     let viewMode = window.localStorage.getItem("gallery-view") || "grid";
+    if (!VIEW_CYCLE.includes(viewMode)) viewMode = "grid";
 
-    const getToggleLabel = () =>
-      viewMode === "grid"
-        ? `<span class="view-toggle__icon">☰</span> List`
-        : `<span class="view-toggle__icon">⊞</span> Grid`;
+    const VIEW_NEXT_LABEL = {
+      grid:  `<span class="view-toggle__icon">☰</span> List`,
+      list:  `<span class="view-toggle__icon">⊞</span> Dense`,
+      dense: `<span class="view-toggle__icon">▦</span> Grid`
+    };
+
+    const getToggleLabel = () => VIEW_NEXT_LABEL[viewMode];
 
     const applyViewMode = (grid) => {
       if (!grid) return;
-      grid.classList.toggle("view-list", viewMode === "list");
+      grid.classList.toggle("view-list",  viewMode === "list");
+      grid.classList.toggle("view-dense", viewMode === "dense");
     };
 
     const renderCollection = (key) => {
@@ -597,7 +621,8 @@
       applyViewMode(panel.querySelector(".media-grid"));
 
       document.getElementById("view-toggle")?.addEventListener("click", () => {
-        viewMode = viewMode === "grid" ? "list" : "grid";
+        const idx = VIEW_CYCLE.indexOf(viewMode);
+        viewMode = VIEW_CYCLE[(idx + 1) % VIEW_CYCLE.length];
         window.localStorage.setItem("gallery-view", viewMode);
         const grid = panel.querySelector(".media-grid");
         applyViewMode(grid);
