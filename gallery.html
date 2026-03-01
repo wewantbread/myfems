@@ -185,6 +185,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
+      align-items: start;
     }
 
     .collection-button {
@@ -193,8 +194,8 @@
       background: var(--card-bg);
       color: var(--text);
       text-align: left;
-      padding: 1rem;
-      min-height: 96px;
+      padding: 0.8rem;
+      min-height: 72px;
       cursor: pointer;
       backdrop-filter: blur(5px);
       transition: transform 190ms ease, background 190ms ease, box-shadow 190ms ease;
@@ -218,9 +219,20 @@
     }
 
     .collection-button p {
-      margin: 0;
+      margin: 0 0 0.5rem;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.78rem;
+    }
+
+    .collection-thumb {
+      display: block;
+      width: 100%;
+      max-width: 180px;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.15);
     }
 
     .items-panel {
@@ -459,13 +471,14 @@
     }
 
     @media (max-width: 900px) {
-      .collections { grid-template-columns: 1fr; }
+      .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .items-panel { min-height: 260px; }
       .topbar { align-items: flex-start; }
     }
 
     @media (max-width: 640px) {
       .media-grid { grid-template-columns: 1fr; }
+      .collections { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -478,7 +491,7 @@
     <header class="topbar">
       <div class="topbar-left">
         <a class="back-home" href="index.html" aria-label="Back home" title="Back home">↩</a>
-        <h1>Gallery Collections</h1>
+        <h1>Gallery</h1>
       </div>
       <button class="theme-toggle" type="button" aria-label="Toggle day and night mode">
         <span class="theme-toggle__icon" aria-hidden="true">☀️</span>
@@ -490,10 +503,11 @@
       <button class="collection-button is-active" type="button" data-collection="veg">
         <h2>Veg</h2>
         <p>Click to view collection</p>
+        <img class="collection-thumb" src="soul1.png" alt="Veg collection preview" loading="lazy" />
       </button>
       <button class="collection-button" type="button" data-collection="flower">
         <h2>Flower</h2>
-        <p>Click to view all submitted photos</p>
+        <img class="collection-thumb" src="soul2.png" alt="Flower collection preview" loading="lazy" />
       </button>
     </section>
 
@@ -590,7 +604,7 @@
 
       const heading = `
         <div class="panel-header">
-          <h2 class="panel-title">${config.title} Collection</h2>
+          <h2 class="panel-title">${config.title}</h2>
           <button class="view-toggle" type="button" id="view-toggle" aria-label="Toggle list or grid view">
             ${getToggleLabel()}
           </button>
