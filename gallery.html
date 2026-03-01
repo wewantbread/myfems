@@ -121,8 +121,15 @@
       justify-content: center;
       background: var(--card-bg);
       transition: transform 180ms ease, background 180ms ease;
-      font-size: 1.25rem;
       line-height: 1;
+    }
+
+    .back-home svg {
+      width: 1.05rem;
+      height: 1.05rem;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
     }
 
     .back-home:hover,
@@ -176,9 +183,55 @@
     .theme-toggle__icon {
       position: relative;
       z-index: 1;
-      font-size: 0.85rem;
-      opacity: 0.86;
+      width: 0.95rem;
+      height: 0.95rem;
+      border-radius: 999px;
+      opacity: 0.92;
       user-select: none;
+      pointer-events: none;
+    }
+
+    .theme-toggle__icon--sun {
+      background: radial-gradient(circle at center, hsl(0 0% 18%) 0%, hsl(46 98% 70%) 45%, hsla(46 100% 80% / 0.4) 100%);
+      box-shadow: 0 0 0.4rem hsla(46 100% 70% / 0.4);
+      position: relative;
+    }
+
+    .theme-toggle__icon--sun::after {
+      content: "";
+      position: absolute;
+      inset: -0.18rem;
+      border-radius: 50%;
+      border: 1px solid hsla(44 100% 72% / 0.45);
+      transform: scale(1.08);
+    }
+
+    .theme-toggle__icon--moon {
+      background: radial-gradient(circle at 65% 35%, hsl(0 0% 88%) 0%, hsl(230 40% 40%) 85%);
+      box-shadow: inset -0.2rem -0.2rem 0 0 hsla(232 72% 20% / 0.5);
+      position: relative;
+      opacity: 0.74;
+    }
+
+    .theme-toggle__icon--moon::before {
+      content: "";
+      position: absolute;
+      top: 0.1rem;
+      left: 0.15rem;
+      width: 0.22rem;
+      height: 0.22rem;
+      border-radius: 50%;
+      background: hsla(0 0% 100% / 0.58);
+    }
+
+    body[data-theme="night"] .theme-toggle__icon--sun {
+      opacity: 0.56;
+      filter: saturate(0.7) brightness(0.8);
+    }
+
+    body[data-theme="night"] .theme-toggle__icon--moon {
+      opacity: 1;
+      filter: saturate(1.1) brightness(1.08);
     }
 
     .collections {
@@ -400,13 +453,7 @@
       line-height: 1;
     }
 
-    /* List-view overrides applied when .view-list is on .media-grid */
-    .media-grid.view-list {
-      grid-template-columns: 1fr;
-      gap: 0.45rem;
-    }
-
-    /* 5×5 grid view */
+    /* Dense grid view */
     .media-grid.view-grid5 {
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 0.35rem;
@@ -422,26 +469,6 @@
 
     @media (max-width: 640px) {
       .media-grid.view-grid5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-
-    .media-grid.view-list .media-item {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      border-radius: 10px;
-    }
-
-    .media-grid.view-list .media-item img {
-      width: 96px;
-      height: 72px;
-      aspect-ratio: unset;
-      flex-shrink: 0;
-      object-fit: cover;
-      border-radius: 9px 0 0 9px;
-    }
-
-    .media-grid.view-list .media-item__meta {
-      padding: 0.45rem 0.75rem;
     }
 
     @keyframes bg-breathe {
@@ -477,12 +504,14 @@
   <main class="page">
     <header class="topbar">
       <div class="topbar-left">
-        <a class="back-home" href="index.html" aria-label="Back home" title="Back home">↩</a>
+        <a class="back-home" href="index.html" aria-label="Back home" title="Back home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/><path d="M8 12h12"/></svg>
+        </a>
         <h1>Gallery Collections</h1>
       </div>
       <button class="theme-toggle" type="button" aria-label="Toggle day and night mode">
-        <span class="theme-toggle__icon" aria-hidden="true">☀️</span>
-        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+        <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
+        <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
       </button>
     </header>
 
@@ -566,17 +595,15 @@
     const closeButton = document.getElementById("close-lightbox");
 
     let viewMode = window.localStorage.getItem("gallery-view") || "grid";
-    if (!["grid", "list", "grid5"].includes(viewMode)) viewMode = "grid";
+    if (!["grid", "grid5"].includes(viewMode)) viewMode = "grid";
 
     const getToggleLabel = () => {
-      if (viewMode === "grid") return `<span class="view-toggle__icon">☰</span> List`;
-      if (viewMode === "list") return `<span class="view-toggle__icon">⊡</span> 5×5`;
-      return `<span class="view-toggle__icon">⊞</span> Grid`;
+      if (viewMode === "grid") return `<span class="view-toggle__icon">▦</span> Grid`;
+      return `<span class="view-toggle__icon">▥</span> Standard`;
     };
 
     const applyViewMode = (grid) => {
       if (!grid) return;
-      grid.classList.toggle("view-list", viewMode === "list");
       grid.classList.toggle("view-grid5", viewMode === "grid5");
     };
 
@@ -591,7 +618,7 @@
       const heading = `
         <div class="panel-header">
           <h2 class="panel-title">${config.title} Collection</h2>
-          <button class="view-toggle" type="button" id="view-toggle" aria-label="Toggle list or grid view">
+          <button class="view-toggle" type="button" id="view-toggle" aria-label="Toggle grid density">
             ${getToggleLabel()}
           </button>
         </div>`;
@@ -618,7 +645,7 @@
       applyViewMode(panel.querySelector(".media-grid"));
 
       document.getElementById("view-toggle")?.addEventListener("click", () => {
-        viewMode = viewMode === "grid" ? "list" : viewMode === "list" ? "grid5" : "grid";
+        viewMode = viewMode === "grid" ? "grid5" : "grid";
         window.localStorage.setItem("gallery-view", viewMode);
         const grid = panel.querySelector(".media-grid");
         applyViewMode(grid);
