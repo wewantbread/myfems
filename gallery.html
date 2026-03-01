@@ -360,6 +360,72 @@
       font-size: 0.75rem;
     }
 
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+
+    .panel-header .panel-title {
+      margin: 0;
+    }
+
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 0.28rem 0.72rem;
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: background 180ms ease, transform 180ms ease;
+      flex-shrink: 0;
+    }
+
+    .view-toggle:hover,
+    .view-toggle:focus-visible {
+      background: var(--card-bg-active);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .view-toggle__icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* List-view overrides applied when .view-list is on .media-grid */
+    .media-grid.view-list {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .media-grid.view-list .media-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-radius: 10px;
+    }
+
+    .media-grid.view-list .media-item img {
+      width: 96px;
+      height: 72px;
+      aspect-ratio: unset;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 9px 0 0 9px;
+    }
+
+    .media-grid.view-list .media-item__meta {
+      padding: 0.45rem 0.75rem;
+    }
+
     @keyframes bg-breathe {
       0%, 100% { transform: scale(1); opacity: var(--bg-breathe-opacity, 0.66); }
       50% { transform: scale(1.018); opacity: calc(var(--bg-breathe-opacity, 0.66) + 0.06); }
@@ -481,6 +547,18 @@
     const lightboxDesc = document.getElementById("lightbox-desc");
     const closeButton = document.getElementById("close-lightbox");
 
+    let viewMode = window.localStorage.getItem("gallery-view") || "grid";
+
+    const getToggleLabel = () =>
+      viewMode === "grid"
+        ? `<span class="view-toggle__icon">☰</span> List`
+        : `<span class="view-toggle__icon">⊞</span> Grid`;
+
+    const applyViewMode = (grid) => {
+      if (!grid) return;
+      grid.classList.toggle("view-list", viewMode === "list");
+    };
+
     const renderCollection = (key) => {
       const config = collections[key];
       if (!config) return;
@@ -489,7 +567,13 @@
         btn.classList.toggle("is-active", btn.dataset.collection === key);
       });
 
-      const heading = `<h2 class="panel-title">${config.title} Collection</h2>`;
+      const heading = `
+        <div class="panel-header">
+          <h2 class="panel-title">${config.title} Collection</h2>
+          <button class="view-toggle" type="button" id="view-toggle" aria-label="Toggle list or grid view">
+            ${getToggleLabel()}
+          </button>
+        </div>`;
 
       if (!config.items.length) {
         panel.innerHTML = `${heading}<p class="empty-note">${config.empty}</p>`;
@@ -508,7 +592,18 @@
         `)
         .join("");
 
-      panel.innerHTML = `${heading}<div class="media-grid">${itemsMarkup}</div>`;
+      panel.innerHTML = `${heading}<div class="media-grid" id="media-grid">${itemsMarkup}</div>`;
+
+      applyViewMode(panel.querySelector(".media-grid"));
+
+      document.getElementById("view-toggle")?.addEventListener("click", () => {
+        viewMode = viewMode === "grid" ? "list" : "grid";
+        window.localStorage.setItem("gallery-view", viewMode);
+        const grid = panel.querySelector(".media-grid");
+        applyViewMode(grid);
+        const btn = document.getElementById("view-toggle");
+        if (btn) btn.innerHTML = getToggleLabel();
+      });
 
       panel.querySelectorAll(".media-item").forEach((node) => {
         node.addEventListener("click", () => {
