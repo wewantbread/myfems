@@ -406,6 +406,24 @@
       gap: 0.45rem;
     }
 
+    /* 5×5 grid view */
+    .media-grid.view-grid5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.35rem;
+    }
+
+    .media-grid.view-grid5 .media-item__meta {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .media-grid.view-grid5 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .media-grid.view-grid5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
     .media-grid.view-list .media-item {
       display: flex;
       flex-direction: row;
@@ -548,15 +566,18 @@
     const closeButton = document.getElementById("close-lightbox");
 
     let viewMode = window.localStorage.getItem("gallery-view") || "grid";
+    if (!["grid", "list", "grid5"].includes(viewMode)) viewMode = "grid";
 
-    const getToggleLabel = () =>
-      viewMode === "grid"
-        ? `<span class="view-toggle__icon">☰</span> List`
-        : `<span class="view-toggle__icon">⊞</span> Grid`;
+    const getToggleLabel = () => {
+      if (viewMode === "grid") return `<span class="view-toggle__icon">☰</span> List`;
+      if (viewMode === "list") return `<span class="view-toggle__icon">⊡</span> 5×5`;
+      return `<span class="view-toggle__icon">⊞</span> Grid`;
+    };
 
     const applyViewMode = (grid) => {
       if (!grid) return;
       grid.classList.toggle("view-list", viewMode === "list");
+      grid.classList.toggle("view-grid5", viewMode === "grid5");
     };
 
     const renderCollection = (key) => {
@@ -597,7 +618,7 @@
       applyViewMode(panel.querySelector(".media-grid"));
 
       document.getElementById("view-toggle")?.addEventListener("click", () => {
-        viewMode = viewMode === "grid" ? "list" : "grid";
+        viewMode = viewMode === "grid" ? "list" : viewMode === "list" ? "grid5" : "grid";
         window.localStorage.setItem("gallery-view", viewMode);
         const grid = panel.querySelector(".media-grid");
         applyViewMode(grid);
